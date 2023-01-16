@@ -25,3 +25,26 @@
 -입출금여부 (0:입금, 1:출금) <int not null>
 -금액<int not null>
 -날짜<date not null>
+
+
+2.질문
+-질문 식별자(기본키) <int not null auto incre>
+-유저 식별자(외래키) : 학생 <int not null>
+-진행여부(0:진행전(채택전), 1:진행중(채택후), 2:완료) <int not null>
+-평가점수 <int> : 100점만점
+-언어 (0:python, 1:java, 2:C) <int not null>
+-카테고리(0:알고리즘, 1:디버깅) <int not null>
+-알고리즘(bfs, dfs, 그래프, DP, 정렬, 그리디, 시뮬레이션, 분할정복, 순열, 조합, 부분집합, 최소스패닝트리,기타) : 비트마스킹 <int not null>
+-출처(0:백준, 1:프로그래머스) <int not null>
+-문제번호 <int not null>
+-제목 <varchar(50) not null>
+-내용 <varchar(1000) not null>
+-예약 시간(date, 시간,분만 잇음) <timestamp not null>
+-코드 <varchar(10000) not null>
+-포인트 <int not null>
+
+2-1. 질문_선생 question_trainner
+-질문_선생식 식별자 <int not null auto incre>
+-질문 식별자(외래키) <int not null>
+-유저 식별자(외래키) : 선생 <int not null>
+-채택여부 (0:채택X, 1:채택) <int default : 0>
