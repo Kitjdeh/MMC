@@ -48,3 +48,23 @@
 -질문 식별자(외래키) <int not null>
 -유저 식별자(외래키) : 선생 <int not null>
 -채택여부 (0:채택X, 1:채택) <int default : 0>
+
+3.강의노트
+-강의노트 식별자(기본키) <int not null auto incre>
+-질문 식별자(외래키) <int not null>
+-경과시간 <int default : 0>
+-문제드로잉 <varchar(10000) not null>
+-코드드로잉 <varchar(10000) not null>
+-낙서장드로잉 <varchar(10000) not null>
+
+4.공지
+-공지식별자 <int not null auto incre>
+-제목 <varchar(50) not null>
+-내용 <varchar(1000) not null>
+-날짜 <timestamp>
+
+5.FAQ
+-FAQ 식별자 <int not null auto incre>
+-제목 <varchar(50) not null>
+-내용 <varchar(1000) not null>
+-날짜 <timestamp>
