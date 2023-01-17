@@ -68,3 +68,5 @@
 -제목 <varchar(50) not null>
 -내용 <varchar(1000) not null>
 -날짜 <timestamp>
+
+![Untitled](/uploads/40dfd7f7cabea8cd40c2b1262d60b8bb/Untitled.png)
