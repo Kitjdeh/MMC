@@ -1,0 +1,162 @@
+**코딩 컨벤션**은 **읽고, 관리하기 쉬운 코드를 작성하기 위한 일종의 코딩 스타일 규약**
+이다.
+예시 블로그 [https://ui.toast.com/fe-guide/ko_CODING-CONVENTION](https://ui.toast.com/fe-guide/ko_CODING-CONVENTION).
+
++여기에 추가적으로 사용하는 각 스택의 버전 기록
+
+## Git & GitLab(Branch)
+
+- Git Branch 명명 규칙
+    
+    master  : 기준이 되는 브랜치로 제품을 배포하는 브랜치
+    develop : 개발 브랜치로 개발자들이 이 브랜치를 기준으로 각자 작업한 기능들을 Merge
+    
+    feature/기능명 : 해당 기능 개발 브런치 ex) feature/login
+    
+
+- Issue 작성
+    - 새로 추가할 기능, 개선할 기능, 버그 등 모든 활동 내역에 대한 이슈를 등록!
+    - 이슈 제목 : 영어 단어
+
+- Git Commit Message
+    
+    ⭐ FEAT : #이슈번호 새로운 기능에 대한 커밋
+    🛠 FIX : #이슈번호 버그 수정에 대한 커밋
+    📝 UPDATE : #이슈번호 파일 내용 수정에 대한 커밋
+    🧱 BUILD : #이슈번호 빌드 관련 파일 수정에 대한 커밋
+    ⚒ REFACT : #이슈번호 코드 리팩토링에 대한 커밋
+    🎨 DESIGN: #이슈번호 CSS 등 사용자 UI 디자인 변경
+    ✏ DOCS : #이슈번호 문서 수정에 대한 커밋
+    💬 COMMENT : #이슈번호 필요한 주석 추가 및 변경
+    🔙 RENAME : #이슈번호 파일 혹은 폴더 명을 수정하거나 옮기는 작업만인 경우
+    ✂ REMOVE : #이슈번호 파일을 삭제하는 작업만 수행한 경우
+    👏 CHORE : #이슈번호 그 외 기타 수정에 대한 커밋
+    
+    ex. ⭐ FEAT : #20 add login
+    
+
+- Pull Request 작성 규칙
+    - #이슈번호_구현 기능(영어 단어)
+
+## React
+
+[[공부] 코딩 컨벤션 (react)](https://2mojurmoyang.tistory.com/178)
+
+1. **파일명**
+    1. 컴포넌트 파일은 PascalCase를 적용한다. 
+        
+        ex) Header.jsx, Main.jsx
+        
+    2. 컴포넌트가 아닌 파일은 camelCase를 적용한다.
+        
+        ex) fetchApi.jsx, auth.jsx
+        
+    3. Test 파일은 대상 파일명+.test를 붙여준다.
+        
+        ex) Header.jsx → Header.test.jsx
+        
+    4. CSS 파일은 대상 파일명과 동일하게 한다.
+        
+        ex) Header.jsx → Header.css
+        
+    5. 다른 CSS 파일은 대상 파일명+.style을 붙여준다.
+        
+        ex) Header.tsx → Header.style.tx
+        
+    6. 서로 연관된 파일들은 하나의 폴더에 넣어준다.
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4fc9ac39-78a9-4dd8-abe4-3ffe5114758a/Untitled.png)
+        
+2. **변수명**
+    1. 변수는 camelCase와 영어 대소문자, 숫자를 사용한다.
+    2. 변수 값이 boolean이면 is를 접두사로 붙인다.
+    3. 상수는 대문자로 작성한다.
+3. **함수명**
+    1. 이벤트 함수명은 on+Event+Handler 형태로 작성한다.
+        
+        ex) on + Click + Handler → onClickHandler
+        
+    2. 이벤트 함수가 여러 개 있을 경우, 기능 정보를 추가한다.
+        
+        ex) on + ClickReset + Handler
+        
+
+## Jira
+
+[JIRA Convention](https://upsw-p.tistory.com/25)
+
+## Java
+
+1. Naming
+    1. 누구나 알 수 있는 쉬운 단어를 선택하고 의미를 명확히 한다. (어려운 어휘 지양)
+    2. 변수명 작성 방법
+        1. 클래스나 메소드명은 파스칼 표기법을 따른다.(모든 단어에서 첫 문자는 대문자 나머지는 소문자)
+        ex) HelloWordl, NameViva
+        2. 변수, 파라미터 등은 카멜 표기법을 따른다.
+        ex) helloWordl, nameViva
+        3. 메서드 이름은 동사/전치사로 시작한다.
+        ex) countNumber, withUserId
+        4. 상수는 대문자로 작성하고 복합어인 경우 '_'를 사용하여 단어를 구분한다.
+        ex) public final int SPECIAL_NUMBER = 1;
+        5. URL, 파일명 등은 kebab-case를 사용한다.
+            
+            ex) /user-email-page
+            
+        6. 패키지명은 단어가 달라지더라도 무조건 소문자를 사용한다.
+            
+            ex) frontend, useremail ...
+            
+        7. ENUM이나 상수는 대문자로 네이밍한다.
+            
+            ex) NORMAL_STATUS
+            
+        8. 함수명은 소문자로 시작하고 **동사**로 네이밍한다.
+            
+            ex) getUserId(), isNormal() ...
+            
+        9. 
+2. Structure
+    1. 패키지는 목적별로 묶는다
+        1. •user(User 관련 패키지), coupon(쿠폰 관련 패키지)
+    2. Controller에서는 최대한 어떤 Service를 호출할지 결정하는 역할과 Exception처리만을 담당하자.
+        - Controller 단에서 로직을 구현하는 것을 지양한다.
+        - Controller의 코드 라인 수를 줄이자는 뜻은 절대 아니다.
+    3. 하나의 메소드와 클래스는 하나의 목적을 두게 만든다.
+        - 하나의 메소드 안에서 한가지 일만 해야한다.
+        - 하나의 클래스 안에서는 같은 목적을 둔 코드들의 집합이여야한다.
+3. Programming
+    1. 테스트 코드를 작성한다. 
+    모든 예외는 무시하지말고 처리한다. 만약 예외를 처리하지 않을거라면 그 이유에 대해서 명확하게 주석을 남긴다.
+    2. 변수는 최대한 사용하는 위치에 가깝게 사용한다.
+    3. 파라미터 변수와 내부 변수를 구별할 땐 언더바가 아닌 this로 구별한다.
+        - this.name = name (O) / name = _name (X)
+        - 추가적으로 언더바를 prefix로 사용하는 것을 지양하자.
+    4. 코드의 길이가 짧고 명료한 것도 좋지만, **가독성이 현저히 떨어진다면 코드를 좀 더 풀어쓴다.**
+    5. 조건문에 부정조건을 넣는 것을 피한다.
+        
+        • if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
+        
+
+## Swagger(2를 사용할지 3을 사용할 지 결정 필요)
+
+Swagger 버전 3은 기존 2에서 쓰던 어노테이션이 많이 바꼈다.
+
+```
+바뀐 점 참고
+
+//어노테이션 변경
+@ApiParam -> @Parameter
+@ApiOperation -> @Operation
+@Api -> @Tag
+@ApiImplicitParams -> @Parameters
+@ApiImplicitParam -> @Parameter
+@ApiIgnore -> @Parameter(hidden = true) or @operation(hidden = true) or @hidden
+@apimodel -> @Schema
+@ApiModelProperty -> @Schema
+
+//파라미터 변경
+value -> description
+tags -> name
+```
+
+스웨거는 경험이 있는 2 사용
