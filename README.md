@@ -10,19 +10,17 @@
 
 - 포인트 페이지 - 입금 신청 후 입금 계좌 공지 페이지까지 만듬
 
-
-
 ## 1.17 - 목업 진행
 
 - 목업 자료 중 담당인 문제 등록, 확인 관련 페이지 작성하였음
 
 - 리액트 라우터 관련 학습
   
+  ![](C:\Users\SSAFY\AppData\Roaming\marktext\images\2023-01-18-10-55-32-image.png)
+  
   ![전체질문페이지.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\전체질문페이지.png)
   
   ![질문 상세페이지.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\질문%20상세페이지.png)
-
-
 
 ![질문 작성하기.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\질문%20작성하기.png)
 
