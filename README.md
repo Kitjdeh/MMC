@@ -70,3 +70,5 @@
 -날짜 <timestamp>
 
 ![MMC](/uploads/f6f7f58551d4f77cde44b3ad726908b9/MMC.png)
+
+![ERD](/uploads/59a45daba67f0fc1fab22c29cca554b6/ERD.png)
