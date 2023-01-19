@@ -69,4 +69,4 @@
 -내용 <varchar(1000) not null>
 -날짜 <timestamp>
 
-![Untitled](/uploads/40dfd7f7cabea8cd40c2b1262d60b8bb/Untitled.png)
+![MMC](/uploads/f6f7f58551d4f77cde44b3ad726908b9/MMC.png)
