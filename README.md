@@ -16,15 +16,8 @@
 
 - 리액트 라우터 관련 학습
   
-  ![](C:\Users\SSAFY\AppData\Roaming\marktext\images\2023-01-18-10-55-32-image.png)
-  
-  ![전체질문페이지.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\전체질문페이지.png)
-  
-  ![질문 상세페이지.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\질문%20상세페이지.png)
 
-![질문 작성하기.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\질문%20작성하기.png)
 
-![메인페이지.png](C:\Users\SSAFY\Desktop\SeongDo\S08P12A508\S08P12A508\메인페이지.png)
 
 ## 1.18 - 목업 진행
 
