@@ -72,4 +72,5 @@ public class UserDto {
         this.point = point;
         this.temperature = temperature;
     }
+
 }

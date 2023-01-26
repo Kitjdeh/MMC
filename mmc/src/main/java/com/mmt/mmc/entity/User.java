@@ -1,16 +1,19 @@
 package com.mmt.mmc.entity;
 
+import com.mmt.mmc.model.dto.UserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,5 +74,48 @@ public class User {
         this.point = point;
         this.temperature = temperature;
     }
+//    public void toDto(User user){
+//        this.userId = user.userId;
+//        this.isManager = user.isManager;
+//        this.isKakao = user.isKakao;
+//        this.isOnline = user.isOnline;
+//        this.profileImage = user.profileImage;
+//        this.identity = user.identity;
+//        this.password = user.password;
+//        this.name = user.name;
+//        this.email = user.email;
+//        this.nickname = user.nickname;
+//        this.language = user.language;
+//        this.phone = user.phone;
+//        this.academicAbility = user.academicAbility;
+//        this.workplace = user.workplace;
+//        this.baekjoonId = user.baekjoonId;
+//        this.award = user.award;
+//        this.point = user.point;
+//        this.temperature = user.temperature;
+//    }
 
+    public UserDto toDto(){
+        UserDto userDto = UserDto.builder()
+                .userId(userId)
+                .isManager(isManager)
+                .isKakao(isKakao)
+                .isOnline(isOnline)
+                .profileImage(profileImage)
+                .identity(identity)
+                .password(password)
+                .name(name)
+                .email(email)
+                .nickname(nickname)
+                .language(language)
+                .phone(phone)
+                .academicAbility(academicAbility)
+                .workplace(workplace)
+                .baekjoonId(baekjoonId)
+                .award(award)
+                .point(point)
+                .temperature(temperature)
+                .build();
+        return userDto;
+    }
 }
