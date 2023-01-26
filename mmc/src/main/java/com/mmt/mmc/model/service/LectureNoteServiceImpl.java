@@ -16,6 +16,7 @@ public class LectureNoteServiceImpl implements LectureNoteService{
 	@Autowired
 	private LectureNoteRepository lectureNoteRepository;
 
+	// 강의 노트 찾기
 	@Override
 	public LectureNoteDto findLectureNote(int lectureNoteId) {
 		Optional<LectureNote> lectureNoteWrapper = lectureNoteRepository.findById(lectureNoteId);
@@ -32,12 +33,14 @@ public class LectureNoteServiceImpl implements LectureNoteService{
 		return null;
 	}
 
+	// 강의 노트 삽입, 수정
 	@Override
 	@Transactional
 	public void saveLectureNote(LectureNoteDto lectureNoteDto) {
 		lectureNoteRepository.save(lectureNoteDto.toEntity());
 	}
 
+	// 강의 노트 제거
 	@Override
 	public void removeLectureNote(int lectureNoteId) {
 		Optional<LectureNote> lectureNoteWrapper = lectureNoteRepository.findById(lectureNoteId);
