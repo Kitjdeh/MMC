@@ -19,7 +19,7 @@ public class UserRestController {
 
     //회원가입
     @PostMapping
-    public ResponseEntity<String> userSave(UserDto userDto) throws Exception{
+    public ResponseEntity<String> userAdd(@RequestBody UserDto userDto) throws Exception{
         userService.addUser(userDto);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
@@ -31,7 +31,7 @@ public class UserRestController {
     }
 
     @PatchMapping("/{user_id}")
-    public ResponseEntity<String> userModify(@PathVariable("user_id") int userId, UserDto userDto){
+    public ResponseEntity<String> userModify(@PathVariable("user_id") int userId, @RequestBody UserDto userDto){
         userService.modifyUser(userDto);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
@@ -42,7 +42,4 @@ public class UserRestController {
         System.out.println("UserRestController " + userDto);
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
-
-
-
 }
