@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,7 +47,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     @Transactional
-    public void savePost(QuestionDto questionDto) {
+    public void saveQuestion(QuestionDto questionDto) {
         questionRepository.save(questionDto.toEntity()).getQuestionId();
     }
 
@@ -55,39 +56,30 @@ public class QuestionServiceImpl implements QuestionService{
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
         if(questionWrapper.isPresent()){
             Question question = questionWrapper.get();
-            QuestionDto dto = QuestionDto.builder()
-                    .questionId(question.getQuestionId())
-                    .userId(question.getUserId())
-                    .progress(question.getProgress())
-                    .progressScore(question.getProgressScore())
-                    .language(question.getLanguage())
-                    .category(question.getCategory())
-                    .algorithm(question.getAlgorithm())
-                    .source(question.getSource())
-                    .questionNumber(question.getQuestionNumber())
-                    .title(question.getTitle())
-                    .content(question.getContent())
-                    .reservation(question.getReservation())
-                    .code(question.getCode())
-                    .point(question.getPoint())
-                    .build();
+            QuestionDto dto = question.toDto();
             return dto;
         }
         return null;
     }
 
     @Override
-    public void deleteQuestion(int questionId) {
+    public boolean deleteQuestion(int questionId) {
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
         if(questionWrapper.isPresent()){
             Question question= questionWrapper.get();
             questionRepository.deleteById(question.getQuestionId());
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void modifyQuestion(int questionId) {
+    public String findImageUrl(int questionId) {
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
-        //추가 작성 필요
+        if(questionWrapper.isPresent()){
+            Question question=questionWrapper.get();
+            return question.getImageUrl();
+        }
+        return null;
     }
 }

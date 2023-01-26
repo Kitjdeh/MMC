@@ -26,6 +26,7 @@ public class QuestionDto {
     private Date reservation;
     private String code;
     private int point;
+    private String imageUrl;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
@@ -45,12 +46,13 @@ public class QuestionDto {
                 .reservation(reservation)
                 .code(code)
                 .point(point)
+                .imageUrl(imageUrl)
                 .build();
         return question;
     }
 
     @Builder
-    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, LocalDateTime createdTime, LocalDateTime updatedTime) {
+    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, LocalDateTime createdTime, LocalDateTime updatedTime) {
         this.questionId = questionId;
         this.userId = userId;
         this.progress = progress;
@@ -65,6 +67,7 @@ public class QuestionDto {
         this.reservation = reservation;
         this.code = code;
         this.point = point;
+        this.imageUrl = imageUrl;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
     }

@@ -1,5 +1,6 @@
 package com.mmt.mmc.entity;
 
+import com.mmt.mmc.model.dto.QuestionDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,8 +58,32 @@ public class Question{
     @Column(nullable = false)
     private int point;
 
+    @Column(name="image_url", length = 200)
+    private String imageUrl;
+
+    public QuestionDto toDto(){
+        QuestionDto questionDto = QuestionDto.builder()
+                .questionId(questionId)
+                .userId(userId)
+                .progress(progress)
+                .progressScore(progressScore)
+                .language(language)
+                .category(category)
+                .algorithm(algorithm)
+                .source(source)
+                .questionNumber(questionNumber)
+                .title(title)
+                .content(content)
+                .reservation(reservation)
+                .code(code)
+                .point(point)
+                .imageUrl(imageUrl)
+                .build();
+        return questionDto;
+    }
+
     @Builder
-    public Question(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point) {
+    public Question(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl) {
         this.questionId = questionId;
         this.userId = userId;
         this.progress = progress;
@@ -73,5 +98,6 @@ public class Question{
         this.reservation = reservation;
         this.code = code;
         this.point = point;
+        this.imageUrl = imageUrl;
     }
 }
