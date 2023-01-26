@@ -1,5 +1,6 @@
 package com.mmt.mmc.model.service;
 
+import com.mmt.mmc.controller.SHA256;
 import com.mmt.mmc.entity.User;
 import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.repository.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 @Transactional
@@ -22,8 +24,9 @@ public class UserServiceImpl implements UserService{
     *회원가입
     */
     @Override
-    public void addUser(UserDto userDto) {
+    public void addUser(UserDto userDto) throws NoSuchAlgorithmException {
         validateDuplicateUser(userDto.toEntity());//중복 회원 검증 , 이후 암호화 적용 및 JWP적용
+        userDto.setPassword(new SHA256().getHash(userDto.getPassword()));
         userRepository.save(userDto.toEntity());
     }
 

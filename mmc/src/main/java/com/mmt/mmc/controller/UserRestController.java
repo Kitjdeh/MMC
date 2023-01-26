@@ -19,7 +19,7 @@ public class UserRestController {
 
     //회원가입
     @PostMapping
-    public ResponseEntity<String> userSave(UserDto userDto) throws Exception{
+    public ResponseEntity<String> userAdd(UserDto userDto) throws Exception{
         userService.addUser(userDto);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
