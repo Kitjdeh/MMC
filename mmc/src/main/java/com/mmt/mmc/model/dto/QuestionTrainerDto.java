@@ -3,8 +3,6 @@ package com.mmt.mmc.model.dto;
 import com.mmt.mmc.entity.QuestionTrainer;
 import lombok.*;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
 @ToString

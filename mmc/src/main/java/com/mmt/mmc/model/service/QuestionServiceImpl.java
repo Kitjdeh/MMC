@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -30,39 +29,30 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     private UserRepository userRepository;
 
+    //질문 전체 조회
     @Override
     public List<QuestionDto> findAllQuestion() {
         List<Question> questions = questionRepository.findAll();
         List<QuestionDto> questionDtoList = new ArrayList<>();
 
         for(Question question: questions){
-            QuestionDto dto = QuestionDto.builder()
-                    .questionId(question.getQuestionId())
-                    .userId(question.getUserId())
-                    .progress(question.getProgress())
-                    .progressScore(question.getProgressScore())
-                    .language(question.getLanguage())
-                    .category(question.getCategory())
-                    .algorithm(question.getAlgorithm())
-                    .source(question.getSource())
-                    .questionNumber(question.getQuestionNumber())
-                    .title(question.getTitle())
-                    .content(question.getContent())
-                    .reservation(question.getReservation())
-                    .code(question.getCode())
-                    .point(question.getPoint())
-                    .build();
+            QuestionDto dto = question.toDto();
             questionDtoList.add(dto);
         }
         return questionDtoList;
     }
 
+    /*
+     * 질문 등록
+     * 질문 수정
+     */
     @Override
     @Transactional
     public void saveQuestion(QuestionDto questionDto) {
         questionRepository.save(questionDto.toEntity());
     }
 
+    // 질문 상세 조회
     @Override
     public QuestionDto findQuestion(int questionId) {
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
@@ -74,17 +64,17 @@ public class QuestionServiceImpl implements QuestionService{
         return null;
     }
 
+    // 질문 삭제
     @Override
-    public boolean deleteQuestion(int questionId) {
+    public void deleteQuestion(int questionId) {
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
         if(questionWrapper.isPresent()){
             Question question= questionWrapper.get();
             questionRepository.deleteById(question.getQuestionId());
-            return true;
         }
-        return false;
     }
 
+    // 질문 이미지 조회
     @Override
     public String findImageUrl(int questionId) {
         Optional<Question> questionWrapper = questionRepository.findById(questionId);
@@ -95,16 +85,23 @@ public class QuestionServiceImpl implements QuestionService{
         return null;
     }
 
+    // 강사 신청
     @Override
     public void saveQuestionTrainer(QuestionTrainerDto questionTrainerDto) {
         questionTrainerRepository.save(questionTrainerDto.toEntity());
     }
 
+    // 강사 신청 삭제
     @Override
     public void deleteQuestionTrainer(int questionId, int userId) {
         questionTrainerRepository.deleteByQuestionIdAndUserId(questionId,userId);
     }
 
+    // 강사 전체 조회
+    /*
+     * 1. questionId로 해당 질문에 신청한 QuestionTrainer 리스트 추출
+     * 2. QuestionTrainer 리스트를 돌면서 각 요소의 userId를 통해 user 정보 획득, userDtoList에 추가
+     */
     @Override
     public List<UserDto> findAllTrainer(int questionId) {
         List<QuestionTrainer> questionWrapper = questionTrainerRepository.findByQuestionId(questionId);

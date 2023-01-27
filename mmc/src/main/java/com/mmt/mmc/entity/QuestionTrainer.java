@@ -2,7 +2,6 @@ package com.mmt.mmc.entity;
 
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.QuestionTrainerId;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

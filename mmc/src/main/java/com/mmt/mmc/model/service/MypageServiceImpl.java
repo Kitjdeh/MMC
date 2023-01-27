@@ -2,10 +2,8 @@ package com.mmt.mmc.model.service;
 
 import com.mmt.mmc.entity.Question;
 import com.mmt.mmc.entity.QuestionTrainer;
-import com.mmt.mmc.entity.User;
 import com.mmt.mmc.model.dto.QuestionDto;
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
-import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.repository.QuestionRepository;
 import com.mmt.mmc.repository.QuestionTrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,7 @@ public class MypageServiceImpl implements MypageService{
     @Autowired
     private QuestionTrainerRepository questionTrainerRepository;
 
+    //내 질문 전체 조회
     @Override
     public List<QuestionDto> findAllMyQuestion(int userId) {
         List<Question> questions = questionRepository.findByUserId(userId);
@@ -32,10 +31,14 @@ public class MypageServiceImpl implements MypageService{
             QuestionDto dto = question.toDto();
             questionDtoList.add(dto);
         }
-        System.out.println(questionDtoList);
         return questionDtoList;
     }
 
+    //내 강의 전체 조회
+    /*
+     * 1. userId로 해당 강사가 신청한 QuestionTrainer 리스트 추출
+     * 2. QuestionTrainer 리스트를 돌면서 각 요소의 questionId를 통해 question 정보 획득, questionDtoList에 추가
+     */
     @Override
     public List<QuestionDto> findAllMyLecture(int userId) {
         List<QuestionTrainer> questionTrainers = questionTrainerRepository.findByUserId(userId);
@@ -49,7 +52,6 @@ public class MypageServiceImpl implements MypageService{
                 questionDtoList.add(questionDto);
             }
         }
-        System.out.println(questionDtoList);
         return questionDtoList;
     }
 }
