@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,10 @@ public class LectureNote {
 	@GeneratedValue
 	private int lectureNoteId;
 
-	@Column
+	@Column(nullable = false)
 	private int questionId;
 
-	@Column
+	@Column@ColumnDefault("0")
 	private int lectureTime;
 
 	@Column

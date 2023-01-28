@@ -26,7 +26,7 @@ public class LectureNoteRestController {
 
 	// 강의 노트 생성
 	@PostMapping
-	public ResponseEntity<String> lectureNoteSave(@RequestBody LectureNoteDto lectureNoteDto) {
+	public ResponseEntity<String> lectureNoteAdd(@RequestBody LectureNoteDto lectureNoteDto) {
 		lectureNoteService.saveLectureNote(lectureNoteDto);
 		return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
 	}
