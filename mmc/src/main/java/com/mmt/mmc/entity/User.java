@@ -1,10 +1,7 @@
 package com.mmt.mmc.entity;
 
 import com.mmt.mmc.model.dto.UserDto;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -13,6 +10,8 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @DynamicUpdate
 public class User {
 
@@ -52,48 +51,11 @@ public class User {
     private int point;
     @Column @ColumnDefault("0")
     private int temperature;
+    @Column
+    private String authToken;
+    @Column
+    private String refreshToken;
 
-    @Builder
-    public User(int userId, int isManager, int isKakao, int isOnline, String profileImage, String identity, String password, String name, String email, String nickname, int language, String phone, String academicAbility, String workplace, String baekjoonId, String award, int point, int temperature) {
-        this.userId = userId;
-        this.isManager = isManager;
-        this.isKakao = isKakao;
-        this.isOnline = isOnline;
-        this.profileImage = profileImage;
-        this.identity = identity;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.nickname = nickname;
-        this.language = language;
-        this.phone = phone;
-        this.academicAbility = academicAbility;
-        this.workplace = workplace;
-        this.baekjoonId = baekjoonId;
-        this.award = award;
-        this.point = point;
-        this.temperature = temperature;
-    }
-//    public void toDto(User user){
-//        this.userId = user.userId;
-//        this.isManager = user.isManager;
-//        this.isKakao = user.isKakao;
-//        this.isOnline = user.isOnline;
-//        this.profileImage = user.profileImage;
-//        this.identity = user.identity;
-//        this.password = user.password;
-//        this.name = user.name;
-//        this.email = user.email;
-//        this.nickname = user.nickname;
-//        this.language = user.language;
-//        this.phone = user.phone;
-//        this.academicAbility = user.academicAbility;
-//        this.workplace = user.workplace;
-//        this.baekjoonId = user.baekjoonId;
-//        this.award = user.award;
-//        this.point = user.point;
-//        this.temperature = user.temperature;
-//    }
 
     public UserDto toDto(){
         UserDto userDto = UserDto.builder()
@@ -115,6 +77,8 @@ public class User {
                 .award(award)
                 .point(point)
                 .temperature(temperature)
+                .authToken(authToken)
+                .refreshToken(refreshToken)
                 .build();
         return userDto;
     }

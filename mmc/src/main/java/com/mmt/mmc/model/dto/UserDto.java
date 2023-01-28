@@ -7,6 +7,8 @@ import lombok.*;
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDto {
     private int userId;
     private int isManager;
@@ -26,6 +28,8 @@ public class UserDto {
     private String award;
     private int point;
     private int temperature;
+    private String authToken;
+    private String refreshToken;
 
     public User toEntity(){
         User build = User.builder()
@@ -47,30 +51,11 @@ public class UserDto {
                 .award(award)
                 .point(point)
                 .temperature(temperature)
+                .authToken(authToken)
+                .refreshToken(refreshToken)
                 .build();
         return build;
     }
 
-    @Builder
-    public UserDto(int userId, int isManager, int isKakao, int isOnline, String profileImage, String identity, String password, String name, String email, String nickname, int language, String phone, String academicAbility, String baekjoonId, String workplace, String award, int point, int temperature) {
-        this.userId = userId;
-        this.isManager = isManager;
-        this.isKakao = isKakao;
-        this.isOnline = isOnline;
-        this.profileImage = profileImage;
-        this.identity = identity;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.nickname = nickname;
-        this.language = language;
-        this.phone = phone;
-        this.academicAbility = academicAbility;
-        this.workplace = workplace;
-        this.baekjoonId = baekjoonId;
-        this.award = award;
-        this.point = point;
-        this.temperature = temperature;
-    }
 
 }
