@@ -14,8 +14,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public void deleteById(int userId);
     //로그인할 때 + 로그인 정보 수정할 때 사용
     public Optional<User> findById(int userId);
-    //이름으로 회원 정보 찾기
-    public Optional<User> findByName(String name);
+    //identity로 회원 정보 찾기
+    public Optional<User> findByIdentity(String identity);
     
 //    public List<UserDto> findAll();
 
