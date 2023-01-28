@@ -3,7 +3,6 @@ package com.mmt.mmc.model.dto;
 import com.mmt.mmc.entity.Question;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.Date;
 

@@ -2,9 +2,11 @@ package com.mmt.mmc.repository;
 
 import com.mmt.mmc.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     //회원 저장
 //    public Optional<User> save(User user);
