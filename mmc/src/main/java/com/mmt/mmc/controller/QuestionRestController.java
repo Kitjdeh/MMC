@@ -4,14 +4,17 @@ import com.mmt.mmc.model.dto.QuestionDto;
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.model.service.QuestionService;
+import com.mmt.mmc.model.service.S3FileUploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,9 @@ public class QuestionRestController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private S3FileUploadService s3FileUploadService;
+
     //질문 전체 조회
     @GetMapping
     public ResponseEntity<Map<String,Object>> questionList() {
@@ -38,9 +44,10 @@ public class QuestionRestController {
 
     //질문 등록
     @PostMapping
-    public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question){
-        //사이트 url -> image url로 변경 로직 작성 필요
-        //
+    public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question, @RequestPart(value="question", required = false) final MultipartFile multipartFile) throws IOException {
+        if(multipartFile != null){
+            question.setImageUrl(s3FileUploadService.upload(multipartFile));
+        }
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
