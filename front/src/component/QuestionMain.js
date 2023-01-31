@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import TeacherCard from "./TeacherCard";
+import TeacherRegister from "./TeacherRegister";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
   ...theme.typography.body2,
@@ -35,7 +37,11 @@ const question = {
   content:
     "BFS로 다 전부 검사하면서 체크하는데 테케랑은 다 맞고 제출하면 계속 틀리네요,,, 반례가 있으면 반례 같이 부탁드리겠습니다. 접근 방식 문제면 같이 이론도 좀",
 };
-const user = ["김정민", "김원혁", "기성도"];
+const user = [
+  { nickname: "김정민", temperature: "32" },
+  { nickname: "김원혁", temperature: "21" },
+  { nickname: "기성도", temperature: "54" },
+];
 const QuestionMain = () => {
   let { id } = useParams();
   const location = useLocation();
@@ -77,47 +83,39 @@ const QuestionMain = () => {
         <Item>{question.reservation}</Item>
       </Stack>
       <br />
-      <Item height={50} sx={{ backgroundColor: "#f6edff" }}>
-        <Grid container spacing={1}>
-          <Item item xs={3}>
+      <Item height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
+        <Grid container sx={{}}>
+          <Bar item xs={2} margin={1}>
             알고리즘
-          </Item>
+          </Bar>
 
-          <Item item xs={9}>
+          <Bar item xs={2} margin={1}>
             {question.algorithm}
-          </Item>
+          </Bar>
         </Grid>
       </Item>
       <br />
-      <Box className="searchbar">{question.content}</Box>
+      <Item sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>
+        {question.content}
+      </Item>
       <Box>
         <br></br>
         <Container>
-          <Grid container>
-            <Grid item xs={6}>
-              <Grid width={250} className="nav-bar">
+          <Grid container justifyContent="space-between">
+            <Grid item margin={1} xs={5}>
+              <Item sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
                 문제설명을 신청한 강사 리스트
-              </Grid>
-              <Grid container direction="column">
-                닉네임
-                {user.map((name) => (
-                  <Grid item>
-                    <Stack
-                      direction="row"
-                      divider={<Divider orientation="vertical" flexItem />}
-                      spacing={3}
-                    >
-                      <Grid>{name}</Grid>
-                      <Grid>프로필</Grid>
-                      <Grid>신청하기</Grid>
-                    </Stack>
-                  </Grid>
+              </Item>
+              <Item>
+                <TeacherRegister nickname="프로필" temperature="온도" />
+                {user.map((item) => (
+                  <TeacherRegister nickname={item.nickname} temperature={item.temperature} />
                 ))}
-                <Grid></Grid>
-              </Grid>
+              </Item>
             </Grid>
-            <Grid item xs={6} className="nav-bar">
-              강사 프로필
+
+            <Grid item margin={1} xs={5}>
+              <TeacherCard />
             </Grid>
           </Grid>
         </Container>
