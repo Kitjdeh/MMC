@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QuestionCard from "../component/QuestionCard";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -8,8 +8,19 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
-const list = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useSearchParams } from "react-router-dom";
+import { questionAction } from "../redux/actions/questionsAction";
+import { useDispatch, useSelector } from "react-redux";
+
 const AllQuestion = () => {
+  const questionList = useSelector((state) => state.question.questions);
+  console.log(questionList,'123412341234')
+  const dispatch = useDispatch();
+  const getQuestions = () => {
+    dispatch(questionAction.getQuestions());
+  };
+  useEffect(() => getQuestions(), []);
+  console.log('111111',questionList)
   const [isfindpython, setfindpython] = React.useState(true);
   const [isfindjava, setfindjava] = React.useState(true);
   const [isfindC, setfindC] = React.useState(true);
@@ -116,9 +127,9 @@ const AllQuestion = () => {
       </Container>
       <Container>
         <Grid container spacing={1}>
-          {list.map((question) => (
-            <Grid item key={question} xl={3} lg={4} md={6}>
-              <QuestionCard />
+          {questionList.map((question) => (
+            <Grid item  xl={3} lg={4} md={6}>
+              <QuestionCard question={question}/>
               <br />
             </Grid>
           ))}

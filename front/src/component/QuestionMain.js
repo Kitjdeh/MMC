@@ -9,11 +9,17 @@ import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(0.5),
   textAlign: "center",
-  color: theme.palette.text.secondary,
+  minWidth: 50,
+}));
+const Bar = styled(Grid)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(0.5),
+  textAlign: "center",
 }));
 const question = {
   language: "Python",
@@ -34,25 +40,35 @@ const QuestionMain = () => {
   let { id } = useParams();
   const location = useLocation();
   return (
-    <Box>
-      <Grid className="questiontitlebar">
-        <Grid container>
+    <Box sx={{ minWidth: 100 }}>
+      <Item sx={{ backgroundColor: "#f6edff" }}>
+        <Bar
+          container
+          spacing={1}
+          sx={{ minWidth: 100, backgroundColor: "#f6edff" }}
+        >
           <Grid item xs={3}>
-            제목
+            <Item sx={{ backgroundColor: "#f6edff" }}>제목</Item>
           </Grid>
 
-          <Grid item xs={9} className="questiontitlemain">
-            {question.title}
+          <Grid item xs={9}>
+            <Item>{question.title}</Item>
           </Grid>
-        </Grid>
-      </Grid>
+        </Bar>
+      </Item>
       <br />
-      <Stack
-        direction="row"
-        justifyContent="center"
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={5}
-      >
+      <Stack direction="row" justifyContent="space-around" alignItems="center">
+        <Item>언어</Item>
+        <Item>카테고리</Item>
+        <Item>출처</Item>
+        <Item>문제번호</Item>
+        <Item>포인트</Item>
+        <Item>예약시간</Item>
+      </Stack>
+
+      <hr />
+
+      <Stack direction="row" justifyContent="space-around" alignItems="center">
         <Item>{question.language}</Item>
         <Item>{question.category}</Item>
         <Item>{question.source}</Item>
@@ -61,17 +77,17 @@ const QuestionMain = () => {
         <Item>{question.reservation}</Item>
       </Stack>
       <br />
-      <Grid className="nav-bar" height={50}>
-        <Grid container>
-          <Grid item xs={3}>
+      <Item height={50} sx={{ backgroundColor: "#f6edff" }}>
+        <Grid container spacing={1}>
+          <Item item xs={3}>
             알고리즘
-          </Grid>
+          </Item>
 
-          <Grid item xs={9}>
+          <Item item xs={9}>
             {question.algorithm}
-          </Grid>
+          </Item>
         </Grid>
-      </Grid>
+      </Item>
       <br />
       <Box className="searchbar">{question.content}</Box>
       <Box>

@@ -117,9 +117,11 @@ const WriteQuestion = () => {
           />
         </Grid>
       </Grid>
-      <br/><br/>
-      <Box className="questiontitlebar" margin="normal" >
+      <br />
+      <br />
+      <Box margin="normal">
         <TextField
+          className="questiontitlebar"
           required
           fullWidth
           id="content"
@@ -128,8 +130,9 @@ const WriteQuestion = () => {
           autoFocus
         />
       </Box>
-      <br/><br/>
-      <Box className="questiontitlebar" margin="normal" >
+      <br />
+      <br />
+      <Box className="questiontitlebar" margin="normal">
         <TextField
           required
           fullWidth
@@ -144,3 +147,4 @@ const WriteQuestion = () => {
 };
 
 export default WriteQuestion;
+

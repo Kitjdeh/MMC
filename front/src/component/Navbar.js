@@ -24,34 +24,33 @@ const Navbar = ({ setAuthenticate }) => {
   };
   const navigate = useNavigate();
   const goPoint = () => {
-    handleClose()
+    handleClose();
     navigate(`/mypage/point`);
   };
   const goquestion = () => {
-    handleClose()
+    handleClose();
     navigate(`/mypage/question`);
   };
   const golecture = () => {
-    handleClose()
+    handleClose();
     navigate(`/mypage/lecture`);
   };
-  const logout = (event) => { 
-    handleClose()
+  const logout = (event) => {
+    handleClose();
     event.preventDefault();
     setAuthenticate(false);
     navigate("/");
   };
 
-
-
   return (
-    <div className="nav-bar">
+    <div>
       <AppBar
-        className="nav-bar"
         position="static"
-        color="transparent"
         elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+        sx={{
+          backgroundColor: "#f6edff",
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Grid

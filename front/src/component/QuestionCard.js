@@ -4,19 +4,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
-const question = {
-  language: "Python",
-  source: "백준",
-  category: "디버깅",
-  algorithm: "BFS",
-  title: "테케는 다 맞는데 17%에서 시간초과 나네요,,,",
-  uerid: "A508",
-  reservation: "21:30",
-  point: "20",
-  question_id: "123",
-};
 
-const QuestionCard = () => {
+
+const QuestionCard = ({question}) => {
+  console.log('333333',{question})
   const navigate = useNavigate();
   const showDetail = () => {
     navigate(`/question/${question.question_id}`);
@@ -54,7 +45,7 @@ const QuestionCard = () => {
             </Grid>
           </Grid>
           <Grid item xs={8} textAlign="left">
-            {question.uerid}
+            {question.userId}
 
           </Grid>
           <Grid item xs={4} sm container>

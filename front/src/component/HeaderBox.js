@@ -7,22 +7,21 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { Opacity } from "@mui/icons-material";
+
+
+
 
 const HeaderBox = (props) => {
   return (
-    <Card
-      sx={{
-        py: 5,
-        boxShadow: 0,
-        textAlign: "center",
-      }}
-    >
+    <Box sx={{textAlign:"center"}} >
       icon
-      <Typography variant="h5">{props?.title}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+      <Typography variant="h6" >{props?.title}</Typography>
+      <Typography variant="subtitle2" >
         {props?.number}
       </Typography>
-    </Card>
+    </Box>
   );
 };
 

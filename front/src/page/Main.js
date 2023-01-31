@@ -5,9 +5,11 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+import { mainInfo } from "../redux/reducers/questions";
+import { useDispatch, useSelector } from "react-redux";
+import Container from "@mui/material/Container";
+const Item = styled(Container)(({ theme }) => ({
+  backgroundColor: "#f6edff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -36,12 +38,11 @@ const mainbodylist = [
 
 const Main = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
+    <Box sx={{ flexGrow: 1,backgroundColor: "#f6edff" }}>
+      <Grid container spacing={3}  >
         <Grid item xs={4}>
-          <Item>
-            {" "}
-            <HeaderBox icon="faUser" title="전체회원" number="3435" />
+          <Item  sx={{ flexGrow: 1,backgroundColor: "#f6edff"}}>
+            <HeaderBox  icon="faUser" title="전체회원" number="3435" />
           </Item>
         </Grid>
         <Grid item xs={4}>
