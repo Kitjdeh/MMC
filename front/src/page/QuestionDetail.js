@@ -13,36 +13,21 @@ import QuestionMain from "../component/QuestionMain";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { detailquestionAction } from "../redux/actions/detailquestionAction";
-
 const QuestionDetail = () => {
   let questionId  = useParams();
+  let id=questionId.id
   const question = useSelector((state) => state.detailquestion.question);
-  console.log(questionId, 484848484848);
   const teacherInfo = useSelector((state) => state.userinfo.userinfo);
   const dispatch = useDispatch();
   const getQuestion = () => {
-    dispatch(detailquestionAction.getQuestionDetail(questionId));
+    dispatch(detailquestionAction.getQuestionDetail(id));
   };
   useEffect(() => getQuestion(), []);
   console.log(question, "질문요청api");
-
   const [content, setContent] = useState();
   const selectquestion = (item) => {
     const { name } = item.target;
-    console.log(name);
     setContent(name);
-
-    const question = {
-      language: "Python",
-      source: "백준",
-      category: "디버깅",
-      algorithm: "BFS",
-      title: "테케는 다 맞는데 17%에서 시간초과 나네요,,,",
-      uerid: "A508",
-      reservation: "21:30",
-      point: "20",
-      question_id: "123",
-    };
   };
   const category = {
     main: <QuestionMain question={question} />,

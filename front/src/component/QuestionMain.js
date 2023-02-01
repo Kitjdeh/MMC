@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
+
+
 import TeacherCard from "./TeacherCard";
 import TeacherRegister from "./TeacherRegister";
 const Item = styled(Paper)(({ theme }) => ({
@@ -28,10 +30,12 @@ const user = [
   { nickname: "기성도", temperature: "54", userId: 2 },
 ];
 const QuestionMain = ({question}) => {
-
+  console.log({question})
+  console.log('111111')
+  console.log("main페이지확인",{question})
   return (
     <Box sx={{ minWidth: 100 }}>
-      <Item sx={{ backgroundColor: "#f6edff" }}>
+      <Bar sx={{ backgroundColor: "#f6edff" }}>
         <Bar
           container
           spacing={1}
@@ -45,7 +49,7 @@ const QuestionMain = ({question}) => {
             <Item>{question.title}</Item>
           </Grid>
         </Bar>
-      </Item>
+      </Bar>
       <br />
       <Stack direction="row" justifyContent="space-around" alignItems="center">
         <Item>언어</Item>
@@ -67,7 +71,7 @@ const QuestionMain = ({question}) => {
         <Item>{question.reservation}</Item>
       </Stack>
       <br />
-      <Item height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
+      <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
         <Grid container sx={{}}>
           <Bar item xs={2} margin={1}>
             알고리즘
@@ -77,11 +81,11 @@ const QuestionMain = ({question}) => {
             {question.algorithm}
           </Bar>
         </Grid>
-      </Item>
+      </Bar>
       <br />
-      <Item sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>
+      <Bar sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>
         {question.content}
-      </Item>
+      </Bar>
       <Box>
         <br></br>
         <Container>

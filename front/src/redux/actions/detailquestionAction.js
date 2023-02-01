@@ -1,10 +1,10 @@
-function getQuestionDetail(questionId){
+function getQuestionDetail(id){
     return async (dispatch,getState)=>{
-        let url = `http://localhost:5000/questions/${questionId}`;
+        let url = `http://i8a508.p.ssafy.io:8080/api/v1/questions/${id}`;
         let response = await fetch(url);
         let data = await response.json();
-        console.log(data,"문제디테일action")
-        dispatch({type:"GET_QUESTION_DETAIL_SUCCESS",payload:{data}})
+        let result = data.question
+        dispatch({type:"GET_QUESTION_DETAIL_SUCCESS",payload:{result}})
 
     }   
 }

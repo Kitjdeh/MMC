@@ -41,7 +41,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Navbar authenticate={authenticate} />
-        <hr/><br/>
+      <br/>
         <Box className="body">
           <Routes>
             <Route path="/" element={<Main />} />

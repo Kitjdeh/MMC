@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const AllQuestion = () => {
   const questionList = useSelector((state) => state.questions.questions);
-  console.log(questionList,'123412341234')
   const dispatch = useDispatch();
   const getallQuestions = () => {
     dispatch(questionAction.getQuestions());

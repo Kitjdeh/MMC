@@ -7,20 +7,35 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: (theme.palette.mode = "#f6edff"),
+  padding: theme.spacing(0.5),
+  textAlign: "center",
+  minWidth: 50,
+}));
+const Bar = styled(Grid)(({ theme }) => ({
+  backgroundColor: (theme.palette.mode = "#f6edff"),
+  padding: theme.spacing(0.5),
+  textAlign: "center",
+}));
 const WriteQuestion = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <Box>
-      <Grid className="questiontitlebar" margin="normal">
-        <TextField
+    <Box component="form">
+      <Bar margin="normal">
+      <TextField
           required
           fullWidth
           id="title"
           label="제목을 입력해 주세요"
           name="title"
+          variant="outlined"
+
           autoFocus
         />
-      </Grid>
+      </Bar>
       <Grid container justifyContent="space-between">
         <Grid item xs={3}>
           <TextField
@@ -147,4 +162,3 @@ const WriteQuestion = () => {
 };
 
 export default WriteQuestion;
-
