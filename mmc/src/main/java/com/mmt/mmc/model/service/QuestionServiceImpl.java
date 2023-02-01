@@ -9,10 +9,14 @@ import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.repository.QuestionRepository;
 import com.mmt.mmc.repository.QuestionTrainerRepository;
 import com.mmt.mmc.repository.UserRepository;
+import it.grabz.grabzit.GrabzItClient;
+import it.grabz.grabzit.parameters.ImageOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +32,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private S3FileUploadService s3FileUploadService;
 
     //질문 전체 조회
     @Override
@@ -118,5 +125,26 @@ public class QuestionServiceImpl implements QuestionService{
         }
         return userDtoList;
     }
+
+    // URL to Img(GrabzIt)
+    public String grabzIt(int questionNum) throws Exception {
+        GrabzItClient grabzIt = new GrabzItClient("MjhhZTRkM2EzZmI5NDgwMjg3ODg3YzBmZWU3ZTg4OWQ=", "Pz8/BT8/Pz8/Iz8PaT8/JT8/aEA/eWMAPwI/Pws/Rz8=");
+
+        ImageOptions options = new ImageOptions();
+        options.setBrowserHeight(-1);
+//        options.setWidth(-1);
+//        options.setHeight(-1);
+
+        grabzIt.URLToImage("https://www.acmicpc.net/problem/"+questionNum,options);
+        String filename=questionNum+".jpg";
+        grabzIt.SaveTo(filename);
+
+        String path=System.getProperty("user.dir");
+        File file =new File(path+"/"+filename);
+        String url=s3FileUploadService.uploadFiles(file);
+        return url;
+    }
+
+
 
 }

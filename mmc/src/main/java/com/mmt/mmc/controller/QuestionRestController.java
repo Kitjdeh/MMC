@@ -4,6 +4,7 @@ import com.mmt.mmc.model.dto.QuestionDto;
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.model.service.QuestionService;
+import com.mmt.mmc.model.service.S3FileUploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/questions")
+@CrossOrigin(origins = "*")
 public class QuestionRestController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -25,6 +27,9 @@ public class QuestionRestController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private S3FileUploadService s3FileUploadService;
 
     //질문 전체 조회
     @GetMapping
@@ -38,9 +43,10 @@ public class QuestionRestController {
 
     //질문 등록
     @PostMapping
-    public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question){
-        //사이트 url -> image url로 변경 로직 작성 필요
-        //
+    public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question) throws Exception {
+        int questionNum = question.getQuestionNumber();
+        question.setImageUrl(questionService.grabzIt(questionNum));
+        System.out.println("Question "+question);
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -126,6 +132,7 @@ public class QuestionRestController {
     public ResponseEntity<Map<String,Object>> trainerList(@PathVariable("question_id") int questionId){
         Map<String,Object> map = new HashMap<>();
         List<UserDto> trainers = questionService.findAllTrainer(questionId);
+        System.out.println("trainers "+trainers);
         map.put("result",SUCCESS);
         map.put("users",trainers);
         return new ResponseEntity<>(map,HttpStatus.OK);

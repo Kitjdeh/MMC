@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private JWTUtil jwtUtil;
 
-
     @Override
     public HashMap<String, Object> loginUser(UserDto tempUserDto) throws NoSuchAlgorithmException, IdIncorrectException, PwIncorrectException {
         System.out.println("login before");
@@ -122,10 +121,11 @@ public class UserServiceImpl implements UserService{
 
     //증복 name 검사
     private void validateDuplicateUser(User user){
-        userRepository.findByIdentity(user.getIdentity())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
+        userRepository.findByIdentity(user.getIdentity());
+//        userRepository.findByIdentity(user.getIdentity())
+//                .ifPresent(m -> {
+//                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+//                });
     }
 
     public Map<String, Object> validRefreshToken(UserDto userDto){
