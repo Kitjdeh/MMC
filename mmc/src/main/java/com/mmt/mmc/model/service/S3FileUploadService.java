@@ -78,4 +78,25 @@ public class S3FileUploadService {
 //            log.error(e.getMessage());
         }
     }
+
+
+    public String uploadFiles(File uploadFile) throws IOException {
+        String origName = uploadFile.getName();
+        String url;
+        try {
+            // 확장자를 찾기 위한 코드
+            final String ext = origName.substring(origName.lastIndexOf('.'));
+            // 파일이름 암호화
+            final String saveFileName = getUuid() + ext;
+            // S3 파일 업로드
+            uploadOnS3(saveFileName, uploadFile);
+            // 주소 할당
+            url = defaultUrl + "/" + saveFileName;
+            // 파일 삭제
+            uploadFile.delete();
+        } catch (StringIndexOutOfBoundsException e) {
+            url = null;
+        }
+        return url;
+    }
 }

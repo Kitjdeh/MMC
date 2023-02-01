@@ -26,8 +26,7 @@ public class QuestionDto {
     private String code;
     private int point;
     private String imageUrl;
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
+    private Date date;
 
     public Question toEntity(){
         Question question = Question.builder()
@@ -51,7 +50,7 @@ public class QuestionDto {
     }
 
     @Builder
-    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, LocalDateTime createdTime, LocalDateTime updatedTime) {
+    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, Date date) {
         this.questionId = questionId;
         this.userId = userId;
         this.progress = progress;
@@ -67,7 +66,6 @@ public class QuestionDto {
         this.code = code;
         this.point = point;
         this.imageUrl = imageUrl;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
+        this.date = date;
     }
 }

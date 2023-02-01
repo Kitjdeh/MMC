@@ -34,4 +34,7 @@ public interface QuestionService {
     
     // 강사 전체 조회
     List<UserDto> findAllTrainer(int questionId);
+
+    // URL to Img(GrabzIt)
+    public String grabzIt(int questionNum) throws Exception;
 }
