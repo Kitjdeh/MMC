@@ -13,13 +13,13 @@ import { questionAction } from "../redux/actions/questionsAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const AllQuestion = () => {
-  const questionList = useSelector((state) => state.question.questions);
+  const questionList = useSelector((state) => state.questions.questions);
   console.log(questionList,'123412341234')
   const dispatch = useDispatch();
-  const getQuestions = () => {
+  const getallQuestions = () => {
     dispatch(questionAction.getQuestions());
   };
-  useEffect(() => getQuestions(), []);
+  useEffect(() => getallQuestions(), []);
   console.log('111111',questionList)
   const [isfindpython, setfindpython] = React.useState(true);
   const [isfindjava, setfindjava] = React.useState(true);

@@ -10,7 +10,7 @@ const QuestionCard = ({question}) => {
   console.log('333333',{question})
   const navigate = useNavigate();
   const showDetail = () => {
-    navigate(`/question/${question.question_id}`);
+    navigate(`/question/${question.questionId}`);
   };
   return (
     <Paper
@@ -19,6 +19,7 @@ const QuestionCard = ({question}) => {
         margin: "50",
         maxWidth: 400,
       }}
+      
       onClick={showDetail}
     >
       <Box component="form" noValidate sx={{ mt: 1, alignItems: "center" }}>

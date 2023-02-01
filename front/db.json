@@ -190,6 +190,43 @@
       "award": "",
       "point": 1000,
       "temperature": 94
+    },    {
+      "isManager": 0,
+      "isKakao": 1,
+      "isOnline": 1,
+      "profileImage": "s3-pgpp-etc-001.s3.ap-northeast-2.amazonaws.com/character.png",
+      "identity": "mmt",
+      "password": "a508",
+      "name": "양현용",
+      "email": "rltjdeh@naver.com",
+      "nickname": "호햏앵햏",
+      "language": 3,
+      "phone": "010-7102-5715",
+      "academicAbility": "서울사이버대학",
+      "workplace": "SSAFY",
+      "backjoonId": "rltjdeh",
+      "award": "",
+      "point": 1000,
+      "temperature": 94
+    },
+    {
+      "isManager": 0,
+      "isKakao": 1,
+      "isOnline": 1,
+      "profileImage": "s3-pgpp-etc-001.s3.ap-northeast-2.amazonaws.com/character.png",
+      "identity": "mmt",
+      "password": "a508",
+      "name": "김정민",
+      "email": "rltjdeh@naver.com",
+      "nickname": "아행햏",
+      "language": 3,
+      "phone": "010-7102-5715",
+      "academicAbility": "서울사이버대학",
+      "workplace": "SSAFY",
+      "backjoonId": "rltjdeh",
+      "award": "",
+      "point": 1000,
+      "temperature": 94
     }
   ]
 }

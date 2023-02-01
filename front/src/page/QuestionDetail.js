@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -11,7 +11,21 @@ import QuestionCode from "../component/QuestionAbout";
 import QuestionAbout from "../component/QuestionCode";
 import QuestionMain from "../component/QuestionMain";
 import { styled } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { detailquestionAction } from "../redux/actions/detailquestionAction";
+
 const QuestionDetail = () => {
+  let questionId  = useParams();
+  const question = useSelector((state) => state.detailquestion.question);
+  console.log(questionId, 484848484848);
+  const teacherInfo = useSelector((state) => state.userinfo.userinfo);
+  const dispatch = useDispatch();
+  const getQuestion = () => {
+    dispatch(detailquestionAction.getQuestionDetail(questionId));
+  };
+  useEffect(() => getQuestion(), []);
+  console.log(question, "질문요청api");
+
   const [content, setContent] = useState();
   const selectquestion = (item) => {
     const { name } = item.target;
@@ -31,7 +45,7 @@ const QuestionDetail = () => {
     };
   };
   const category = {
-    main: <QuestionMain />,
+    main: <QuestionMain question={question} />,
     question: <QuestionAbout />,
     code: <QuestionCode />,
   };

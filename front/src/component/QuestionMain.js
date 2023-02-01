@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import TeacherCard from "./TeacherCard";
@@ -23,28 +21,14 @@ const Bar = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
 }));
-const question = {
-  language: "Python",
-  source: "백준",
-  category: "디버깅",
-  algorithm: "BFS",
-  title: "테케는 다 맞는데 17%에서 시간초과 나네요,,,",
-  uerid: "A508",
-  reservation: "21:30",
-  point: "20",
-  question_id: "123",
-  question_number: "3452",
-  content:
-    "BFS로 다 전부 검사하면서 체크하는데 테케랑은 다 맞고 제출하면 계속 틀리네요,,, 반례가 있으면 반례 같이 부탁드리겠습니다. 접근 방식 문제면 같이 이론도 좀",
-};
+
 const user = [
-  { nickname: "김정민", temperature: "32" },
-  { nickname: "김원혁", temperature: "21" },
-  { nickname: "기성도", temperature: "54" },
+  { nickname: "김정민", temperature: "32", userId: 1 },
+  { nickname: "김원혁", temperature: "21", userId: 3 },
+  { nickname: "기성도", temperature: "54", userId: 2 },
 ];
-const QuestionMain = () => {
-  let { id } = useParams();
-  const location = useLocation();
+const QuestionMain = ({question}) => {
+
   return (
     <Box sx={{ minWidth: 100 }}>
       <Item sx={{ backgroundColor: "#f6edff" }}>
@@ -109,7 +93,11 @@ const QuestionMain = () => {
               <Item>
                 <TeacherRegister nickname="프로필" temperature="온도" />
                 {user.map((item) => (
-                  <TeacherRegister nickname={item.nickname} temperature={item.temperature} />
+                  <TeacherRegister
+                    nickname={item.nickname}
+                    temperature={item.temperature}
+                    userId={item.userId}
+                  />
                 ))}
               </Item>
             </Grid>

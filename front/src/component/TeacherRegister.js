@@ -19,7 +19,10 @@ const Word = styled(Grid)(({ theme }) => ({
   textAlign: "center",
   minWidth: 60,
 }));
-const TeacherRegister = ({nickname,temperature}) => {
+
+
+const TeacherRegister = ({nickname,temperature,userId}) => {
+    
   return (
     <Word>
       <Stack
