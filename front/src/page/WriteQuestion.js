@@ -32,7 +32,6 @@ const WriteQuestion = () => {
           label="제목을 입력해 주세요"
           name="title"
           variant="outlined"
-
           autoFocus
         />
       </Bar>
