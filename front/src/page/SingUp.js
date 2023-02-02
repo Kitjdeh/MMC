@@ -11,10 +11,10 @@ import Paper from "@mui/material/Paper";
 
 import Typography from "@mui/material/Typography";
 export default function SingUp() {
-  const [pythonchecked, setpythonChecked] = React.useState(true);
-  const [javachecked, setjavaChecked] = React.useState(true);
-  const [cchecked, setcChecked] = React.useState(true);
-
+  const [pythonchecked, setpythonChecked] = React.useState(false);
+  const [javachecked, setjavaChecked] = React.useState(false);
+  const [cchecked, setcChecked] = React.useState(false);
+  console.log("111",cchecked,pythonchecked)
   const pythonChange = (event) => {
     setpythonChecked(event.target.checked);
   };
@@ -23,7 +23,11 @@ export default function SingUp() {
   };
   const cChange = (event) => {
     setcChecked(event.target.checked);
+    console.log(cchecked,pythonchecked)
   };
+
+
+
   return (
     <div>
       <Grid container component="main" sx={{ height: "80vh" }} xs>

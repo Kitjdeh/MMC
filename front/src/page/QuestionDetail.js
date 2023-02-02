@@ -23,7 +23,6 @@ const QuestionDetail = () => {
     dispatch(detailquestionAction.getQuestionDetail(id));
   };
   useEffect(() => getQuestion(), []);
-  console.log(question, "질문요청api");
   const [content, setContent] = useState();
   const selectquestion = (item) => {
     const { name } = item.target;
