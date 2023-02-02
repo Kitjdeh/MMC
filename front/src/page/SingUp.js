@@ -11,10 +11,16 @@ import Paper from "@mui/material/Paper";
 
 import Typography from "@mui/material/Typography";
 export default function SingUp() {
+  const userinfo = {
+    userid: "",
+    password: "",
+    nickname: "",
+    language: "",
+  };
   const [pythonchecked, setpythonChecked] = React.useState(false);
   const [javachecked, setjavaChecked] = React.useState(false);
   const [cchecked, setcChecked] = React.useState(false);
-  console.log("111",cchecked,pythonchecked)
+  console.log("111", cchecked, pythonchecked);
   const pythonChange = (event) => {
     setpythonChecked(event.target.checked);
   };
@@ -23,11 +29,8 @@ export default function SingUp() {
   };
   const cChange = (event) => {
     setcChecked(event.target.checked);
-    console.log(cchecked,pythonchecked)
+    console.log(cchecked, pythonchecked);
   };
-
-
-
   return (
     <div>
       <Grid container component="main" sx={{ height: "80vh" }} xs>
@@ -44,6 +47,7 @@ export default function SingUp() {
               label="아이디를 입력해주세요"
               name="userid"
               autoFocus
+              size="small"
             />
             <TextField
               margin="normal"
@@ -53,6 +57,7 @@ export default function SingUp() {
               label="Password"
               type="password"
               id="password"
+              size="small"
             />
             <TextField
               margin="normal"
@@ -61,58 +66,65 @@ export default function SingUp() {
               label="닉네임을 입력해주세요"
               defaultValue=""
               autoFocus
+              size="small"
             />
             <TextField
               margin="normal"
               fullWidth
-              name="emial"
-              id="email"
-              label="이메일을 입력해주세요"
+              name="baekjoon"
+              id="baekjoon"
+              label="백준아이디를 입력해주세요"
               defaultValue=""
+              size="small"
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              name="baekjoon"
+              id="baekjoon"
+              label="백준아이디를 입력해주세요"
+              defaultValue=""
+              size="small"
             />{" "}
             <TextField
               margin="normal"
               fullWidth
               id="language"
               label=""
+              size="small"
               defaultValue="주언어를 선택해주세요(중복가능)"
-
               InputProps={{
                 readOnly: true,
               }}
-              
             />
             <Box>
-            <Checkbox
-              checked={pythonchecked}
-              onChange={pythonChange}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            python
-            <Checkbox
-              checked={javachecked}
-              onChange={javaChange}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            java
-            <Checkbox
-              checked={cchecked}
-              onChange={cChange}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            c++
-          </Box>
-              
+              <Checkbox
+                checked={pythonchecked}
+                onChange={pythonChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              python
+              <Checkbox
+                checked={javachecked}
+                onChange={javaChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              java
+              <Checkbox
+                checked={cchecked}
+                onChange={cChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              c++
+            </Box>
             <Button
               type="submit"
               fullWidth
-              variant="contained" 
-
-              sx={{ mt: 3, mb: 2, bgcolor:"violet",borderColor: '#005cbf'}}
+              variant="contained"
+              sx={{ mt: 3, mb: 2, bgcolor: "violet", borderColor: "#005cbf" }}
             >
               회원가입
             </Button>
-
           </Box>
         </Grid>
         <Grid

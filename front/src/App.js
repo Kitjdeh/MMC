@@ -16,7 +16,7 @@ const theme = createTheme({
 });
 
 function App() {
-  const [authenticate, setAuthenticate] = useState(false); // true면 로그인이 됨
+  const [authenticate, setAuthenticate] = useState(false)
   useEffect(() => {
     console.log("aaa", authenticate);
   }, [authenticate]);
