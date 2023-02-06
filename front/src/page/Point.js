@@ -16,7 +16,6 @@ const Point = () => {
   const [content, setContent] = useState();
   const selectcomponent = (item) => {
     const { name } = item.target;
-    console.log(name);
     setContent(name);
   };
   const Word = styled(Grid)(({ theme }) => ({

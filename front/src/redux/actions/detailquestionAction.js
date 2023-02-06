@@ -10,6 +10,7 @@ function getQuestionDetail(id) {
         dispatch({ type: "GET_QUESTION_DETAIL_SUCCESS", payload: { result } });
       })
       .catch((error) => {
+        console.log("fail", error);
       });
   };
 }
