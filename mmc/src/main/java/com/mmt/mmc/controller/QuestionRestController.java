@@ -45,6 +45,7 @@ public class QuestionRestController {
     @PostMapping
     public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question) throws Exception {
         int questionNum = question.getQuestionNumber();
+        System.out.println("questionNumber "+questionNum);
         question.setImageUrl(questionService.grabzIt(questionNum));
         System.out.println("Question "+question);
         questionService.saveQuestion(question);
@@ -73,8 +74,10 @@ public class QuestionRestController {
     }
 
     //질문 삭제
+    @Transactional
     @DeleteMapping("/{question_id}")
     public ResponseEntity<Map<String,Object>> questionRemove(@PathVariable("question_id") int questionId){
+        questionService.deleteQuestionTrainerList(questionId);
         questionService.deleteQuestion(questionId);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);

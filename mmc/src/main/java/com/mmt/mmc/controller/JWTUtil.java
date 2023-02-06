@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.Map;
 
@@ -66,13 +67,20 @@ public class JWTUtil {
      * @return
      */
     public Map<String, Object> checkAndGetClaims(String jwt) {
-        Jws<Claims> claims = Jwts.parser()
-                        .setSigningKey(salt.getBytes())
-                        .parseClaimsJws(jwt);
-        log.trace("claims: {}", claims);
+        try{
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(salt.getBytes())
+                    .parseClaimsJws(jwt);
+            log.trace("claims: {}", claims);
 
-        //Claims는 Map의 구현체
-        return claims.getBody();
+            //Claims는 Map의 구현체
+            return claims.getBody();
+        }
+        catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e){
+            e.printStackTrace();
+            throw new InvalidParameterException("유효하지 않은 토큰입니다.");
+        }
+
     }
 
 }

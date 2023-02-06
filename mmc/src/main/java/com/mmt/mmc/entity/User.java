@@ -55,6 +55,8 @@ public class User {
     private String authToken;
     @Column
     private String refreshToken;
+    @Column @ColumnDefault("0")
+    private int lectureCount;
 
 
     public UserDto toDto(){
@@ -79,6 +81,7 @@ public class User {
                 .temperature(temperature)
                 .authToken(authToken)
                 .refreshToken(refreshToken)
+                .lectureCount(lectureCount)
                 .build();
         return userDto;
     }

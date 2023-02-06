@@ -45,6 +45,8 @@ public class TradeRestController {
 	@PatchMapping("/points/{trade_id}")
 	public ResponseEntity<String> TradeModify(@RequestBody TradeDto tradeDto){
 		tradeService.saveTrade(tradeDto);
+		// 사용자 포인트 정보 수정 추가 필요
+
 		return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
 	}
 

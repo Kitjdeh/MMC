@@ -1,11 +1,8 @@
 package com.mmt.mmc.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Trade {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int tradeId;
 
 	@Column(nullable = false)
@@ -34,7 +31,7 @@ public class Trade {
 
 	@CreatedDate
 	@Column(updatable = false)
-	private LocalDateTime date;
+	private String date;
 
 	@Column(nullable = false)
 	private String bank;
@@ -47,7 +44,7 @@ public class Trade {
 	private int process;
 
 	@Builder
-	public Trade(int tradeId, int userId, int depositAndWithdrawl, int amount, LocalDateTime date,
+	public Trade(int tradeId, int userId, int depositAndWithdrawl, int amount, String date,
 		String bank, String account, int process) {
 		this.tradeId = tradeId;
 		this.userId = userId;

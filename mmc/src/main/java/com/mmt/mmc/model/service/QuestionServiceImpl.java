@@ -145,6 +145,11 @@ public class QuestionServiceImpl implements QuestionService{
         return url;
     }
 
+    //강사 전체 삭제
+    @Override
+    public void deleteQuestionTrainerList(int questionId) {
+        questionTrainerRepository.deleteAllByQuestionId(questionId);
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.mmt.mmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mmt.mmc.model.dto.QuestionDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -61,6 +63,9 @@ public class Question{
     @Column(name="image_url", length = 200)
     private String imageUrl;
 
+    @Column
+    private String date;
+
     public QuestionDto toDto(){
         QuestionDto questionDto = QuestionDto.builder()
                 .questionId(questionId)
@@ -78,12 +83,13 @@ public class Question{
                 .code(code)
                 .point(point)
                 .imageUrl(imageUrl)
+                .date(date)
                 .build();
         return questionDto;
     }
 
     @Builder
-    public Question(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl) {
+    public Question(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, String date) {
         this.questionId = questionId;
         this.userId = userId;
         this.progress = progress;
@@ -99,5 +105,6 @@ public class Question{
         this.code = code;
         this.point = point;
         this.imageUrl = imageUrl;
+        this.date=date;
     }
 }

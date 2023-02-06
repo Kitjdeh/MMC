@@ -37,4 +37,7 @@ public interface QuestionService {
 
     // URL to Img(GrabzIt)
     public String grabzIt(int questionNum) throws Exception;
+
+    // 강사 전체 삭제
+    void deleteQuestionTrainerList(int questionId);
 }

@@ -3,6 +3,7 @@ package com.mmt.mmc.model.dto;
 import com.mmt.mmc.entity.Question;
 import lombok.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public class QuestionDto {
     private String code;
     private int point;
     private String imageUrl;
-    private Date date;
+    private String date;
 
     public Question toEntity(){
         Question question = Question.builder()
@@ -50,7 +51,7 @@ public class QuestionDto {
     }
 
     @Builder
-    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, Date date) {
+    public QuestionDto(int questionId, int userId, int progress, int progressScore, int language, int category, int algorithm, int source, int questionNumber, String title, String content, Date reservation, String code, int point, String imageUrl, String date) {
         this.questionId = questionId;
         this.userId = userId;
         this.progress = progress;

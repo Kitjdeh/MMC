@@ -12,4 +12,5 @@ public interface QuestionTrainerRepository extends JpaRepository<QuestionTrainer
     List<QuestionTrainer> findByQuestionId(int questionId);
     void deleteByQuestionIdAndUserId(int questionId,int userId);
     List<QuestionTrainer> findByUserId(int userId);
+    List<QuestionTrainer> deleteAllByQuestionId(int questionId);
 }

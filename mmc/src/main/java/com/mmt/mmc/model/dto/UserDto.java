@@ -30,6 +30,7 @@ public class UserDto {
     private int temperature;
     private String authToken;
     private String refreshToken;
+    private int lectureCount;
 
     public User toEntity(){
         User build = User.builder()
@@ -53,6 +54,7 @@ public class UserDto {
                 .temperature(temperature)
                 .authToken(authToken)
                 .refreshToken(refreshToken)
+                .lectureCount(lectureCount)
                 .build();
         return build;
     }

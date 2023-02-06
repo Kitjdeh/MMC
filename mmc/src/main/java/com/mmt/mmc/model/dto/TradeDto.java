@@ -1,6 +1,7 @@
 package com.mmt.mmc.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.mmt.mmc.entity.Trade;
 
@@ -19,7 +20,7 @@ public class TradeDto {
 	private int userId;
 	private int depositAndWithdrawl;
 	private int amount;
-	private LocalDateTime date;
+	private String date;
 	private String bank;
 	private String account;
 	private int process;
@@ -39,7 +40,7 @@ public class TradeDto {
 	}
 
 	@Builder
-	public TradeDto(int tradeId, int userId, int depositAndWithdrawl, int amount, LocalDateTime date,
+	public TradeDto(int tradeId, int userId, int depositAndWithdrawl, int amount, String date,
 		String bank, String account, int process) {
 		this.tradeId = tradeId;
 		this.userId = userId;

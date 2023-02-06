@@ -18,10 +18,10 @@ public class JWTInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler){
-        // preflight를 위한 OPTIONS 요청은 그냥 전달 (아마 필요없음)
-        if(request.getMethod().equals("OPTIONS")) {
-            return true;
-        }
+        // preflight를 위한 OPTIONS 요청은 그냥 전달 (학습을 위해 주석 처리)
+//        if(request.getMethod().equals("OPTIONS")) {
+//            return true;
+//        }
 
 
         // request의 헤더에서 jwt-auth-token으로 넘어온 녀석을 찾아본다.
