@@ -25,7 +25,7 @@ const WriteQuestion = () => {
   return (
     <Box component="form">
       <Bar margin="normal">
-      <TextField
+        <TextField
           required
           fullWidth
           id="title"
@@ -138,6 +138,7 @@ const WriteQuestion = () => {
           className="questiontitlebar"
           required
           fullWidth
+          multiline
           id="content"
           label="궁금한 내용을 적어주세요"
           name="content"
