@@ -3,9 +3,14 @@ import questionReducer from "./questions";
 import userReducer from "./userinfo";
 import detailquestionReducer from "./questiondetail";
 import pointReducer from "./point";
+import tokenReducer from "./authenticate";
+import teacherinfoReducer from "./teacherinfo";
 export default combineReducers({
     questions: questionReducer,
     userinfo: userReducer,
     detailquestion:detailquestionReducer,
     point: pointReducer,
+    authToken:tokenReducer,
+    teacherinfo:teacherinfoReducer,
+    signup:userReducer
 })

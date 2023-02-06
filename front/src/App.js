@@ -6,6 +6,10 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@mui/material/styles";
 import UserPage from "./page/UserPage";
 import LectureNote from "./page/LectureNote";
+import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+import { getCookieToken,getUserId } from "./storage/Cookie";
+import { authAction } from "./redux/actions/authAction";
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -14,12 +18,17 @@ const theme = createTheme({
     },
   },
 });
-
 function App() {
-  const [authenticate, setAuthenticate] = useState(false); // true면 로그인이 됨
-  useEffect(() => {
-    console.log("aaa", authenticate);
-  }, [authenticate]);
+  const dispatch = useDispatch();
+  const userId = getUserId()
+  const refreshToken = getCookieToken();
+  const accessToken = useSelector((state) => state.authToken.accessToken);
+
+  console.log("리프래쉬토큰부르기");
+  console.log("엑세스토큰", accessToken,userId);
+  if (accessToken === null && refreshToken) {
+    dispatch(authAction.resetToken(refreshToken, userId));
+  }
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -31,5 +40,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
