@@ -15,3 +15,10 @@ function getQuestions(id) {
   };
 }
 export const questionAction = { getQuestions };
+
+
+
+
+
+
+

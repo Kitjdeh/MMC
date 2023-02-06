@@ -17,7 +17,7 @@ const QuestionDetail = () => {
   let questionId  = useParams();
   let id=questionId.id
   const question = useSelector((state) => state.detailquestion.question);
-  const teacherInfo = useSelector((state) => state.userinfo.userinfo);
+
   const dispatch = useDispatch();
   const getQuestion = () => {
     dispatch(detailquestionAction.getQuestionDetail(id));

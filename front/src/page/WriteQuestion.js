@@ -25,7 +25,7 @@ const WriteQuestion = () => {
   return (
     <Box component="form">
       <Bar margin="normal">
-      <TextField
+        <TextField
           required
           fullWidth
           id="title"

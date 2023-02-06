@@ -23,14 +23,16 @@ const Login = () => {
   const loginUser = (e) => {
     e.preventDefault();
     dispatch(authAction.onLogin(userid, password));
+    navigate("/question")
   };
+
+
   console.log(userid)
   return (
     <div>
       <Grid
         container
         component="form"
-
         sx={{ height: "80vh" }}
         xs
       >

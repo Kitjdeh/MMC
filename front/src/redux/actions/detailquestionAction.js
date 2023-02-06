@@ -13,4 +13,11 @@ function getQuestionDetail(id) {
       });
   };
 }
+
+
+
+
+
+
+
 export const detailquestionAction = { getQuestionDetail };

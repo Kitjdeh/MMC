@@ -6,10 +6,12 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-
-
+import { useDispatch, useSelector } from "react-redux";
 import TeacherCard from "./TeacherCard";
 import TeacherRegister from "./TeacherRegister";
+import { Button } from "@mui/material";
+
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
   ...theme.typography.body2,
@@ -23,16 +25,13 @@ const Bar = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
 }));
-
+// const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
 const user = [
   { nickname: "김정민", temperature: "32", userId: 1 },
   { nickname: "김원혁", temperature: "21", userId: 3 },
   { nickname: "기성도", temperature: "54", userId: 2 },
 ];
-const QuestionMain = ({question}) => {
-  console.log({question})
-  console.log('111111')
-  console.log("main페이지확인",{question})
+const QuestionMain = ({ question }) => {
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -87,7 +86,9 @@ const QuestionMain = ({question}) => {
         {question.content}
       </Bar>
       <Box>
-        <br></br>
+        <Bar>
+          <Button>문제풀이 신청</Button>
+        </Bar>
         <Container>
           <Grid container justifyContent="space-between">
             <Grid item margin={1} xs={5}>

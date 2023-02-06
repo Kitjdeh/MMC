@@ -9,11 +9,16 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-
+import { useDispatch, useSelector } from "react-redux";
+import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-
-const Navbar = ({ setAuthenticate }) => {
+import { getCookieToken } from "../storage/Cookie";
+import alarm from "./alarm";
+const Navbar = () => {
+  const authcookie = getCookieToken();
+  const authenticated = useSelector((state) => state.authToken.authenticated);
+  const userId = useSelector((state) => state.authToken.userId);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,6 +28,8 @@ const Navbar = ({ setAuthenticate }) => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const goPoint = () => {
     handleClose();
     navigate(`/mypage/point`);
@@ -35,10 +42,10 @@ const Navbar = ({ setAuthenticate }) => {
     handleClose();
     navigate(`/mypage/lecture`);
   };
-  const logout = (event) => {
+  const logout = () => {
     handleClose();
-    event.preventDefault();
-    setAuthenticate(false);
+    console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
+    dispatch(authAction.onLogout(userId));
     navigate("/");
   };
 
@@ -79,29 +86,20 @@ const Navbar = ({ setAuthenticate }) => {
               </Link>
             </Typography>
 
-            <Grid item>
-              <Link
-                variant="button"
-                color="text.primary"
-                href="#"
-                sx={{ my: 1, mx: 1.5 }}
-              >
-                알림
-              </Link>
-            </Grid>
-
             <Box sx={{ minWidth: 300 }}>
-              {setAuthenticate === false ? (
-                <Button
-                  href="/login"
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ my: 1, mx: 1.5 }}
-                >
-                  Login
-                </Button>
-              ) : (
+              {authenticated === true ? (
                 <div>
+                  <Grid item>
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    >
+                      <alarm />
+                    </Button>
+                  </Grid>
                   <Button
                     id="basic-button"
                     aria-controls={open ? "basic-menu" : undefined}
@@ -126,6 +124,15 @@ const Navbar = ({ setAuthenticate }) => {
                     <MenuItem onClick={logout}>로그아웃</MenuItem>
                   </Menu>
                 </div>
+              ) : (
+                <Button
+                  href="/login"
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ my: 1, mx: 1.5 }}
+                >
+                  Login
+                </Button>
               )}
             </Box>
           </Grid>
