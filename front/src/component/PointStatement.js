@@ -12,10 +12,7 @@ const PointStatement = () => {
   useEffect(() => getDepositAndWithdraw(), []);
   
   return (
-    <div>{pointList.length>0 ? 
-      <TablePagination rowsPerPageOptions={[10, 50]} pointList={pointList}></TablePagination>
-    : <div></div>}
-    </div>
+    <div>PointStatement</div>
   )
 }
 

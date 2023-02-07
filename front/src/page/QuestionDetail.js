@@ -17,6 +17,7 @@ const QuestionDetail = () => {
   let questionId  = useParams();
   let id=questionId.id
   const question = useSelector((state) => state.question.question);
+
   const dispatch = useDispatch();
   const getQuestion = () => {
     dispatch(questionAction.getQuestionDetail(id));

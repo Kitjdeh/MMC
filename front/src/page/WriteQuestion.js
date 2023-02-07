@@ -261,6 +261,7 @@ const WriteQuestion = () => {
           className="questiontitlebar"
           required
           fullWidth
+          multiline
           id="content"
           label="궁금한 내용을 적어주세요"
           name="content"

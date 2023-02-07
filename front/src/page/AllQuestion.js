@@ -19,7 +19,6 @@ const AllQuestion = () => {
     dispatch(questionAction.getQuestions());
   };
   useEffect(() => getallQuestions(), []);
-  console.log('111111',questionList)
   const [isfindpython, setfindpython] = React.useState(true);
   const [isfindjava, setfindjava] = React.useState(true);
   const [isfindC, setfindC] = React.useState(true);
@@ -127,7 +126,7 @@ const AllQuestion = () => {
       <Container>
         <Grid container spacing={1}>
           {questionList.map((question) => (
-            <Grid item  xl={3} lg={4} md={6}>
+            <Grid item  xl={3} lg={4} md={6} key={question}>
               <QuestionCard question={question}/>
               <br />
             </Grid>

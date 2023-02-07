@@ -12,16 +12,30 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-const Login = ({ setAuthenticate }) => {
+import { authAction } from "../redux/actions/authAction";
+import { useDispatch } from "react-redux";
+
+const Login = () => {
+  const [userid, setId] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const loginUser = (event) => { 
-    event.preventDefault();
-    setAuthenticate(true);
-    navigate("/");
+  const dispatch = useDispatch();
+  const loginUser = (e) => {
+    e.preventDefault();
+    dispatch(authAction.onLogin(userid, password));
+    navigate("/question")
   };
+
+
+  console.log(userid)
   return (
     <div>
-      <Grid container component="main" sx={{ height: "80vh" }} xs>
+      <Grid
+        container
+        component="form"
+        sx={{ height: "80vh" }}
+        xs
+      >
         <Grid
           item
           component={Paper}
@@ -41,7 +55,11 @@ const Login = ({ setAuthenticate }) => {
         />
         <Grid item sm={6} md={6} square component={Paper}>
           <Box component="form" noValidate sx={{ mt: 1, alignItems: "center" }}>
-            <Typography component="h1" variant="h5">
+            <Typography
+              component="h1"
+              variant="h5"
+             
+            >
               로그인
             </Typography>
             <TextField
@@ -52,6 +70,7 @@ const Login = ({ setAuthenticate }) => {
               label="아이디를 입력해주세요"
               name="userid"
               autoFocus
+              onChange={(event) => setId(event.target.value)}
             />
             <TextField
               margin="normal"
@@ -61,16 +80,17 @@ const Login = ({ setAuthenticate }) => {
               label="Password"
               type="password"
               id="password"
+              onChange={(event) => setPassword(event.target.value)}
             />
-             <Form onSubmit={(event) => loginUser(event)}
-              onClick={loginUser}
+            <Button
               type="submit"
               fullWidth
               variant="contained"
+              onClick={loginUser}
               sx={{ mt: 3, mb: 2, bgcolor: "secondary.light" }}
             >
               코딩하러가기
-            </Form>
+            </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="/signup" variant="body2">
