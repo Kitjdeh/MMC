@@ -87,7 +87,6 @@ const QuestionMain = ({ question }) => {
     dispatch(adminAction.updatePoints(3));
   };
 
-  const QuestionMain = ({ question }) => {
     return (
       <Box sx={{ minWidth: 100 }}>
         <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -195,5 +194,4 @@ const QuestionMain = ({ question }) => {
       </Box>
     );
   };
-};
 export default QuestionMain;

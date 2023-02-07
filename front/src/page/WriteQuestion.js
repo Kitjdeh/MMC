@@ -76,7 +76,6 @@ const WriteQuestion = () => {
 
   const dispatch = useDispatch();
   const submitQuestion = () => {
-    transBitmask();
     dispatch(questionAction.writeQuestion(inputs));
   };
 
@@ -97,6 +96,7 @@ const WriteQuestion = () => {
     //     typeof value === 'string' ? value.split(',') : value,
     //   );
     // }
+    transBitmask();
   }
   
   const transBitmask = () =>{

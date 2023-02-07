@@ -10,8 +10,8 @@ let initialState = {
       case "POST_SIGNUP_SUCCESS":
         console.log(payload.data)
         return { ...state, userinfo: payload.data };
-        default:
-          return { ...state };
+      default:
+        return { ...state };
     }
   }
   export default userReducer;
