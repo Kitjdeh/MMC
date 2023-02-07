@@ -21,11 +21,20 @@ const Navbar = () => {
   const userId = useSelector((state) => state.authToken.userId);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [anchore2, setAnchorE2] = React.useState(null);
+  const openalarm = Boolean(anchore2);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const onClickAlarmHandler = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  const onClickAlarmClose = () => {
+    setAnchorE2(null);
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,38 +100,52 @@ const Navbar = () => {
                 <div>
                   <Grid item>
                     <Button
+                      id="alarm-button"
+                      aria-controls={openalarm ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openalarm ? "true" : undefined}
+                      onClick={onClickAlarmHandler}
+                      open={openalarm}
+                      onClose={onClickAlarmClose}
+                    >
+                      알람
+                      <Menu
+                        id="alarm-menu"
+                        anchorE2={anchore2}
+                        open={openalarm}
+                        onClose={handleClose}
+                        MenuListProps={{
+                          "aria-labelledby": "alarm-menu",
+                        }}
+                      >
+                        <MenuItem>알람이 없습니다.</MenuItem>
+                        <MenuItem>알람이 없습니다.</MenuItem>
+                      </Menu>
+                    </Button>
+                    <Button
                       id="basic-button"
                       aria-controls={open ? "basic-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                       onClick={handleClick}
                     >
-                      <alarm />
+                      마이페이지
                     </Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
+                      <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
+                      <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
+                      <MenuItem onClick={logout}>로그아웃</MenuItem>
+                    </Menu>
                   </Grid>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                  >
-                    마이페이지
-                  </Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
-                    <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
-                    <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
-                    <MenuItem onClick={logout}>로그아웃</MenuItem>
-                  </Menu>
                 </div>
               ) : (
                 <Button
