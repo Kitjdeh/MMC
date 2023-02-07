@@ -8,7 +8,7 @@ import UserPage from "./page/UserPage";
 import LectureNote from "./page/LectureNote";
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    // mode: "dark",
     primary: {
       main: "#d3c3ff",
     },

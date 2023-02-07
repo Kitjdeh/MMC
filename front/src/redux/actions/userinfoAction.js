@@ -1,12 +1,20 @@
+import axios from "axios";
+let baseUrl="http://localhost:8080/api/v1/users";
 
-
-
-function getUserInfo() {
-  return async (dispatch, getState) => {
-    let url = `http://localhost:5000/user`;
-    let response = await fetch(url);
-    let data = await response.json();
-    dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
-  };
+function getUserInfo(user_id){
+    return async (dispatch)=>{
+        let url = baseUrl+`/${user_id}`;
+        let response = await axios.get(url)
+        .then((response)=>{
+            let data=response.data;
+            dispatch({type:"GET_USERINFO_SUCCESS",payload:{data}});
+        })
+        .catch((error)=>{
+            console.log("getUser", error);
+        })
+    }   
 }
+
 export const userinfoAction = { getUserInfo };
+
+

@@ -1,21 +1,14 @@
 import React,{useEffect} from 'react';
-import { pointAction } from '../redux/actions/pointAction';
+import { mypageAction } from '../redux/actions/mypageAction';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import TablePagination from "./TablePagination.js";
 
 const PointStatement = () => {
   const dispatch = useDispatch();
   const getDepositAndWithdraw = () => {
-    dispatch(pointAction.getDepositAndWithdrawList(1));
+    dispatch(mypageAction.getDepositAndWithdrawList(1));  //userId로 변경해야됨
   };
-  const pointList = useSelector((state) => state.point.point);
+  const pointList = useSelector((state) => state.mypage.point);
   useEffect(() => getDepositAndWithdraw(), []);
   
   return (

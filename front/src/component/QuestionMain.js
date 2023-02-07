@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
@@ -6,10 +6,13 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-
-
+import {useDispatch, useSelector} from "react-redux";
+import { questionAction } from "../redux/actions/questionAction";
 import TeacherCard from "./TeacherCard";
 import TeacherRegister from "./TeacherRegister";
+import { TransitEnterexitSharp } from "@mui/icons-material";
+import { adminAction } from './../redux/actions/adminAction';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
   ...theme.typography.body2,
@@ -24,15 +27,75 @@ const Bar = styled(Grid)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const user = [
-  { nickname: "김정민", temperature: "32", userId: 1 },
-  { nickname: "김원혁", temperature: "21", userId: 3 },
-  { nickname: "기성도", temperature: "54", userId: 2 },
+const lang = [
+  'Python',
+  'Java',
+  'C++',
 ];
+const category = [
+  '알고리즘',
+  '디버깅',
+];
+const algo = [
+  'BFS',
+  'DFS',
+  '그래프',
+  'DP',
+  '정렬',
+  '그리디',
+  '시뮬레이션',
+  '분할정복',
+  '순열',
+  '조합',
+  '부분집합',
+  '최소스패닝트리',
+  '기타',
+];
+const source = [
+  '백준',
+  '프로그래머스'
+];
+
 const QuestionMain = ({question}) => {
+  let time = new Date(question.reservation);
+  const [algorithm, setAlgorithm] = useState([]);
   console.log({question})
   console.log('111111')
   console.log("main페이지확인",{question})
+  useEffect(()=>{
+    transBitmask();
+  },[]);
+  const trainers = useSelector((state) => state.question.trainers);
+  const transBitmask = () =>{
+    let algobit=1;
+    let index=0;
+    console.log(question.algorithm.toString(2).split("").reverse().join(""));
+    for(let x of question.algorithm.toString(2).split("").reverse().join("")){
+      algobit=algobit && x;
+      if(algobit==='1'){
+        console.log(index, algo[index]);
+        setAlgorithm([...algorithm,algo[index]]);
+      }
+      console.log(index)
+      index++;
+    }
+    // question.algorithm.map((element)=>{
+    //   algobit = algobit | 1>>element;
+    //   console.log(algobit);
+    // });
+  }
+  const dispatch=useDispatch();
+  const deleteQuestion = () => {
+    dispatch(questionAction.deleteQuestion(question.questionId));
+  };
+  const addTrainer = () => {
+    dispatch(questionAction.addTrainer(question.questionId, 1));  //userId 추가 필요
+  }
+  
+  const getPoints = () =>{
+    dispatch(adminAction.updatePoints(3));
+  }
+
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -63,12 +126,19 @@ const QuestionMain = ({question}) => {
       <hr />
 
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>{question.language}</Item>
-        <Item>{question.category}</Item>
-        <Item>{question.source}</Item>
-        <Item>{question.question_number}</Item>
+        <Item>{lang[question.language]}</Item>
+        <Item>{category[question.category]}</Item>
+        <Item>{source[question.source]}</Item>
+        <Item>{question.questionNumber}</Item>
         <Item>{question.point}</Item>
-        <Item>{question.reservation}</Item>
+        <Item>{new Date(question.reservation).toLocaleString(
+  "ko-kr",
+    {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }
+)}</Item>
       </Stack>
       <br />
       <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
@@ -78,8 +148,14 @@ const QuestionMain = ({question}) => {
           </Bar>
 
           <Bar item xs={2} margin={1}>
-            {question.algorithm}
+            {algorithm}
           </Bar>
+          {/* {algorithm.length>0 ? algorithm.map((element)=>{
+            <Bar item xs={2} margin={1}>
+            {element}
+          </Bar>
+          }): <div></div>} */}
+
         </Grid>
       </Bar>
       <br />
@@ -96,7 +172,7 @@ const QuestionMain = ({question}) => {
               </Item>
               <Item>
                 <TeacherRegister nickname="프로필" temperature="온도" />
-                {user.map((item) => (
+                {trainers.users.map((item) => (
                   <TeacherRegister
                     nickname={item.nickname}
                     temperature={item.temperature}
@@ -112,6 +188,10 @@ const QuestionMain = ({question}) => {
           </Grid>
         </Container>
       </Box>
+
+      <button onClick={deleteQuestion}>글 삭제</button>
+      <button onClick={addTrainer}>강사 신청</button>
+      <button onClick={getPoints}>test</button>
     </Box>
   );
 };

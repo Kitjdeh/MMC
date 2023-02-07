@@ -1,7 +1,9 @@
 import React from "react";
-import Box from "@mui/material/Box";
-const QuestionCode = () => {
-  return <Box><img src="/img/codeex.png" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }} /></Box>;
+import TextField from "@mui/material/TextField";
+import { styled } from '@mui/material/styles';
+
+const QuestionCode = ({question}) => {
+  return <TextField>{question.code}</TextField>;
 };
 
 export default QuestionCode;

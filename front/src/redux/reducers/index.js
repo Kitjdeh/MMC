@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import questionReducer from "./questions";
+import questionReducer from "./question";
 import userReducer from "./userinfo";
-import detailquestionReducer from "./questiondetail";
-import pointReducer from "./point";
+import mypageReducer from "./mypage";
+import adminReducer from './admin';
 export default combineReducers({
-    questions: questionReducer,
+    question: questionReducer,
     userinfo: userReducer,
-    detailquestion:detailquestionReducer,
-    point: pointReducer,
+    mypage: mypageReducer,
+    admin: adminReducer
 })

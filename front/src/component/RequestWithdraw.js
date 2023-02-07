@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { DepositWarning } from "../assets/DepositWarning";
 import { menuItemClasses } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { pointAction } from "../redux/actions/pointAction";
+import { mypageAction } from "../redux/actions/mypageAction";
 import moment from 'moment';
 
 const Main = styled(Grid)(({ theme }) => ({
@@ -37,7 +37,7 @@ const RequestWithdraw = () => {
   })
   const dispatch = useDispatch();
   const submitWithdraw = () => {
-    dispatch(pointAction.sendDepositAndWithdrawl(inputs));
+    dispatch(mypageAction.sendDepositAndWithdrawl(inputs));
   };
   const onChangeHandler = (e) => {
     e.preventDefault();

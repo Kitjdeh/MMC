@@ -9,11 +9,11 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import { useSearchParams } from "react-router-dom";
-import { questionAction } from "../redux/actions/questionsAction";
+import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const AllQuestion = () => {
-  const questionList = useSelector((state) => state.questions.questions);
+  const questionList = useSelector((state) => state.question.questions);
   const dispatch = useDispatch();
   const getallQuestions = () => {
     dispatch(questionAction.getQuestions());

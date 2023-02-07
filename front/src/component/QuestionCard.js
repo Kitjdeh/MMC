@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 
 const QuestionCard = ({question}) => {
-  console.log('333333',{question})
   const navigate = useNavigate();
   const showDetail = () => {
     navigate(`/question/${question.questionId}`);

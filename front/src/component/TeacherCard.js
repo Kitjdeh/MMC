@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import { useSelector } from "react-redux";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#c1abff",
@@ -19,14 +20,16 @@ const Word = styled(Grid)(({ theme }) => ({
   minWidth: 60,
 }));
 const TeacherCard = () => {
+  const trainer = useSelector((state) => state.userinfo.userinfo);
+  console.log(trainer);
   return (
     <Item sx={{ backgroundColor: "#f6edff" ,minWidth:300 }}>
       <Word container direction="row" justifyContent="center" alignItems="center" >
         <Word item xs={4}>
-            프로필 이미지
+            <img src={trainer.profileImage} width="100%" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/>
         </Word>
         <Word item xs={8}>
-            닉네임
+            {trainer.nickname}
         </Word>
       </Word>
 
@@ -38,7 +41,7 @@ const TeacherCard = () => {
           alignItems="center"
         >
           <Word>주언어</Word>
-          <Item>파이썬</Item>
+          <Item>{trainer.language}</Item>
         </Word>
         <Word
           container
@@ -47,7 +50,7 @@ const TeacherCard = () => {
           alignItems="center"
         >
           <Word>온도</Word>
-          <Item>48</Item>
+          <Item>{trainer.temperature}</Item>
         </Word>
         <Word
           container
@@ -65,12 +68,12 @@ const TeacherCard = () => {
           alignItems="center"
         >
           <Word>학력</Word>
-          <Item>-</Item>
+          <Item>{trainer.academicAbility}</Item>
         </Word>
       </Stack>
       <Box>수상 및 경력
         <Item sx={{minHeight:50 }}>
-
+          {trainer.award}
         </Item>
       </Box>
     </Item>

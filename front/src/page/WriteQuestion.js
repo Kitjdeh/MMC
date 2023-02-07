@@ -9,6 +9,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import {questionAction}from "../redux/actions/questionAction";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import moment from "moment";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#f6edff"),
   padding: theme.spacing(0.5),
@@ -20,36 +25,127 @@ const Bar = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
 }));
+
 const WriteQuestion = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [algorithm, setAlgorithm] = useState([]);
+  const [inputs, setInputs] = useState({
+    userId: 1,  //수정 필요
+    language: 0, 
+    progress: 0,
+    category: 0,
+    algorithm: 0,
+    source: 0,
+    questionNumber: 0, 
+    title: "",
+    content: "",
+    reservation: "",
+    code: "", 
+    point: 0, 
+    // date: moment().format('yyyy-MM-DD HH:mm:ss')
+  });
+
+  const lang = [
+    'Python',
+    'Java',
+    'C++',
+  ];
+  const category = [
+    '알고리즘',
+    '디버깅',
+  ];
+  const algo = [
+    'BFS',
+    'DFS',
+    '그래프',
+    'DP',
+    '정렬',
+    '그리디',
+    '시뮬레이션',
+    '분할정복',
+    '순열',
+    '조합',
+    '부분집합',
+    '최소스패닝트리',
+    '기타',
+  ];
+  const source = [
+    '백준',
+    '프로그래머스'
+  ];
+
+  const dispatch = useDispatch();
+  const submitQuestion = () => {
+    transBitmask();
+    dispatch(questionAction.writeQuestion(inputs));
+  };
+
+  const onChangeHandler = (e) => {
+    e.preventDefault();
+		const { name, value } = e.target
+		const nextInputs = { ...inputs,  [name]: value}
+		setInputs(nextInputs);      
+  }
+
+  const onChangeMultiHandler = (e) => {
+    const {value} = e.target;
+    setAlgorithm(
+        typeof value === 'string' ? value.split(',') : value,
+    );
+    // if(e.target.name==="algorithm"){
+    //   setAlgorithm(  
+    //     typeof value === 'string' ? value.split(',') : value,
+    //   );
+    // }
+  }
+  
+  const transBitmask = () =>{
+    let algobit=0;
+    algorithm.map((element)=>{
+      algobit = algobit | 1<<element;
+    });
+    console.log(algorithm)
+    const nextInputs = { ...inputs,  algorithm:algobit, reservation:startDate };
+    console.log(nextInputs);
+    setInputs(nextInputs);
+  }
+
   return (
     <Box component="form">
       <Bar margin="normal">
-      <TextField
+        <TextField
           required
           fullWidth
           id="title"
           label="제목을 입력해 주세요"
           name="title"
           variant="outlined"
+          value={inputs.title}
+          onChange={onChangeHandler}
           autoFocus
         />
       </Bar>
       <Grid container justifyContent="space-between">
         <Grid item xs={3}>
-          <TextField
-            select
+          <Select
             required
             fullWidth
             id="language"
             label="언어를 선택해주세요"
             name="language"
+            value={inputs.language}
+            onChange={onChangeHandler}
             autoFocus
           >
-            <MenuItem>Python</MenuItem>
-            <MenuItem>Java</MenuItem>
-            <MenuItem>C++</MenuItem>
-          </TextField>
+            {lang.map((name, index) => (
+            <MenuItem
+              key={index}
+              value={index}
+            >
+              {name}
+            </MenuItem>
+          ))}
+          </Select>
         </Grid>
         <Grid item xs={3}>
           <TextField
@@ -59,26 +155,41 @@ const WriteQuestion = () => {
             id="category"
             label="카테고리를 선택해주세요"
             name="category"
+            value={inputs.category}
+            onChange={onChangeHandler}
             autoFocus
           >
-            <MenuItem>알고리즘</MenuItem>
-            <MenuItem>디버깅</MenuItem>
+             {category.map((name, index) => (
+            <MenuItem
+              key={index}
+              value={index}
+            >
+              {name}
+            </MenuItem>
+          ))}
           </TextField>
         </Grid>
         <Grid item xs={3}>
-          <TextField
-            select
+          <Select
             required
             fullWidth
-            id="algorithum"
+            multiple
+            id="algorithm"
             label="알고리즘을 선택해주세요"
-            name="algorithum"
+            name="algorithm"
+            value={algorithm}
+            onChange={onChangeMultiHandler}
             autoFocus
           >
-            <MenuItem>BFS</MenuItem>
-            <MenuItem>DFS</MenuItem>
-            <MenuItem>Tree</MenuItem>
-          </TextField>
+             {algo.map((name, index) => (
+            <MenuItem
+              key={index}
+              value={index}
+            >
+              {name}
+            </MenuItem>
+          ))}
+          </Select>
         </Grid>
       </Grid>
       <br />
@@ -92,10 +203,18 @@ const WriteQuestion = () => {
             id="source"
             label="문제출처를 선택해 주세요"
             name="source"
+            value={inputs.source}
+            onChange={onChangeHandler}
             autoFocus
           >
-            <MenuItem>백준</MenuItem>
-            <MenuItem>프로그래머스</MenuItem>
+             {source.map((name, index) => (
+            <MenuItem
+              key={index}
+              value={index}
+            >
+              {name}
+            </MenuItem>
+          ))}
           </TextField>
         </Grid>
         <Grid item xs={3}>
@@ -106,6 +225,8 @@ const WriteQuestion = () => {
             id="point"
             label="포인트를 설정해 주세요"
             name="point"
+            value={inputs.point}
+            onChange={onChangeHandler}
             autoFocus
           ></TextField>
 
@@ -114,7 +235,9 @@ const WriteQuestion = () => {
             fullWidth
             id="question_number"
             label="문제번호를 입력해주세요"
-            name="question_number"
+            name="questionNumber"
+            value={inputs.questionNumber}
+            onChange={onChangeHandler}
             autoFocus
           ></TextField>
         </Grid>
@@ -126,7 +249,7 @@ const WriteQuestion = () => {
             timeFormat="HH:mm"
             timeIntervals={15}
             timeCaption="time"
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat="yyyy-MM-dd hh:mm:ss a"
             form="external-form"
           />
         </Grid>
@@ -142,6 +265,8 @@ const WriteQuestion = () => {
           label="궁금한 내용을 적어주세요"
           name="content"
           autoFocus
+          value={inputs.content}
+          onChange={onChangeHandler}
         />
       </Box>
       <br />
@@ -154,9 +279,25 @@ const WriteQuestion = () => {
           label="질문할 코드를 입력해 주세요"
           name="code"
           autoFocus
+          multiline
+          value={inputs.code}
+          onChange={onChangeHandler}
         />
       </Box>
+
+      <Button
+        sx={{
+          backgroundColor: "#f6edff",
+          textAlign: "center",
+          margin: 2,
+          width: 100,
+        }}
+        onClick={submitQuestion}
+      >
+        작성
+      </Button>
     </Box>
+  
   );
 };
 
