@@ -13,6 +13,7 @@ import TeacherRegister from "./TeacherRegister";
 import { TransitEnterexitSharp } from "@mui/icons-material";
 import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
+import { noteAction } from './../redux/actions/noteAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -83,9 +84,15 @@ const QuestionMain = ({ question }) => {
     dispatch(questionAction.addTrainer(question.questionId, 1)); //userId 추가 필요
   };
 
-  const getPoints = () => {
-    dispatch(adminAction.updatePoints(3));
+  const getLectureNote = () => {
+    console.log("123123123")
+    dispatch(noteAction.getLectureNote(question.questionId));
   };
+  const note = useSelector((state) => state.note.note);
+  console.log(note);
+  const modifyNote = () =>{
+    dispatch(noteAction.modifyNote(note));
+  }
 
     return (
       <Box sx={{ minWidth: 100 }}>
@@ -190,7 +197,8 @@ const QuestionMain = ({ question }) => {
 
         <button onClick={deleteQuestion}>글 삭제</button>
         <button onClick={addTrainer}>강사 신청</button>
-        <button onClick={getPoints}>test</button>
+        <button onClick={getLectureNote}>강의실 입장</button>
+        <button onClick={modifyNote}>test</button>
       </Box>
     );
   };

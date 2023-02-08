@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -13,21 +13,32 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { authAction } from "../redux/actions/authAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { getRefreshToken, getUserId, getAccessToken} from "../storage/Cookie";
+import { Cookies } from "react-cookie";
 
 const Login = () => {
   const [userid, setId] = useState("");
   const [password, setPassword] = useState("");
+  // const [token, setToken] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loginUser = (e) => {
-    e.preventDefault();
-    dispatch(authAction.onLogin(userid, password));
+  const store = useStore();
+
+  const loginUser = async () => {
+    await dispatch(authAction.userConfirm(userid,password));
+    let token=store.getState().authToken.accessToken;
+    let isLogin=store.getState().authToken.isLogin;
+    
+    if(isLogin){
+      console.log("123");
+      await dispatch(authAction.getUserInfo(token));
+    }
+    // dispatch(authAction.onLogin(userid, password));
     navigate("/question")
   };
 
 
-  console.log(userid)
   return (
     <div>
       <Grid
@@ -83,7 +94,6 @@ const Login = () => {
               onChange={(event) => setPassword(event.target.value)}
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               onClick={loginUser}

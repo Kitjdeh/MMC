@@ -9,22 +9,55 @@ const cookies = new Cookies();
 export const setUserId = (userId) => {
   const today = new Date();
   const expireDate = today.setHours(today.getHours() + 10);
-  return cookies.set("userid", userId, {
+  return cookies.set("userId", userId, {
     sameSite: "strict",
     path: "/",
     expires: new Date(expireDate),
   });
 };
 
-export const getRefreshToken = (refreshToken) => {
+export const setAccessToken = (accessToken) => {
   const today = new Date();
-  const expireDate = today.setHours(today.getHours() + 10);
-  console.log("쿠키저장작동", refreshToken);
-  return cookies.set("refresh_token", refreshToken, {
+  const expireDate = today.setHours(today.getHours()+10);
+  console.log("쿠키저장", accessToken);
+
+  return cookies.set("jwt-auth-token", accessToken, {
     sameSite: "strict",
     path: "/",
     expires: new Date(expireDate),
   });
+};
+
+export const setRefreshToken = (refreshToken) => {
+  const today = new Date();
+  const expireDate = today.setHours(today.getHours() + 10);
+  console.log("쿠키저장", refreshToken);
+  return cookies.set("jwt-refresh-token", refreshToken, {
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(expireDate),
+  });
+};
+
+
+// export const getRefreshToken = (refreshToken) => {
+//   const today = new Date();
+//   const expireDate = today.setHours(today.getHours() + 10);
+//   console.log("쿠키저장작동", refreshToken);
+//   return cookies.set("refresh_token", refreshToken, {
+//     sameSite: "strict",
+//     path: "/",
+//     expires: new Date(expireDate),
+//   });
+// };
+export const getRefreshToken = () => {
+  console.log("쿠키발급작동");
+  return cookies.get("jwt-refresh-token");
+};
+
+export const getAccessToken = () => {
+  console.log("쿠키발급작동");
+  return cookies.get("jwt-auth-token");
 };
 
 export const getCookieToken = () => {
