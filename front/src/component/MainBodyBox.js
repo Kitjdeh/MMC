@@ -22,9 +22,9 @@ const MainBodyBox = (props) => {
       sx={{
         p: 2,
         margin: "auto",
-        mb:5,
+        mb: 5,
         maxWidth: 1000,
-        backgroundColor: "#f6edff"
+        backgroundColor: "#f6edff",
       }}
     >
       <Grid container spacing={3}>
@@ -33,10 +33,20 @@ const MainBodyBox = (props) => {
         </Grid>
         <Grid item xs={2}></Grid>
         <Grid item xs={6} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs container alignItems="center">
-              <Typography variant="h5">{props?.title}</Typography>
-
+          <Grid
+            item
+            xs
+            container
+            direction="column"
+            spacing={2}
+            justifyContent="center"
+          >
+            <Grid item xs={1} alignItems="center">
+              <Typography variant="h5" align="center">
+                {props?.title}
+              </Typography>
+            </Grid>
+            <Grid item xs={5}>
               <Typography variant="body1">{props?.mention}</Typography>
             </Grid>
           </Grid>

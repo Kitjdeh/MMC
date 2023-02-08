@@ -2,6 +2,8 @@ import axios from "axios";
 import { getRefreshToken,setUserId } from "../../storage/Cookie";
 import { removeCookieToken } from "../../storage/Cookie";
 
+let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1/";
+
 function onLogin(id, password) {
   let data = {
     identity: id,
@@ -9,7 +11,7 @@ function onLogin(id, password) {
   };
   console.log("로그인요청은 옴", data);
   return async (dispatch, getState) => {
-    let url = `http://localhost:8080/api/v1/login`;
+    let url = `${baseUrl}login`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
     let response = await axios
       .post(url, JSON.stringify(data), {
@@ -37,7 +39,7 @@ function onLogout(userId) {
     userId: id,
   };
   return async (dispatch, getState) => {
-    let url = `http://localhost:8080/api/v1/logout?userId=${id}`;
+    let url = `${baseUrl}logout?userId=${id}`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/logout?userId=${id}`;
     let response = await axios
       .get(url)
@@ -59,7 +61,7 @@ function resetToken(refreshtoken,userId){
   }
   console.log("리셋토큰데이터",data)
   return async (dispatch,getstate) =>{
-    let url = `http://localhost:8080/api/v1/users/refresh`
+    let url = `${baseUrl}users/refresh`
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
     .post(url, JSON.stringify(data), {

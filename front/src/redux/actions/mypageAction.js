@@ -1,5 +1,5 @@
 import axios from "axios";
-let baseURL=`http://localhost:8080/api/v1`;
+let baseURL=`http://i8a508.p.ssafy.io:8083/api/v1`;
 
 function sendDepositAndWithdrawl(trade) {
   return async (dispatch) => {

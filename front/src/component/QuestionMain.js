@@ -51,12 +51,12 @@ const QuestionMain = ({ question }) => {
   let time = new Date(question.reservation);
   const [algorithm, setAlgorithm] = useState([]);
   console.log({ question });
-  console.log("111111");
   console.log("main페이지확인", { question });
   useEffect(() => {
     transBitmask();
   }, []);
   const trainers = useSelector((state) => state.question.trainers);
+  console.log("트레이너호출",trainers)
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;

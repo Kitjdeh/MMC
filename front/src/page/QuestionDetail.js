@@ -30,7 +30,7 @@ const QuestionDetail = () => {
     getAllTrainers();
   }, []);
 
-  const [content, setContent] = useState();
+  const [content, setContent] = useState('main');
   const selectquestion = (item) => {
     const { name } = item.target;
     setContent(name);

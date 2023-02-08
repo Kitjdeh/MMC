@@ -31,7 +31,7 @@ export default function SingUp() {
     temperature:0,
     profileImage:"",
   });
-  // console.log("dddddd", inputs);
+;
 
   const dispatch = useDispatch();
   const [pythonchecked, setpythonChecked] = React.useState(false);
@@ -41,7 +41,6 @@ export default function SingUp() {
   const onDrop = picture => {
     setPictures({...pictures, picture});
   };
-
   const languageArray = [pythonchecked, javachecked, cchecked];
   const languagecount = [1, 2, 4];
   const pythonChange = (event) => {
@@ -79,9 +78,7 @@ export default function SingUp() {
 
   const onChangeHandler = (event) => {
     event.preventDefault();
-
     const { name, value } = event.target;
-
     const nextInputs = { ...inputs, [name]: value };
     setInputs(nextInputs);
   };

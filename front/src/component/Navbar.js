@@ -21,20 +21,13 @@ const Navbar = () => {
   const userId = useSelector((state) => state.authToken.userId);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [anchore2, setAnchorE2] = React.useState(null);
-  const openalarm = Boolean(anchore2);
-
+  let openalarm = false
+  let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
     setAnchorEl(null);
-  };
-  const onClickAlarmHandler = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
-  const onClickAlarmClose = () => {
-    setAnchorE2(null);
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -100,33 +93,32 @@ const Navbar = () => {
                 <div>
                   <Grid item>
                     <Button
-                      id="alarm-button"
-                      aria-controls={openalarm ? "basic-menu" : undefined}
+                      aria-controls={openalarm ? "alarm-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={openalarm ? "true" : undefined}
-                      onClick={onClickAlarmHandler}
+                      onClick={handleClick}
+                      id="alarm-button"
                       open={openalarm}
-                      onClose={onClickAlarmClose}
                     >
                       알람
-                      <Menu
-                        id="alarm-menu"
-                        anchorE2={anchore2}
-                        open={openalarm}
-                        onClose={handleClose}
-                        MenuListProps={{
-                          "aria-labelledby": "alarm-menu",
-                        }}
-                      >
-                        <MenuItem>알람이 없습니다.</MenuItem>
-                        <MenuItem>알람이 없습니다.</MenuItem>
-                      </Menu>
                     </Button>
+                    <Menu
+                      id="alarm-menu"
+                      anchorEl={anchorEl}
+                      open={openalarm}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "alarm-menu",
+                      }}
+                    >
+                      <MenuItem>알람이 없습니다.</MenuItem>
+                      <MenuItem>알람이 없습니다.</MenuItem>
+                    </Menu>
                     <Button
-                      id="basic-button"
-                      aria-controls={open ? "basic-menu" : undefined}
+                      id="mypage-button"
+                      aria-controls={openmypage ? "basic-menu" : undefined}
                       aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
+                      aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
                     >
                       마이페이지
@@ -134,10 +126,10 @@ const Navbar = () => {
                     <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
-                      open={open}
+                      open={openmypage}
                       onClose={handleClose}
                       MenuListProps={{
-                        "aria-labelledby": "basic-button",
+                        "aria-labelledby": "mypage-button",
                       }}
                     >
                       <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
