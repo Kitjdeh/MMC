@@ -1,81 +1,78 @@
-import React,{ useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
-import LectureCode from "../component/LectureCode";
+import React, { useState, useMemo } from "react";
+import { Grid, Button, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import LectureQuestion from "../component/LectureQuestion";
+import LectureCode from "../component/LectureCode";
+import LectureGraffiti from "../component/LectureGraffiti";
 import LectureWebRTC from "../component/LectureWebRTC";
-const Bar = styled(Grid)(({ theme }) => ({
-  backgroundColor: (theme.palette.mode = "#f6edff"),
-  textAlign: "center",
-}));
-const Word = styled(Grid)(({ theme }) => ({
-  textAlign: "center",
-}));
+import LectureChat from "../component/LectureChat";
+
+const useStyles = makeStyles({
+  bar: {
+    backgroundColor: "#f6edff",
+    textAlign: "center",
+  },
+  word: {
+    textAlign: "center",
+  },
+});
+
 const LectureNote = () => {
-  const [content, setContent] = useState();
-  const selectpage = (item) => {
-    const { name } = item.target;
+  const classes = useStyles();
+  const [content, setContent] = useState("Question");
+  const [check, setCheck] = useState(0);
+
+  const selectpage = (name) => {
     setContent(name);
   };
-  const category = {
-    main: <LectureWebRTC />,
-    question: <LectureQuestion />,
-    code: <LectureCode />,
-  };
+
+  const category = useMemo(
+    () => ({
+      Question: <LectureQuestion check={check} setCheck={setCheck} />,
+      Code: <LectureCode />,
+      Graffiti: <LectureGraffiti check={check} setCheck={setCheck} />,
+      WebRTC: <LectureWebRTC />,
+      Chat: <LectureChat />,
+    }),
+    []
+  );
+
   return (
-    <Bar
-      container
-      justifyContent="space-between"
-      sx={{ backgroundColor: "#ffffff" }}
-    >
-      <Bar item xs={1} sx={{ border: "1px dashed grey" }}>
-        {" "}
-        버튼
-        <Grid container direction="column" alignItems="flex-start" margin={2}>
-          <Word item xs={4}>
-            <Button
-              onClick={selectpage}
-              name="main"
-              value="main2"
-              variant="contained"
-              sx={{ backgroundColor: "#c1abff" }}
-            >
-              메인
+    <Grid container justify="space-between">
+      <Grid item xs={1} className={classes.bar}>
+        Buttons
+        <Grid container direction="column" alignItems="flex-start" spacing={2}>
+          <Grid item xs={4} className={classes.word}>
+            <Button onClick={() => selectpage("Question")} variant="contained" color="primary">
+              Question
             </Button>
-          </Word>
-          <Word item xs={4}>
-            <Button
-              onClick={selectpage}
-              name="code"
-              variant="contained"
-              sx={{ backgroundColor: "#c1abff" }}
-            >
-              코드
+          </Grid>
+          <Grid item xs={4} className={classes.word}>
+            <Button onClick={() => selectpage("Code")} variant="contained" color="primary">
+              Code
             </Button>
-          </Word>
-          <Word item xs={4}>
-            <Button
-              onClick={selectpage}
-              name="question"
-              variant="contained"
-              sx={{ backgroundColor: "#c1abff" }}
-            >
-              문제
+          </Grid>
+          <Grid item xs={4} className={classes.word}>
+            <Button onClick={() => selectpage("Graffiti")} variant="contained" color="primary">
+              Graffiti
             </Button>
-          </Word>
+          </Grid>
+          <Grid item xs={4} className={classes.word}>
+            <Button onClick={() => selectpage("WebRTC")} variant="contained" color="primary">
+              WebRTC
+            </Button>
+          </Grid>
         </Grid>
-      </Bar>
-      <Bar item xs={9} sx={{ border: "1px dashed grey" }}>
-        화면
+      </Grid>
+      <Grid item xs={9} className={classes.bar}>
+        Screen
         {content && <Box>{category[content]}</Box>}
-      </Bar>
-      <Bar item xs={2} sx={{ border: "1px dashed grey" }}>
-        채팅창
-      </Bar>
-    </Bar>
+      </Grid>
+      <Grid item xs={2} className={classes.bar}>
+        Chat Window
+        <Box>{category["Chat"]}</Box>
+      </Grid>
+    </Grid>
   );
 };
 
