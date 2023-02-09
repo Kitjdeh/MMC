@@ -14,7 +14,7 @@ import { TransitEnterexitSharp } from "@mui/icons-material";
 import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
 import { noteAction } from "./../redux/actions/noteAction";
-import { Cookies } from 'react-cookie';
+import { Cookies } from "react-cookie";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -50,10 +50,10 @@ const algo = [
 const source = ["백준", "프로그래머스"];
 
 const QuestionMain = ({ question }) => {
+  console.log("props", question);
   let time = new Date(question.reservation);
   const [algorithm, setAlgorithm] = useState([]);
   console.log({ question });
-  console.log("111111");
   console.log("main페이지확인", { question });
   useEffect(() => {
     transBitmask();

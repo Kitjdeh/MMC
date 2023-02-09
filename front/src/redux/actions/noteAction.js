@@ -1,7 +1,8 @@
 import axios from "axios";
 import { apiInstance } from "../../api";
 const api = apiInstance();
-let baseURL=`http://localhost:8080/api/v1/notes`;
+// let baseURL=`http://localhost:8080/api/v1/notes`;
+let baseURL=`http://i8a508.p.ssafy.io:8080/api/v1/notes`;
 
 function makeLectureNote(question_id) {
     const inputs={

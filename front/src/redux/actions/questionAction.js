@@ -2,7 +2,7 @@ import axios from "axios";
 import { apiInstance } from "../../api";
 const api = apiInstance();
 
-let baseUrl="http://localhost:8080/api/v1/questions";
+let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1/questions";
 
 
 function getQuestions(){

@@ -2,7 +2,10 @@ import axios from "axios";
 import { getRefreshToken, setUserId, setAccessToken, setRefreshToken} from "../../storage/Cookie";
 import { removeAccessToken, removeRefreshToken, removeUserId } from "../../storage/Cookie";
 import jwtDecode from "jwt-decode";
+
 import { apiInstance } from "../../api/index";
+
+let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1/";
 
 const api = apiInstance();
 
@@ -13,7 +16,7 @@ function onLogin(id, password) {
   };
   console.log("로그인요청은 옴", data);
   return async (dispatch, getState) => {
-    let url = `http://localhost:8080/api/v1/login`;
+    let url = `${baseUrl}login`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
     let response = await axios
       .post(url, JSON.stringify(data), {
@@ -41,7 +44,7 @@ function onLogout(userId) {
     userId: id,
   };
   return async (dispatch, getState) => {
-    let url = `http://localhost:8080/api/v1/logout?userId=${id}`;
+    let url = `${baseUrl}logout?userId=${id}`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/logout?userId=${id}`;
     let response = await api
       .get(url)
@@ -70,7 +73,7 @@ function resetToken(refreshtoken, userId) {
   };
   console.log("리셋토큰데이터", data);
   return async (dispatch, getstate) => {
-    let url = `http://localhost:8080/api/v1/users/refresh`;
+    let url = `${baseUrl}users/refresh`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
       .post(url, JSON.stringify(data), {
@@ -95,7 +98,7 @@ function userConfirm(userId, password) {
     password: password,
   };
   return async (dispatch) => {
-    let url = `http://localhost:8080/api/v1/login`;
+    let url = `${baseUrl}login`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
     let response = await axios
       .post(url, JSON.stringify(inputs), {
@@ -143,7 +146,7 @@ function getUserInfo(token){
   // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
   console.log("GETUSERINFOOOOO", decodeToken);
   return async (dispatch) => {
-    let url = `http://localhost:8080/api/v1/users/${decodeToken.userId}`;
+    let url = `${baseUrl}users/${decodeToken.userId}`;
     api.defaults.headers["jwt-auth-token"] = token;
     let response = await api
       .get(url)
