@@ -21,7 +21,6 @@ const Word = styled(Grid)(({ theme }) => ({
 }));
 const TeacherCard = () => {
   const trainer = useSelector((state) => state.userinfo.userinfo);
-  console.log(trainer);
   return (
     <Item sx={{ backgroundColor: "#f6edff" ,minWidth:300 }}>
       <Word container direction="row" justifyContent="center" alignItems="center" >

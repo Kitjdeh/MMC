@@ -5,6 +5,7 @@ import mypageReducer from "./mypage";
 import adminReducer from './admin';
 import pointReducer from "./point";
 import tokenReducer from "./authenticate";
+import noteReducer from "./note";
 
 export default combineReducers({
     question: questionReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     admin: adminReducer,
     authToken:tokenReducer,
     point: pointReducer,
+    note: noteReducer,
 })

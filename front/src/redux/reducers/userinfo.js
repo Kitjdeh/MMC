@@ -3,7 +3,6 @@ let initialState = {
   };
   function userReducer(state = initialState, action) {
     let { type, payload } = action;
-    console.log('유저인포',payload)
     switch (type) {
       case "GET_USERINFO_SUCCESS":
         return { ...state, userinfo: payload.data };

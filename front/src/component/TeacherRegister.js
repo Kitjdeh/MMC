@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import { questionAction } from './../redux/actions/questionAction';
 import { useDispatch,useSelector } from "react-redux";
 import { userinfoAction } from './../redux/actions/userinfoAction';
+import { noteAction } from './../redux/actions/noteAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#f6edff",
@@ -33,6 +34,9 @@ const TeacherRegister = ({nickname,temperature,userId}) => {
   }
   const acceptTrainer = () => {
     dispatch(questionAction.acceptTrainer(question.questionId, 1)); //userId 추가 필요
+    console.log("before")
+    dispatch(noteAction.makeLectureNote(question.questionId));
+    console.log("after")
   }
   const getUserInfo = () => {
     dispatch(userinfoAction.getUserInfo(1));

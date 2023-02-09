@@ -11,11 +11,13 @@ import QuestionAbout from "../component/QuestionAbout";
 import QuestionCode from "../component/QuestionCode";
 import QuestionMain from "../component/QuestionMain";
 import { styled } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 const QuestionDetail = () => {
-  let questionId  = useParams();
-  let id=questionId.id
+  let questionId = useParams();
+  let id = questionId.id;
+
+  // const store = useStore();
   const question = useSelector((state) => state.question.question);
 
   const dispatch = useDispatch();
@@ -24,21 +26,23 @@ const QuestionDetail = () => {
   };
   const getAllTrainers = () => {
     dispatch(questionAction.getTrainers(id));
-  }
+  };
   useEffect(() => {
-    getQuestion(); 
+    getQuestion();
     getAllTrainers();
   }, []);
 
-  const [content, setContent] = useState('main');
+  // const question = store.getState().question;
+
+  const [content, setContent] = useState();
   const selectquestion = (item) => {
     const { name } = item.target;
     setContent(name);
   };
   const category = {
     main: <QuestionMain question={question} />,
-    question: <QuestionAbout question={question}/>,
-    code: <QuestionCode question={question}/>,
+    question: <QuestionAbout question={question} />,
+    code: <QuestionCode question={question} />,
   };
   const aboutcomponent = ["메인", "문제", "코드"];
   const Word = styled(Grid)(({ theme }) => ({
@@ -79,7 +83,6 @@ const QuestionDetail = () => {
           </Button>
         </Word>
       </Grid>
-
       {content && <Box>{category[content]}</Box>}
     </Box>
   );

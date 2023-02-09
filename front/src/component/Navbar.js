@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { getCookieToken } from "../storage/Cookie";
 import alarm from "./alarm";
 const Navbar = () => {
-  const authcookie = getCookieToken();
-  const authenticated = useSelector((state) => state.authToken.authenticated);
-  const userId = useSelector((state) => state.authToken.userId);
+  // const authcookie = getCookieToken();
+  // const authenticated = useSelector((state) => state.authToken.authenticated);
+  // const userId = useSelector((state) => state.authToken.userId);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let openalarm = false
@@ -46,8 +46,8 @@ const Navbar = () => {
   };
   const logout = () => {
     handleClose();
-    console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
-    dispatch(authAction.onLogout(userId));
+    // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
+    // dispatch(authAction.onLogout(userId));
     navigate("/");
   };
 
@@ -89,7 +89,7 @@ const Navbar = () => {
             </Typography>
 
             <Box sx={{ minWidth: 300 }}>
-              {authenticated === true ? (
+              {/* {authenticated === true ? ( */}
                 <div>
                   <Grid item>
                     <Button
@@ -139,7 +139,7 @@ const Navbar = () => {
                     </Menu>
                   </Grid>
                 </div>
-              ) : (
+              {/* ) : ( */}
                 <Button
                   href="/login"
                   variant="outlined"
@@ -148,7 +148,7 @@ const Navbar = () => {
                 >
                   Login
                 </Button>
-              )}
+              {/* )} */}
             </Box>
           </Grid>
         </Toolbar>

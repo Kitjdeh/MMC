@@ -1,8 +1,12 @@
 import axios from "axios";
-import { getRefreshToken,setUserId } from "../../storage/Cookie";
+import { getRefreshToken, setUserId, setAccessToken, setRefreshToken} from "../../storage/Cookie";
 import { removeCookieToken } from "../../storage/Cookie";
+import jwtDecode from "jwt-decode"
+import { apiInstance } from "../../api/index";
 
 let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1/";
+
+const api = apiInstance();
 
 function onLogin(id, password) {
   let data = {
@@ -22,9 +26,9 @@ function onLogin(id, password) {
       .then((response) => {
         let data = response.data;
         let refreshtoken = data["jwt-refresh-token"];
-        let userid = data["userId"]
+        let userid = data["userId"];
         getRefreshToken(refreshtoken);
-        setUserId(userid)
+        setUserId(userid);
         dispatch({ type: "POST_AUTH_SUCCESS", payload: { data } });
       })
       .catch((error) => {
@@ -53,32 +57,99 @@ function onLogout(userId) {
   };
 }
 
-
-function resetToken(refreshtoken,userId){
+function resetToken(refreshtoken, userId) {
   let data = {
-    "userId":userId,
-    "refreshToken":refreshtoken
-  }
-  console.log("리셋토큰데이터",data)
-  return async (dispatch,getstate) =>{
-    let url = `${baseUrl}users/refresh`
+    userId: userId,
+    refreshToken: refreshtoken,
+  };
+  console.log("리셋토큰데이터", data);
+  return async (dispatch, getstate) => {
+    let url = `${baseUrl}users/refresh`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
-    .post(url, JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-    })
+      .post(url, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
 
-    .then((response) => {
-      let data = response.data;
-      let accesstoken = data["jwt-auth-token"];
-      dispatch({ type: "POST_RESETTOEKN_SUCCESS", payload: { data } });
-    })
-    .catch((error) => {
-      console.log("토큰리셋인증에러", error);
-    });
-  }
+      .then((response) => {
+        let data = response.data;
+        let accesstoken = data["jwt-auth-token"];
+        dispatch({ type: "POST_RESETTOEKN_SUCCESS", payload: { data } });
+      })
+      .catch((error) => {
+        console.log("토큰리셋인증에러", error);
+      });
+  };
 }
 
-export const authAction = { onLogout, onLogin,resetToken};
+function userConfirm(userId, password) {
+  const inputs = {
+    identity: userId,
+    password: password,
+  };
+  return async (dispatch) => {
+    let url = `${baseUrl}login`;
+    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
+    let response = await axios
+      .post(url, JSON.stringify(inputs), {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
+      .then((response) => {
+        let data = response.data;
+        if(data["jwt-auth-token"] != null){
+          let accessToken = data["jwt-auth-token"];
+          let refreshToken = data["jwt-refresh-token"];
+          let userId = data["userId"];
+          console.log(accessToken);
+          console.log(refreshToken);
+          console.log(userId);
+          dispatch({ type: "SET_IS_LOGIN", payload: true });
+          dispatch({ type: "SET_IS_VALID_TOKEN", payload: true });
+          dispatch({ type: "SET_IS_LOGIN_ERROR", payload: false }); 
+          
+          // sessionStorage.setItem("jwt-auth-token", accessToken);
+          
+          setAccessToken(accessToken);
+          setRefreshToken(refreshToken);
+          setUserId(userId);
+          dispatch({ type: "SET_AUTH_TOKEN", payload: accessToken });
+        }
+        else{
+          alert("아이디와 비밀번호를 확인하세요.");
+          dispatch({ type: "SET_IS_LOGIN", payload: false });
+          dispatch({ type: "SET_IS_VALID_TOKEN", payload: false });
+          dispatch({ type: "SET_IS_LOGIN_ERROR", payload: true });
+        }
+      })
+      .catch((error) => {
+        alert("아이디와 비밀번호를 확인하세요.");
+        console.log("userConfirm Error", error);
+      });
+  };
+}
+
+function getUserInfo(token){
+  console.log("OOOO",token)
+  let decodeToken = jwtDecode(token);
+  // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+  console.log("GETUSERINFOOOOO", decodeToken);
+  return async (dispatch) => {
+    let url = `${baseUrl}users/${decodeToken.userId}`;
+    api.defaults.headers["jwt-auth-token"] = token;
+    let response = await api
+      .get(url)
+      .then((response) => {
+        let data = response.data;
+        dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
+      })
+      .catch((error) => {
+        console.log("getUser", error);
+      });
+  };
+}
+
+export const authAction = { onLogout, onLogin, resetToken, userConfirm, getUserInfo };
