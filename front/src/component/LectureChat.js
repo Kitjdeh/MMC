@@ -10,24 +10,31 @@ socket.addEventListener("close", () => {
   console.log("Disconnected from Server ❌");
 });
 
-function makeMessage(type, payload, name) {
-  const msg = { type, payload, name };
+function makeMessage(type, payload, nickName, lectureNoteId) {
+  const msg = { type, payload, nickName, lectureNoteId };
   return JSON.stringify(msg);
 }
 
+let savedStates = [];
+
 const LectureChat = () => {
+  console.log("aaaa");
   const messageListRef = useRef();
   const messageFormRef = useRef();
-  const name = "김정민";
+  const nickName = "SSAFY";
+  const lectureNoteId = "2";
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
+      console.log("0");
       const message = JSON.parse(msg.data);
       if (message.type === "new_message") {
         const li = document.createElement("li");
         // li.style.textAlign = (name === message.username) ? "right" : "left";
         li.style.textAlign = "left";
         li.style.listStyle = "none";
-        li.innerText = name + " : " + message.payload;
+        li.innerText = nickName + " : " + message.payload;
+        savedStates.push(li);
+        console.log(savedStates);
         messageListRef.current.append(li);
       }
     });
@@ -36,7 +43,7 @@ const LectureChat = () => {
   function handleSubmit(event) {
     event.preventDefault();
     const input = messageFormRef.current.querySelector("input");
-    socket.send(makeMessage("new_message", input.value, name));
+    socket.send(makeMessage("new_message", input.value, nickName, lectureNoteId));
     input.value = "";
   }
 

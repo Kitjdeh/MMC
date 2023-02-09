@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 const LectureNote = () => {
   const classes = useStyles();
   const [content, setContent] = useState("Question");
+  const [check, setCheck] = useState(0);
 
   const selectpage = (name) => {
     setContent(name);
@@ -27,9 +28,9 @@ const LectureNote = () => {
 
   const category = useMemo(
     () => ({
-      Question: <LectureQuestion />,
+      Question: <LectureQuestion check={check} setCheck={setCheck} />,
       Code: <LectureCode />,
-      Graffiti: <LectureGraffiti />,
+      Graffiti: <LectureGraffiti check={check} setCheck={setCheck} />,
       WebRTC: <LectureWebRTC />,
       Chat: <LectureChat />,
     }),
