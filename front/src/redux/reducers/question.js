@@ -2,7 +2,8 @@ let initialState = {
     question: [],
     questions: [],
     trainers: [],
-    imageUrl:[]
+    imageUrl:[],
+    backjoon: [],
   };
   function questionReducer(state = initialState, action) {
     let { type, payload } = action;
@@ -15,6 +16,8 @@ let initialState = {
         return { ...state, trainers: payload.data };
       case "GET_IMAGE_URL_SUCCESS":
         return { ...state, imageUrl: payload.data };
+      case "GET_BACKJOON_INFO_SUCCESS":
+        return { ...state, backjoon: payload.data };
       default:
         return { ...state };
     }

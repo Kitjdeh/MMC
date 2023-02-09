@@ -25,7 +25,7 @@ export default function SingUp() {
     phone: "",
     academicAbility: "",
     workplace: "",
-    backjoonId: "",
+    baekjoonId: "",
     award: "",
     lectureCount:10,
     point:0,
@@ -154,12 +154,12 @@ export default function SingUp() {
             <TextField
               margin="normal"
               fullWidth
-              name="backjoonId"
-              id="backjoonId"
+              name="baekjoonId"
+              id="baekjoonId"
               label="백준아이디를 입력해주세요"
               size="small"
               onChange={onChangeHandler}
-              value={inputs.backjoonId}
+              value={inputs.baekjoonId}
             />
             <TextField
               margin="normal"

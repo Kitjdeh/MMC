@@ -159,5 +159,20 @@ function getQuestionImage(question_id){
       });
   };
 }
+function getBackJoon(user_backjoon){
+  console.log(user_backjoon)
+  return async (dispatch) => {
+    let url = `https://solved.ac/api/v3/user/show?handle=${user_backjoon}`;
+    let response = await api.get(url)
+      .then((response) => {
+        let data = response.data;
+        console.log(data);
+        dispatch({type:"GET_BACKJOON_INFO_SUCCESS", payload: {data}});
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+      });
+  };
+}
 
-export const questionAction = {getQuestions, getQuestionDetail, writeQuestion, deleteQuestion, getTrainers, addTrainer, acceptTrainer, deleteTrainer ,getQuestionImage}
+export const questionAction = {getQuestions, getQuestionDetail, writeQuestion, deleteQuestion, getTrainers, addTrainer, acceptTrainer, deleteTrainer ,getQuestionImage, getBackJoon}

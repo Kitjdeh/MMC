@@ -26,11 +26,11 @@ const Bar = styled(Grid)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const WriteQuestion = () => {
+const WriteQuestion = ({userId}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [algorithm, setAlgorithm] = useState([]);
   const [inputs, setInputs] = useState({
-    userId: 1,  //수정 필요
+    userId: userId,  //수정 필요
     language: 0, 
     progress: 0,
     category: 0,

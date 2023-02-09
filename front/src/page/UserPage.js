@@ -14,6 +14,7 @@ import AllQuestion from "./AllQuestion";
 import Main from "./Main";
 import MyLecture from "./MyLecture";
 import Admin from './Admin';
+import { Cookies } from 'react-cookie';
 
 const theme = createTheme({
   palette: {
@@ -24,6 +25,8 @@ const theme = createTheme({
   },
 });
 const UserPage = () => {
+  const cookie=new Cookies();
+  const userId=cookie.get("userId");
   return (
     <div>
       <Navbar />
@@ -35,7 +38,7 @@ const UserPage = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/question" element={<AllQuestion />} />
           <Route path="/question/:id" element={<QuestionDetail />} />
-          <Route path="/question/write" element={<WriteQuestion />} />
+          <Route path="/question/write" element={<WriteQuestion userId={userId} />} />
           <Route path="/mypage/point" element={<Point />} />
           <Route path="/mypage/question" element={<MyQuestion />} />
           <Route path="/mypage/lecture" element={<MyLecture />} />

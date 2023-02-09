@@ -96,9 +96,6 @@ const QuestionMain = ({ question }) => {
   };
   const note = useSelector((state) => state.note.note);
   console.log(note);
-  const modifyNote = () => {
-    dispatch(noteAction.modifyNote(note));
-  };
 
   return (
     <Box sx={{ minWidth: 100 }}>
@@ -138,7 +135,7 @@ const QuestionMain = ({ question }) => {
         <Item>
           {new Date(question.reservation).toLocaleString("ko-kr", {
             month: "short",
-            day: "2-digit",
+            day: "2-digit", 
             year: "numeric",
           })}
         </Item>
@@ -181,7 +178,7 @@ const QuestionMain = ({ question }) => {
                     <TeacherRegister
                       nickname={item.nickname}
                       temperature={item.temperature}
-                      userId={item.userId}
+                      writeId={item.userId}
                     />
                   ))
                 ) : (
@@ -199,7 +196,6 @@ const QuestionMain = ({ question }) => {
 
       <button onClick={deleteQuestion}>글 삭제</button>
       <button onClick={getLectureNote}>강의실 입장</button>
-      <button onClick={modifyNote}>test</button>
     </Box>
   );
 };
