@@ -160,7 +160,7 @@ const AllQuestion = () => {
       </Container>
       <Container>
         <Grid container spacing={1}>
-          {filteredList?.map((question) => (
+          {filteredList.slice(0).reverse()?.map((question) => (
             <Grid item xl={3} lg={4} md={6} key={question}>
               <QuestionCard question={question} />
               <br />
