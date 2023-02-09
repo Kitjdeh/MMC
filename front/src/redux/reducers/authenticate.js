@@ -18,7 +18,7 @@ function tokenReducer(state = initialState, action) {
       };
     case "DELETE_TOKEN_SUCCESS":
       console.log("로그아웃 토큰제거까지 옴");
-      return { ...state, authenticated: false, accessToken: null };
+      return { ...state, isLogin: false, accessToken: null };
     case "POST_RESETTOEKN_SUCCESS":
       console.log("토큰 재발급 요청");
       return {
@@ -36,6 +36,8 @@ function tokenReducer(state = initialState, action) {
     case "SET_AUTH_TOKEN":
       console.log("SET_AUTH_TOKEN",payload)
       return { ...state, accessToken: payload };
+    case "GET_USERINFO_SUCCESS":
+      return { ...state, userId: payload.data};
     default:
       return { ...state };
   }

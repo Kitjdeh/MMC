@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getRefreshToken, setUserId, setAccessToken, setRefreshToken} from "../../storage/Cookie";
-import { removeCookieToken } from "../../storage/Cookie";
+import { removeAccessToken, removeRefreshToken, removeUserId } from "../../storage/Cookie";
 import jwtDecode from "jwt-decode";
 import { apiInstance } from "../../api/index";
 
@@ -43,11 +43,19 @@ function onLogout(userId) {
   return async (dispatch, getState) => {
     let url = `http://localhost:8080/api/v1/logout?userId=${id}`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/logout?userId=${id}`;
-    let response = await axios
+    let response = await api
       .get(url)
       .then((response) => {
-        removeCookieToken();
         dispatch({ type: "DELETE_TOKEN_SUCCESS" });
+        dispatch({ type: "SET_IS_LOGIN", payload: false });
+        dispatch({ type: "SET_IS_VALID_TOKEN", payload: false });
+        dispatch({ type: "SET_IS_LOGIN_ERROR", payload: false }); 
+          
+        sessionStorage.clear();
+        
+        removeAccessToken(null);
+        removeRefreshToken(null);
+        removeUserId(null);
       })
       .catch((error) => {
         console.log("로그아웃에러", error);
@@ -70,7 +78,6 @@ function resetToken(refreshtoken, userId) {
           "Content-Type": "application/json;charset=utf-8",
         },
       })
-
       .then((response) => {
         let data = response.data;
         let accesstoken = data["jwt-auth-token"];
@@ -109,7 +116,7 @@ function userConfirm(userId, password) {
           dispatch({ type: "SET_IS_VALID_TOKEN", payload: true });
           dispatch({ type: "SET_IS_LOGIN_ERROR", payload: false }); 
           
-          // sessionStorage.setItem("jwt-auth-token", accessToken);
+          sessionStorage.setItem("jwt-auth-token", accessToken);
           
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
@@ -141,13 +148,41 @@ function getUserInfo(token){
     let response = await api
       .get(url)
       .then((response) => {
-        let data = response.data;
+        let data = response.data.userId;
+        console.log(data);
         dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
       })
-      .catch((error) => {
+      .catch(async(error) => {
         console.log("getUser", error);
       });
   };
 }
+
+function tokenRegeneration(refreshtoken, userId) {
+  let data = {
+    userId: userId,
+    refreshToken: refreshtoken,
+  };
+  console.log("리셋토큰데이터", data);
+  return async (dispatch, getstate) => {
+    let url = `http://localhost:8080/api/v1/users/refresh`;
+    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
+    let response = await axios
+      .post(url, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
+      .then((response) => {
+        let data = response.data;
+        let accesstoken = data["jwt-auth-token"];
+        dispatch({ type: "POST_RESETTOEKN_SUCCESS", payload: { data } });
+      })
+      .catch((error) => {
+        console.log("토큰리셋인증에러", error);
+      });
+    }
+  };
+
 
 export const authAction = { onLogout, onLogin, resetToken, userConfirm, getUserInfo };

@@ -5,7 +5,7 @@ let initialState = {
     let { type, payload } = action;
     switch (type) {
       case "GET_POINT_LIST_SUCCESS":
-        return { ...state, questions: payload.data };
+        return { ...state, points: payload.data };
       default:
         return { ...state };
     }

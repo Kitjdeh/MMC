@@ -5,6 +5,7 @@ import QuestionCard from './../component/QuestionCard';
 import { useDispatch } from 'react-redux';
 import { mypageAction } from "../redux/actions/mypageAction";
 import { useSelector } from 'react-redux';
+import { Cookies } from 'react-cookie';
 
 const MyLecture = () => {
   useEffect(() => {
@@ -12,9 +13,11 @@ const MyLecture = () => {
   }, [])
   const dispatch = useDispatch();
   const getMyLecture = () =>{
-    dispatch(mypageAction.getMyLectureList(1));  //userId로 바꿔야됨
+    dispatch(mypageAction.getMyLectureList(userId));  //userId로 바꿔야됨
   }
   const lecturesList = useSelector((state) => state.mypage.lectures);
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
 
   return (
     (lecturesList.length > 0 ?

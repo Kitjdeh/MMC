@@ -5,6 +5,7 @@ import QuestionCard from './../component/QuestionCard';
 import { useDispatch } from 'react-redux';
 import { mypageAction } from "../redux/actions/mypageAction";
 import { useSelector } from 'react-redux';
+import { Cookies } from 'react-cookie';
 
 const MyQuestion = () => {
   useEffect(() => {
@@ -12,10 +13,13 @@ const MyQuestion = () => {
   }, [])
   const dispatch = useDispatch();
   const getMyQuestion = () =>{
-    dispatch(mypageAction.getMyQuestionList(1));  //userId로 바꿔야됨
+    dispatch(mypageAction.getMyQuestionList(userId));  //userId로 바꿔야됨
   }
   const questionList = useSelector((state) => state.mypage.questions);
   console.log("questions", questionList);
+
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
 
   return (
     // <div>

@@ -69,6 +69,14 @@ export const getUserId = () => {
   return cookies.get("userid");
 };
 
-export const removeCookieToken = () => {
-  return cookies.remove("refresh_token", { sameSite: "strict", path: "/" });
+export const removeRefreshToken = () => {
+  return cookies.remove("jwt-refresh-token", { sameSite: "strict", path: "/" });
+};
+
+export const removeAccessToken = () => {
+  return cookies.remove("jwt-auth-token", { sameSite: "strict", path: "/" });
+};
+
+export const removeUserId = () => {
+  return cookies.remove("userId", { sameSite: "strict", path: "/" });
 };

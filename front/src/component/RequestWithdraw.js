@@ -11,6 +11,7 @@ import { menuItemClasses } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { pointAction } from "../redux/actions/pointAction";
 import moment from 'moment';
+import { Cookies } from 'react-cookie';
 
 const Main = styled(Grid)(({ theme }) => ({
   backgroundColor: "#ffffff",
@@ -26,15 +27,16 @@ const Bar = styled(Grid)(({ theme }) => ({
   margin: 1,
 }));
 
-const RequestWithdraw = () => {
+const RequestWithdraw = ({userId}) => {
   const [inputs, setInputs] = useState({
-    userId:1,
+    userId:userId,
     depositAndWithdrawl:1,
     amount:0,
     bank: "",
     account: "",
     date: moment().format('YYYY-MM-DD HH:mm:ss')
   })
+
   const dispatch = useDispatch();
   const submitWithdraw = () => {
     dispatch(pointAction.sendDepositAndWithdrawl(inputs));

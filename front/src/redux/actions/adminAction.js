@@ -1,11 +1,12 @@
 import axios from "axios";
-
+import { apiInstance } from "../../api";
+const api = apiInstance();
 let baseUrl="http://localhost:8080/api/v1/points";
 
 function getPoints(){
     return async (dispatch)=>{
         let url = baseUrl;
-        let response = await axios.get(url)
+        let response = await api.get(url)
         .then((response)=>{
             let data=response.data;
             dispatch({type:"GET_POINT_LIST_SUCCESS",payload:{data}});
@@ -25,7 +26,7 @@ function updatePoints(trade_id){
     console.log(inputs);
     return async () => {
       let url = baseUrl+`/${trade_id}`;
-      let response = await axios.put(url, JSON.stringify(inputs), {headers: {
+      let response = await api.put(url, JSON.stringify(inputs), {headers: {
         "Content-Type": "application/json;charset=utf-8"}})
         .then((response) => {
           let data = response.data;
@@ -40,7 +41,7 @@ function updatePoints(trade_id){
 function deletePoints(trade_id){
     return async ()=>{
         let url = baseUrl+`/${trade_id}`;
-        let response = await axios.delete(url)
+        let response = await api.delete(url)
         .then((response)=>{
             let data=response.data;
             console.log(data);

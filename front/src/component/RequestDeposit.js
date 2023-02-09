@@ -11,6 +11,7 @@ import { menuItemClasses } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { pointAction } from "../redux/actions/pointAction";
 import moment from 'moment';
+import { Cookies } from 'react-cookie';
 
 const Main = styled(Grid)(({ theme }) => ({
   backgroundColor: "#ffffff",
@@ -26,9 +27,9 @@ const Bar = styled(Grid)(({ theme }) => ({
   margin: 1,
 }));
 
-const RequestDeposit = () => {
+const RequestDeposit = ({userId}) => {
   const [inputs, setInputs] = useState({
-    userId:1,
+    userId: userId,
     depositAndWithdrawl:0,
     amount:0,
     bank: "",

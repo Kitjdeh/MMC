@@ -15,6 +15,18 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Cookies } from 'react-cookie';
+import { styled } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import { adminAction } from './../redux/actions/adminAction';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#f6edff",
+  ...theme.typography.body2,
+  padding: theme.spacing(0.3),
+  textAlign: "center",
+  minWidth: 60,
+  maxWidth:400,
+}));
 
 const TablePaginationActions = (props)=> {
   const theme = useTheme();
@@ -96,6 +108,15 @@ const CustomPaginationActionsTable=({pointList})=> {
     setPage(0);
   };
 
+  const dispatch=useDispatch();
+  const acceptTrade = (e,row) =>{
+    dispatch(adminAction.updatePoints(row.tradeId));
+  }
+
+  const cancelTrade = (e,row) => {
+    dispatch(adminAction.deletePoints(row.tradeId));
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -112,8 +133,9 @@ const CustomPaginationActionsTable=({pointList})=> {
                 {row.depositAndWithdrawl === 0 ? "입금" : "출금"}
               </TableCell>
               <TableCell align="center">{row.amount}</TableCell>
-              <TableCell align="right">{row.depositAndWithdrawl === 0 ? "입금 완료" : "출금 완료"}</TableCell>
               <TableCell align="right">{row.date}</TableCell>
+              <TableCell align="right" onClick={(e)=>acceptTrade(e,row)}><Item>승인</Item></TableCell>
+              <TableCell align="right" onClick={(e)=>cancelTrade(e,row)}><Item>삭제</Item></TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (

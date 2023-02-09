@@ -1,9 +1,12 @@
 import axios from "axios";
+import { apiInstance } from "../../api";
+const api = apiInstance();
 
 let baseUrl="http://localhost:8080/api/v1/questions";
 
+
 function getQuestions(){
-    return async (dispatch,getState)=>{
+  return async (dispatch,getState)=>{
         let url = baseUrl;
         let response = await axios.get(url)
         .then((response)=>{
@@ -16,11 +19,12 @@ function getQuestions(){
     }   
 }
 
+
 function getQuestionDetail(user_id) {
   return async (dispatch, getState) => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/questions/${user_id}`;
     let url = baseUrl+`/${user_id}`;
-    let response = await axios.get(url)
+    let response = await api.get(url)
       .then((response) => {
         let data = response.data.question;
         dispatch({ type: "GET_QUESTION_DETAIL_SUCCESS", payload: { data } });
@@ -36,7 +40,7 @@ function writeQuestion(question) {
   return async () => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl;
-    let response = await axios.post(url, JSON.stringify(question), {headers: {
+    let response = await api.post(url, JSON.stringify(question), {headers: {
         "Content-Type": "application/json;charset=utf-8"}})
       .then((response) => {
         let data = response.data;
@@ -52,7 +56,7 @@ function deleteQuestion(question_id){
   return async (dispatch) => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/${question_id}`;
-    let response = await axios.delete(url)
+    let response = await api.delete(url)
       .then((response) => {
         let data = response.data;
         console.log(data);
@@ -65,20 +69,19 @@ function deleteQuestion(question_id){
 }
 
 function getTrainers(question_id){
-  console.log("getTrainers",question_id);
   return async (dispatch) => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/${question_id}/trainer`;
-    let response = await axios.get(url)
+    api.defaults.headers["jwt-auth-token"] = sessionStorage.getItem("jwt-auth-token");
+    let response = await api.get(url)
       .then((response) => {
-        let data = response.data;
-        console.log(data);
+        let data = response.data.users;
         dispatch({type: "GET_TRAINER_LIST_SUCCEESS", payload :{data}})
       })
       .catch((error) => {
-        console.log("ERROR", error);
+        console.log("ERROR222", error);
       });
-  };
+  }
 }
 
 function addTrainer(question_id, user_id){
@@ -90,7 +93,7 @@ function addTrainer(question_id, user_id){
   return async () => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/lecture`;
-    let response = await axios.post(url, JSON.stringify(inputs), {headers: {
+    let response = await api.post(url, JSON.stringify(inputs), {headers: {
       "Content-Type": "application/json;charset=utf-8"}})
       .then((response) => {
         let data = response.data;
@@ -112,7 +115,7 @@ function acceptTrainer(question_id, user_id){
   return async () => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/lecture/${question_id}/${user_id}`;
-    let response = await axios.patch(url, JSON.stringify(inputs), {headers: {
+    let response = await api.patch(url, JSON.stringify(inputs), {headers: {
       "Content-Type": "application/json;charset=utf-8"}})
       .then((response) => {
         let data = response.data;
@@ -129,7 +132,7 @@ function deleteTrainer(question_id,user_id){
   return async () => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/lecture/${question_id}/${user_id}`;
-    let response = await axios.delete(url)
+    let response = await api.delete(url)
       .then((response) => {
         let data = response.data;
         console.log(data);
@@ -145,7 +148,7 @@ function getQuestionImage(question_id){
   return async (dispatch) => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl+`/${question_id}/image`;
-    let response = await axios.get(url)
+    let response = await api.get(url)
       .then((response) => {
         let data = response.data;
         console.log(data);

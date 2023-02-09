@@ -22,9 +22,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   // const [token, setToken] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const store = useStore();
-
   const loginUser = async () => {
     await dispatch(authAction.userConfirm(userid,password));
     let token=store.getState().authToken.accessToken;

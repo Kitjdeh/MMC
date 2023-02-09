@@ -1,4 +1,6 @@
 import axios from "axios";
+import { apiInstance } from "../../api";
+const api = apiInstance();
 let baseURL=`http://localhost:8080/api/v1/notes`;
 
 function makeLectureNote(question_id) {
@@ -8,7 +10,7 @@ function makeLectureNote(question_id) {
   return async () => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseURL;
-    let response = await axios.post(url, JSON.stringify(inputs), {headers: {
+    let response = await api.post(url, JSON.stringify(inputs), {headers: {
         "Content-Type": "application/json;charset=utf-8"}})
       .then((response) => {
         let data = response.data;
@@ -25,7 +27,7 @@ function getLectureNote(lecture_note_id) {
   return async (dispatch) => {
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseURL+`/${lecture_note_id}`;
-    let response = await axios.get(url)
+    let response = await api.get(url)
       .then((response) => {
         let data = response.data.lectureNoteId;
         console.log("getLectureNote",data);
@@ -46,7 +48,7 @@ function modifyNote(lecture_note_id){
     return async () => {
       // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
       let url = baseURL+`/${lecture_note_id}`;
-      let response = await axios.patch(url, JSON.stringify(inputs), {headers: {
+      let response = await api.patch(url, JSON.stringify(inputs), {headers: {
         "Content-Type": "application/json;charset=utf-8"}})
         .then((response) => {
           let data = response.data;
@@ -62,7 +64,7 @@ function deleteNote(lecture_note_id){
     return async () => {
       // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
       let url = baseURL+`/${lecture_note_id}`;
-      let response = await axios.delete(url)
+      let response = await api.delete(url)
         .then((response) => {
           let data = response.data;
           console.log(data);
