@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { userinfoAction } from "../redux/actions/userinfoAction";
 import ImageUploader from "react-images-upload";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SingUp() {
@@ -31,8 +32,8 @@ export default function SingUp() {
     temperature:0,
     profileImage:"",
   });
-;
-
+  // console.log("dddddd", inputs);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [pythonchecked, setpythonChecked] = React.useState(false);
   const [javachecked, setjavaChecked] = React.useState(false);
@@ -74,6 +75,7 @@ export default function SingUp() {
     params.append("user", blob);
     params.append("profile", pictures.picture[0]);
     dispatch(userinfoAction.signUp(params));
+    navigate(`/`);
   };
 
   const onChangeHandler = (event) => {

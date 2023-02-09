@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +17,10 @@ import { getCookieToken } from "../storage/Cookie";
 import alarm from "./alarm";
 const Navbar = () => {
   // const authcookie = getCookieToken();
-  // const authenticated = useSelector((state) => state.authToken.authenticated);
-  // const userId = useSelector((state) => state.authToken.userId);
+  const store = useStore();
+  console.log(store.getState());
+  const authenticated = store.getState().authToken.isLogin;
+  const userId= store.getState().authToken.userId;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let openalarm = false
@@ -47,7 +49,8 @@ const Navbar = () => {
   const logout = () => {
     handleClose();
     // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
-    // dispatch(authAction.onLogout(userId));
+    console.log(userId);
+    dispatch(authAction.onLogout(userId));
     navigate("/");
   };
 
@@ -89,7 +92,7 @@ const Navbar = () => {
             </Typography>
 
             <Box sx={{ minWidth: 300 }}>
-              {/* {authenticated === true ? ( */}
+              {authenticated === true ? (
                 <div>
                   <Grid item>
                     <Button
@@ -139,7 +142,7 @@ const Navbar = () => {
                     </Menu>
                   </Grid>
                 </div>
-              {/* ) : ( */}
+              ) : (
                 <Button
                   href="/login"
                   variant="outlined"
@@ -148,7 +151,7 @@ const Navbar = () => {
                 >
                   Login
                 </Button>
-              {/* )} */}
+              )}
             </Box>
           </Grid>
         </Toolbar>

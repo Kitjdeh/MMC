@@ -10,10 +10,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from "./TablePagination.js";
 
-const PointStatement = () => {
+const PointStatement = ({userId}) => {
   const dispatch = useDispatch();
   const getDepositAndWithdraw = () => {
-    dispatch(pointAction.getDepositAndWithdrawList(1));
+    dispatch(pointAction.getDepositAndWithdrawList(userId));
   };
   const pointList = useSelector((state) => state.point.point);
   useEffect(() => getDepositAndWithdraw(), []);

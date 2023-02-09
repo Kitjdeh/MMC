@@ -9,6 +9,7 @@ import { questionAction } from './../redux/actions/questionAction';
 import { useDispatch,useSelector } from "react-redux";
 import { userinfoAction } from './../redux/actions/userinfoAction';
 import { noteAction } from './../redux/actions/noteAction';
+import { Cookies } from 'react-cookie';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#f6edff",
@@ -24,21 +25,24 @@ const Word = styled(Grid)(({ theme }) => ({
   minWidth: 60,
 }));
 
+const cookie = new Cookies();
+const userId = cookie.get("userId");
 
 const TeacherRegister = ({nickname,temperature,userId}) => {
   const question = useSelector((state) => state.question.question);
 // console.log("TeacherRegister question",question.questionId);
   const dispatch = useDispatch();
   const deleteTrainer = () => {
-    dispatch(questionAction.deleteTrainer(question.questionId, 1)); //userId 추가 필요
+    dispatch(questionAction.deleteTrainer(question.questionId, userId)); 
   }
   const acceptTrainer = () => {
-    dispatch(questionAction.acceptTrainer(question.questionId, 1)); //userId 추가 필요
+    dispatch(questionAction.acceptTrainer(question.questionId, userId)); 
     console.log("before")
     dispatch(noteAction.makeLectureNote(question.questionId));
     console.log("after")
   }
-  const getUserInfo = () => {
+  const getUserInfo = (e) => {
+    console.log(e);
     dispatch(userinfoAction.getUserInfo(1));
   }
   return (

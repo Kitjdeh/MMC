@@ -30,14 +30,11 @@ const AllQuestion = () => {
   useEffect(() => {
     getFilteredList();
   }, [searchList]);
-
-
   //함수 selectList 구성 effect({},[language,search,category])
   //1. 검색어 title 모으는 titleList
   //2. 언어 체크리스트 모으는 lanugageGroup
   //3. 유형 체크리스트 모으는 categoryGroup
   //4. 3가지 함수를 await로 대기 한 후 filter
-
   const getLanguage = () => {
     let temp = [];
     languageGroup.forEach((item, index) => {
@@ -46,7 +43,7 @@ const AllQuestion = () => {
         console.log(language);
       }
     });
-    setLanguage(temp)
+    setLanguage(temp);
     return language;
   };
 
