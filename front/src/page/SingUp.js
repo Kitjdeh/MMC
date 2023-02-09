@@ -10,31 +10,38 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { userinfoAction } from "../redux/actions/userinfoAction";
+import ImageUploader from "react-images-upload";
+import { useNavigate } from 'react-router-dom';
+
+
 export default function SingUp() {
   const [inputs, setInputs] = useState({
     identity: "",
     password: "",
     nickname: "",
     language: 0,
-    name: "fffffMT",
+    name: "",
     email: "",
     phone: "",
     academicAbility: "",
     workplace: "",
-    backjoonId: "",
+    baekjoonId: "",
     award: "",
     lectureCount:10,
     point:0,
     temperature:0,
     profileImage:"",
-    profile:null
   });
-  console.log("dddddd", inputs);
-
+  // console.log("dddddd", inputs);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [pythonchecked, setpythonChecked] = React.useState(false);
   const [javachecked, setjavaChecked] = React.useState(false);
   const [cchecked, setcChecked] = React.useState(false);
+  const [pictures, setPictures] = useState([]);
+  const onDrop = picture => {
+    setPictures({...pictures, picture});
+  };
   const languageArray = [pythonchecked, javachecked, cchecked];
   const languagecount = [1, 2, 4];
   const pythonChange = (event) => {
@@ -55,21 +62,25 @@ export default function SingUp() {
       if (languageArray[i] === true) {
         temp += languagecount[i];
       }
-      console.log("언어합", temp, languageArray);
+      // console.log("언어합", temp, languageArray);
     }
     inputs["language"] = temp;
-    console.log(inputs["language"]);
+    // console.log(inputs["language"]);
   };
-  const submitUserInfo = (event) => {
-    event.preventDefault();
-    dispatch(userinfoAction.signUp(inputs));
-    console.log('회원가입submit',inputs)
+
+  const regist= ()=> {
+    const params = new FormData();
+    const json = JSON.stringify(inputs);
+    const blob = new Blob([json], { type: "application/json" });
+    params.append("user", blob);
+    params.append("profile", pictures.picture[0]);
+    dispatch(userinfoAction.signUp(params));
+    navigate(`/`);
   };
+
   const onChangeHandler = (event) => {
     event.preventDefault();
-
     const { name, value } = event.target;
-
     const nextInputs = { ...inputs, [name]: value };
     setInputs(nextInputs);
   };
@@ -81,6 +92,14 @@ export default function SingUp() {
             로그인
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
+            <ImageUploader
+              withIcon={true}
+              onChange={onDrop}
+              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+              maxFileSize={5242880}
+              singleImage
+              withPreview
+            />
             <TextField
               margin="normal"
               required
@@ -103,7 +122,19 @@ export default function SingUp() {
               id="password"
               size="small"
               onChange={onChangeHandler}
-              value={inputs.passwrod}
+              value={inputs.password}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="이름을 입력해주세요"
+              name="name"
+              type="text"
+              id="name"
+              size="small"
+              onChange={onChangeHandler}
+              value={inputs.name}
             />
             <TextField
               margin="normal"
@@ -120,14 +151,14 @@ export default function SingUp() {
             <TextField
               margin="normal"
               fullWidth
-              name="backjoonId"
-              id="backjoonId"
+              name="baekjoonId"
+              id="baekjoonId"
               label="백준아이디를 입력해주세요"
               size="small"
               onChange={onChangeHandler}
-              value={inputs.backjoonId}
+              value={inputs.baekjoonId}
             />
-                        <TextField
+            <TextField
               margin="normal"
               fullWidth
               name="email"
@@ -157,7 +188,8 @@ export default function SingUp() {
               size="small"
               defaultValue="주언어를 선택해주세요(중복가능)"
               InputProps={{
-                readOnly: true, "aria-label": "controlled"
+                readOnly: true,
+                "aria-label": "controlled",
               }}
             />
             <Box>
@@ -186,10 +218,9 @@ export default function SingUp() {
               name="academicAbility"
               id="academicAbility"
               label="학력을 입력해주세요"
-
               size="small"
               onChange={onChangeHandler}
-              value={inputs.academicAbility||""}
+              value={inputs.academicAbility}
             />
             <TextField
               margin="normal"
@@ -197,10 +228,9 @@ export default function SingUp() {
               name="workplace"
               id="workplace"
               label="직장을 입력해주세요"
-
               size="small"
               onChange={onChangeHandler}
-              value={inputs.workplace||""}
+              value={inputs.workplace}
             />
             <TextField
               margin="normal"
@@ -208,16 +238,14 @@ export default function SingUp() {
               name="award"
               id="award"
               label="수상경력을 입력해주세요"
-
               size="small"
               onChange={onChangeHandler}
-              value={inputs.award||""}
+              value={inputs.award}
             />{" "}
             <Button
-              type="submit"
               fullWidth
               variant="contained"
-              onClick={submitUserInfo}
+              onClick={regist}
               sx={{ mt: 3, mb: 2, bgcolor: "violet", borderColor: "#005cbf" }}
             >
               회원가입

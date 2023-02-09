@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { mainInfo } from "../redux/reducers/questions";
+import { mainInfo } from "../redux/reducers/question";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 const Item = styled(Container)(({ theme }) => ({
@@ -38,42 +38,42 @@ const mainbodylist = [
 
 const Main = () => {
   return (
-    <Box sx={{ flexGrow: 1,backgroundColor: "#f6edff" }}>
-      <Grid container spacing={3}  >
-        <Grid item xs={4}>
-          <Item  sx={{ flexGrow: 1,backgroundColor: "#f6edff"}}>
-            <HeaderBox  icon="faUser" title="전체회원" number="3435" />
-          </Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>
-            <HeaderBox
-              icon="faGraduationCap"
-              title="진행중인질문"
-              number="213"
-            />
-          </Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>
-            <HeaderBox icon="ff" title="완료된질문" number="434512" />
-          </Item>
-        </Grid>
-        <Grid item xs={12}>
-          <Item>
-            {" "}
-            {mainbodylist.map((item) => (
-              <MainBodyBox
-                title={item.title}
-                mention={item.mention}
-                img={item.img}
-              />
-            ))}
-          </Item>
-        </Grid>
+    <Box sx={{ flexGrow: 1, backgroundColor: "#f6edff" }}>
+    <Grid container spacing={2} sx={{ mt: 2 }}>
+      <Grid item xs={4}>
+        <Item >
+          <HeaderBox icon="faUser" title="전체회원" number="3435" />
+        </Item>
       </Grid>
-    </Box>
-  );
+      <Grid item xs={4}>
+        <Item>
+          <HeaderBox
+            icon="faGraduationCap"
+            title="진행중인질문"
+            number="213"
+          />
+        </Item>
+      </Grid>
+      <Grid item xs={4}>
+        <Item>
+          <HeaderBox icon="ff" title="완료된질문" number="434512" />
+        </Item>
+      </Grid>
+      <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
+        <Item sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
+          {" "}
+          {mainbodylist.map((item) => (
+            <MainBodyBox
+              title={item.title}
+              mention={item.mention}
+              img={item.img}
+            />
+          ))}
+        </Item>
+      </Grid>
+    </Grid>
+  </Box>
+);
 };
 
 export default Main;

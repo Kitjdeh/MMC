@@ -12,23 +12,25 @@ import { getCookieToken,getUserId } from "./storage/Cookie";
 import { authAction } from "./redux/actions/authAction";
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    // mode: "dark",
     primary: {
       main: "#d3c3ff",
     },
   },
 });
 function App() {
-  const dispatch = useDispatch();
-  const userId = getUserId()
-  const refreshToken = getCookieToken();
-  const accessToken = useSelector((state) => state.authToken.accessToken);
 
-  console.log("리프래쉬토큰부르기");
-  console.log("엑세스토큰", accessToken,userId);
-  if (accessToken === null && refreshToken) {
-    dispatch(authAction.resetToken(refreshToken, userId));
-  }
+  // const dispatch = useDispatch();
+  // const userId = getUserId()
+  // const refreshToken = getCookieToken();
+  // const accessToken = useSelector((state) => state.authToken.accessToken);
+
+  // console.log("리프래쉬토큰부르기");
+  // console.log("엑세스토큰", accessToken,userId);
+  // if (accessToken === null && refreshToken) {
+    // dispatch(authAction.resetToken(refreshToken, userId));
+  // }
+  
   return (
     <div>
       <ThemeProvider theme={theme}>

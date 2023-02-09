@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
@@ -6,11 +6,15 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { questionAction } from "../redux/actions/questionAction";
 import TeacherCard from "./TeacherCard";
 import TeacherRegister from "./TeacherRegister";
+import { TransitEnterexitSharp } from "@mui/icons-material";
+import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
-
+import { noteAction } from "./../redux/actions/noteAction";
+import { Cookies } from "react-cookie";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -25,13 +29,74 @@ const Bar = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
 }));
-// const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
-const user = [
-  { nickname: "김정민", temperature: "32", userId: 1 },
-  { nickname: "김원혁", temperature: "21", userId: 3 },
-  { nickname: "기성도", temperature: "54", userId: 2 },
+
+const lang = ["Python", "Java", "C++"];
+const category = ["알고리즘", "디버깅"];
+const algo = [
+  "BFS",
+  "DFS",
+  "그래프",
+  "DP",
+  "정렬",
+  "그리디",
+  "시뮬레이션",
+  "분할정복",
+  "순열",
+  "조합",
+  "부분집합",
+  "최소스패닝트리",
+  "기타",
 ];
+const source = ["백준", "프로그래머스"];
+
 const QuestionMain = ({ question }) => {
+  console.log("props", question);
+  let time = new Date(question.reservation);
+  const [algorithm, setAlgorithm] = useState([]);
+  console.log({ question });
+  console.log("main페이지확인", { question });
+  useEffect(() => {
+    transBitmask();
+  }, []);
+  // const trainers = useSelector((state) => state.question.trainers);
+  const store = useStore();
+  const trainers = store.getState().question.trainers;
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
+
+  const transBitmask = () => {
+    let algobit = 1;
+    let index = 0;
+    console.log(question.algorithm.toString(2).split("").reverse().join(""));
+    for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
+      algobit = algobit && x;
+      if (algobit === "1") {
+        console.log(index, algo[index]);
+        setAlgorithm([...algorithm, algo[index]]);
+      }
+      console.log(index);
+      index++;
+    }
+    // question.algorithm.map((element)=>{
+    //   algobit = algobit | 1>>element;
+    //   console.log(algobit);
+    // });
+  };
+  const dispatch = useDispatch();
+  const deleteQuestion = () => {
+    dispatch(questionAction.deleteQuestion(question.questionId));
+  };
+  const addTrainer = () => {
+    dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
+  };
+
+  const getLectureNote = () => {
+    console.log("123123123");
+    dispatch(noteAction.getLectureNote(question.questionId));
+  };
+  const note = useSelector((state) => state.note.note);
+  console.log(note);
+
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -62,12 +127,18 @@ const QuestionMain = ({ question }) => {
       <hr />
 
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>{question.language}</Item>
-        <Item>{question.category}</Item>
-        <Item>{question.source}</Item>
-        <Item>{question.question_number}</Item>
+        <Item>{lang[question.language]}</Item>
+        <Item>{category[question.category]}</Item>
+        <Item>{source[question.source]}</Item>
+        <Item>{question.questionNumber}</Item>
         <Item>{question.point}</Item>
-        <Item>{question.reservation}</Item>
+        <Item>
+          {new Date(question.reservation).toLocaleString("ko-kr", {
+            month: "short",
+            day: "2-digit", 
+            year: "numeric",
+          })}
+        </Item>
       </Stack>
       <br />
       <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
@@ -77,8 +148,13 @@ const QuestionMain = ({ question }) => {
           </Bar>
 
           <Bar item xs={2} margin={1}>
-            {question.algorithm}
+            {algorithm}
           </Bar>
+          {/* {algorithm.length>0 ? algorithm.map((element)=>{
+            <Bar item xs={2} margin={1}>
+            {element}
+          </Bar>
+          }): <div></div>} */}
         </Grid>
       </Bar>
       <br />
@@ -87,7 +163,7 @@ const QuestionMain = ({ question }) => {
       </Bar>
       <Box>
         <Bar>
-          <Button>문제풀이 신청</Button>
+          <Button onClick={addTrainer}>문제풀이 신청</Button>
         </Bar>
         <Container>
           <Grid container justifyContent="space-between">
@@ -97,13 +173,17 @@ const QuestionMain = ({ question }) => {
               </Item>
               <Item>
                 <TeacherRegister nickname="프로필" temperature="온도" />
-                {user.map((item) => (
-                  <TeacherRegister
-                    nickname={item.nickname}
-                    temperature={item.temperature}
-                    userId={item.userId}
-                  />
-                ))}
+                {trainers ? (
+                  trainers.map((item) => (
+                    <TeacherRegister
+                      nickname={item.nickname}
+                      temperature={item.temperature}
+                      writeId={item.userId}
+                    />
+                  ))
+                ) : (
+                  <div>답변자 리스트가 없습니다.</div>
+                )}
               </Item>
             </Grid>
 
@@ -113,8 +193,10 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
+
+      <button onClick={deleteQuestion}>글 삭제</button>
+      <button onClick={getLectureNote}>강의실 입장</button>
     </Box>
   );
 };
-
 export default QuestionMain;

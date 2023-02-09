@@ -1,8 +1,9 @@
 import React from 'react'
 
-const QuestionAbout = () => {
+const QuestionAbout = ({question}) => {
+  console.log({question});
   return (
-    <div><img src="/img/problemex.png"  component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/></div>
+    <div><img src={question.imageUrl} width="100%" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/></div>
   )
 }
 

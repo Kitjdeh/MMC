@@ -1,33 +1,37 @@
 import axios from "axios";
+import { apiInstance } from "../../api";
+const api = apiInstance();
+// let baseUrl = "http://localhost:8080/api/v1/users";
+let baseUrl = "http://i8a508.p.ssafy.io:8083/api/v1";
 
-// function getUserInfo() {
-//   return async (dispatch, getState) => {
-//     let url = `http://localhost:5000/user`;
-//     let response = await fetch(url);
-//     let data = await response.json();
-//     dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
-//   };
-// }
-
-function signUp(item) {
-  let data = item
-  console.log("회원가입 action", data);
-  return async (dispatch, getState) => {
-    let url = `http://i8a508.p.ssafy.io:8080/api/v1/users`;
-    let response = await axios
-      .post(url, JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-      })
+function getUserInfo(user_id) {
+  return async (dispatch) => {
+    let url = baseUrl + `/${user_id}`;
+    let response = await api
+      .get(url)
       .then((response) => {
         let data = response.data;
-        console.log("회원가입response",response)
-        dispatch({ type: "POST_SIGNUP_SUCCESS", payload: { data } });
+        dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
       })
       .catch((error) => {
-        console.log("회원가입에러", error);
+        console.log("getUser", error);
       });
   };
 }
-export const userinfoAction = {  signUp };
+
+function signUp(inputs) {
+  console.log("회원가입 action", inputs);
+    return async () => {
+      let url = baseUrl + `/users`;;
+      let response = await axios
+        .post(url, inputs)
+        .then((response) => {
+          let data = response.data;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("ERROR", error);
+        });
+  };
+}
+export const userinfoAction = { signUp, getUserInfo };

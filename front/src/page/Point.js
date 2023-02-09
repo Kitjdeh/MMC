@@ -7,11 +7,15 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { Cookies } from 'react-cookie';
 const Point = () => {
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
+
   const category = {
-    deposit: <RequestDeposit />,
-    withdraw: <RequestWithdraw />,
-    statement: <PointStatement />,
+    deposit: <RequestDeposit userId={userId} />,
+    withdraw: <RequestWithdraw  userId={userId}/>,
+    statement: <PointStatement userId={userId} />,
   };
   const [content, setContent] = useState();
   const selectcomponent = (item) => {

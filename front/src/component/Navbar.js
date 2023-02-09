@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -9,22 +9,36 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { getCookieToken } from "../storage/Cookie";
+import { getCookieToken, getUserId} from "../storage/Cookie";
 import alarm from "./alarm";
+import { Cookies } from 'react-cookie';
 const Navbar = () => {
-  const authcookie = getCookieToken();
-  const authenticated = useSelector((state) => state.authToken.authenticated);
-  const userId = useSelector((state) => state.authToken.userId);
+  // const authcookie = getCookieToken();
+  const store = useStore();
+  console.log(store.getState());
+  // const authenticated = store.getState().authToken.isLogin;
+  const [authenticated, setAuthenticated] = useState(false)
+
+  useEffect(() => {
+    const cookie = new Cookies();
+    setAuthenticated(cookie.get("userId") !== undefined ? true : false);
+  })
+  console.log(authenticated)
+  
+  const cookie = new Cookies();
+  const userId= cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  let openalarm = false
+  let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
@@ -44,7 +58,8 @@ const Navbar = () => {
   };
   const logout = () => {
     handleClose();
-    console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
+    // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
+    console.log(userId);
     dispatch(authAction.onLogout(userId));
     navigate("/");
   };
@@ -91,38 +106,51 @@ const Navbar = () => {
                 <div>
                   <Grid item>
                     <Button
-                      id="basic-button"
-                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-controls={openalarm ? "alarm-menu" : undefined}
                       aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
+                      aria-expanded={openalarm ? "true" : undefined}
+                      onClick={handleClick}
+                      id="alarm-button"
+                      open={openalarm}
+                    >
+                      알람
+                    </Button>
+                    <Menu
+                      id="alarm-menu"
+                      anchorEl={anchorEl}
+                      open={openalarm}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "alarm-menu",
+                      }}
+                    >
+                      <MenuItem>알람이 없습니다.</MenuItem>
+                      <MenuItem>알람이 없습니다.</MenuItem>
+                    </Menu>
+                    <Button
+                      id="mypage-button"
+                      aria-controls={openmypage ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
                     >
-                      <alarm />
+                      마이페이지
                     </Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={openmypage}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "mypage-button",
+                      }}
+                    >
+                      <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
+                      <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
+                      <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
+                      <MenuItem onClick={logout}>로그아웃</MenuItem>
+                    </Menu>
                   </Grid>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                  >
-                    마이페이지
-                  </Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
-                    <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
-                    <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
-                    <MenuItem onClick={logout}>로그아웃</MenuItem>
-                  </Menu>
                 </div>
               ) : (
                 <Button

@@ -7,14 +7,14 @@ import { styled } from "@mui/material/styles";
 import LectureCode from "../component/LectureCode";
 import LectureQuestion from "../component/LectureQuestion";
 import LectureWebRTC from "../component/LectureWebRTC";
+const Bar = styled(Grid)(({ theme }) => ({
+  backgroundColor: (theme.palette.mode = "#f6edff"),
+  textAlign: "center",
+}));
+const Word = styled(Grid)(({ theme }) => ({
+  textAlign: "center",
+}));
 const LectureNote = () => {
-  const Bar = styled(Grid)(({ theme }) => ({
-    backgroundColor: (theme.palette.mode = "#f6edff"),
-    textAlign: "center",
-  }));
-  const Word = styled(Grid)(({ theme }) => ({
-    textAlign: "center",
-  }));
   const [content, setContent] = useState();
   const selectpage = (item) => {
     const { name } = item.target;
