@@ -1,0 +1,27 @@
+{
+  "name": "webrtc",
+  "version": "1.0.0",
+  "description": "Zoom Clone using WebRTC",
+  "license": "ISC",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "@socket.io/admin-ui": "^0.5.1",
+    "express": "^4.18.2",
+    "express-react-views": "^0.11.0",
+    "pug": "^3.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "redis": "^3.1.2",
+    "socket.io": "^4.5.4",
+    "ws": "^8.12.0"
+  }
+}
