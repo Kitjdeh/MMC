@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { Cookies } from 'react-cookie';
 
-const LectureCode = () => {
+const LectureCode = ({ check, setCheck }) => {
+  useEffect(() => {
+    if (check !== 2) {
+      setCheck(2);
+    }
+  }, []);
+
   let SEC_HTTPS = true;
   let SEC_BASE = "compilers.widgets.sphere-engine.com";
   let SEC = window.SEC || (window.SEC = []);
@@ -11,8 +16,7 @@ const LectureCode = () => {
     if (d.getElementById(id)) return;
     js = d.createElement(s);
     js.id = id;
-    js.src =
-      (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+    js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   })(document, "script", "sphere-engine-compilers-jssdk");
 

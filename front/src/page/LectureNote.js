@@ -29,9 +29,9 @@ const LectureNote = () => {
   const category = useMemo(
     () => ({
       Question: <LectureQuestion check={check} setCheck={setCheck} />,
-      Code: <LectureCode />,
+      Code: <LectureCode check={check} setCheck={setCheck} />,
       Graffiti: <LectureGraffiti check={check} setCheck={setCheck} />,
-      WebRTC: <LectureWebRTC />,
+      WebRTC: <LectureWebRTC check={check} setCheck={setCheck} />,
       Chat: <LectureChat />,
     }),
     []

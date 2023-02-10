@@ -27,13 +27,13 @@ const LectureGraffiti = ({ check, setCheck }) => {
   const lectureNoteId = "2";
 
   useEffect(() => {
-    if (check !== 2) {
-      setCheck(2);
+    if (check !== 3) {
+      setCheck(3);
       socket.send(updatePicture("first2", "", lectureNoteId));
     }
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.type === "picture2") {
+      if (message.lectureNoteId === lectureNoteId && message.type === "picture2") {
         const Data2Array = JSON.parse(message.payload);
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d", { willReadFrequently: true });

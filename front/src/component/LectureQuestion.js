@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-
 
 const socket = new WebSocket(`ws://localhost:8000`);
 
@@ -35,7 +33,7 @@ const LectureQuestion = ({ check, setCheck }) => {
     }
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.type === "picture1") {
+      if (message.lectureNoteId === lectureNoteId && message.type === "picture1") {
         const Data2Array = JSON.parse(message.payload);
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d", { willReadFrequently: true });
