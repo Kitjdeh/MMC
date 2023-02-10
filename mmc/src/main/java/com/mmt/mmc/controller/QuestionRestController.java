@@ -64,7 +64,9 @@ public class QuestionRestController {
 
     //질문 수정
     @PatchMapping("/{question_id}")
-    public ResponseEntity<Map<String,Object>> questionModify(@PathVariable("question_id") int questionId, @RequestBody QuestionDto question){
+    public ResponseEntity<Map<String,Object>> questionModify(@PathVariable("question_id") int questionId, @RequestBody QuestionDto question) throws Exception {
+        int questionNum = question.getQuestionNumber();
+        question.setImageUrl(questionService.grabzIt(questionNum));
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
