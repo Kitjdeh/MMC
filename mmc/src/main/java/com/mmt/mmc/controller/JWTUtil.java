@@ -45,8 +45,8 @@ public class JWTUtil {
         builder.setSubject(subject)
                 .setHeaderParam("alg", "HS256")
                 .setHeaderParam("typ", "JWT")
-                .setExpiration(new Date(System.currentTimeMillis() + expireMin));
-
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin));
+//                .setExpiration(new Date(System.currentTimeMillis() + expireMin));
         //담고 싶은 정보 설정
         builder.claim("userId", userId);
 
@@ -76,7 +76,7 @@ public class JWTUtil {
             //Claims는 Map의 구현체
             return claims.getBody();
         }
-        catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e){
+        catch (ExpiredJwtException e){
             e.printStackTrace();
             throw new InvalidParameterException("유효하지 않은 토큰입니다.");
         }

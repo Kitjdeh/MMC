@@ -9,6 +9,7 @@ import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
@@ -69,7 +70,8 @@ public class UserServiceImpl implements UserService{
     */
     @Override
     public void addUser(UserDto userDto) throws NoSuchAlgorithmException {
-        validateDuplicateUser(userDto.toEntity());//중복 회원 검증 , 이후 암호화 적용 및 JWP적용
+        System.out.println("USERDTO "+userDto);
+//        validateDuplicateUser(userDto.toEntity());//중복 회원 검증 , 이후 암호화 적용 및 JWP적용
         userDto.setPassword(new SHA256().getHash(userDto.getPassword()));
         userRepository.save(userDto.toEntity());
     }

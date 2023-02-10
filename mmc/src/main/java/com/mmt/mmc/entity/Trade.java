@@ -1,10 +1,9 @@
 package com.mmt.mmc.entity;
 
-import java.util.Date;
-
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 
 import lombok.Builder;
@@ -14,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
+@DynamicUpdate
 public class Trade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +54,9 @@ public class Trade {
 		this.bank = bank;
 		this.account = account;
 		this.process = process;
+	}
+
+	public void changeProcess(int process){
+		this.process=process;
 	}
 }

@@ -45,9 +45,7 @@ public class QuestionRestController {
     @PostMapping
     public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question) throws Exception {
         int questionNum = question.getQuestionNumber();
-        System.out.println("questionNumber "+questionNum);
         question.setImageUrl(questionService.grabzIt(questionNum));
-        System.out.println("Question "+question);
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -112,7 +110,7 @@ public class QuestionRestController {
     }
 
     //강사 신청 수락
-    @PatchMapping("/lecture/{question_id}")
+    @PatchMapping("/lecture/{question_id}/{user_id}")
     public ResponseEntity<Map<String,Object>> questionTrainerModify(@RequestBody QuestionTrainerDto questionTrainer){
         questionService.saveQuestionTrainer(questionTrainer);
         Map<String,Object> map = new HashMap<>();
@@ -135,7 +133,6 @@ public class QuestionRestController {
     public ResponseEntity<Map<String,Object>> trainerList(@PathVariable("question_id") int questionId){
         Map<String,Object> map = new HashMap<>();
         List<UserDto> trainers = questionService.findAllTrainer(questionId);
-        System.out.println("trainers "+trainers);
         map.put("result",SUCCESS);
         map.put("users",trainers);
         return new ResponseEntity<>(map,HttpStatus.OK);

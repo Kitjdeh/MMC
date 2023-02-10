@@ -39,11 +39,22 @@ public class TradeServiceImpl implements TradeService {
 		return null;
 	}
 
-	// 입출금 내역 삽입, 수정
+	// 입출금 내역 등록
+	@Override
+	public void addTrade(TradeDto tradeDto) {
+		tradeRepository.save(tradeDto.toEntity()).getTradeId();
+	}
+
+	// 입출금 내역 수정
 	@Override
 	@Transactional
-	public void saveTrade(TradeDto tradeDto) {
-		tradeRepository.save(tradeDto.toEntity());
+	public void modifyTrade(TradeDto tradeDto) {
+		Optional<Trade> tradeWrapper=tradeRepository.findById(tradeDto.getTradeId());
+		if(tradeWrapper.isPresent()){
+			Trade trade = tradeWrapper.get();
+			trade.changeProcess(tradeDto.getProcess());
+			tradeRepository.save(trade).getTradeId();
+		}
 	}
 
 	// 입출금 내역 제거
