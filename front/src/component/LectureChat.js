@@ -23,12 +23,17 @@ const LectureChat = () => {
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.type === "new_message") {
+      if (message.lectureNoteId === lectureNoteId && message.type === "new_message") {
         const li = document.createElement("li");
-        // li.style.textAlign = (name === message.username) ? "right" : "left";
-        li.style.textAlign = "left";
         li.style.listStyle = "none";
-        li.innerText = nickName + " : " + message.payload;
+        if (nickName === message.nickName) {
+          li.style.textAlign = "right";
+          li.innerText = message.payload;
+        } else {
+          console.log("why");
+          li.style.textAlign = "left";
+          li.innerText = message.nickName + " : " + message.payload;
+        }
         messageListRef.current.append(li);
       }
     });
