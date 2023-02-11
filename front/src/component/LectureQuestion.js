@@ -24,7 +24,11 @@ const LectureQuestion = ({ check, setCheck }) => {
   const [thickness, setThickness] = useState(2);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-  const lectureNoteId = "2";
+
+  const noteId = useSelector((state) => state.note.note);
+
+  console.log("NOTEIDQUESTION",noteId);
+  const lectureNoteId = noteId;
 
   useEffect(() => {
     if (check !== 1) {
