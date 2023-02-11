@@ -13,6 +13,7 @@ import {questionAction}from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#f6edff"),
@@ -74,9 +75,11 @@ const WriteQuestion = ({userId}) => {
     '프로그래머스'
   ];
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const submitQuestion = () => {
     dispatch(questionAction.writeQuestion(inputs));
+    navigate(`/question`);
   };
 
   const onChangeHandler = (e) => {

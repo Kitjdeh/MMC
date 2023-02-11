@@ -4,9 +4,12 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { questionAction } from './../redux/actions/questionAction';
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const showDetail = () => {
     navigate(`/question/${question.questionId}`);
   };

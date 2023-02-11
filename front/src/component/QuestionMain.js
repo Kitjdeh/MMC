@@ -15,6 +15,7 @@ import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
 import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -23,6 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   minWidth: 50,
 }));
+
 const Bar = styled(Grid)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
   ...theme.typography.body2,
@@ -50,19 +52,32 @@ const algo = [
 const source = ["백준", "프로그래머스"];
 
 const QuestionMain = ({ question }) => {
-  console.log("props", question);
-  let time = new Date(question.reservation);
   const [algorithm, setAlgorithm] = useState([]);
-  console.log({ question });
-  console.log("main페이지확인", { question });
+  const [loading, setLoading] = useState(false);
+
+  const store = useStore();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const trainers = store.getState().question.trainers;
+  const noteId = useSelector((state) => state.note.note);
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
+
+  let time = new Date(question.reservation);
+
   useEffect(() => {
     transBitmask();
   }, []);
-  // const trainers = useSelector((state) => state.question.trainers);
-  const store = useStore();
-  const trainers = store.getState().question.trainers;
-  const cookie = new Cookies();
-  const userId = cookie.get("userId");
+  useEffect(() => {
+    if (loading) {
+      console.log("NOTEID", noteId);
+      navigate(`/lecture/${noteId}`);
+    }
+  }, [noteId]);
+  useEffect(()=>{
+    algorithm.map((e)=>console.log(e))
+  },[algorithm])
 
   const transBitmask = () => {
     let algobit = 1;
@@ -72,17 +87,21 @@ const QuestionMain = ({ question }) => {
       algobit = algobit && x;
       if (algobit === "1") {
         console.log(index, algo[index]);
-        setAlgorithm([...algorithm, algo[index]]);
+        // setAlgorithm([...algorithm, algo[index++]]);
+        setAlgorithm((prev)=>{
+          const updated=[...prev];
+          updated[index]=algo[index];
+          console.log(updated);
+          return updated;
+        });
+        index++;
       }
-      console.log(index);
-      index++;
     }
     // question.algorithm.map((element)=>{
     //   algobit = algobit | 1>>element;
     //   console.log(algobit);
     // });
   };
-  const dispatch = useDispatch();
   const deleteQuestion = () => {
     dispatch(questionAction.deleteQuestion(question.questionId));
   };
@@ -90,13 +109,12 @@ const QuestionMain = ({ question }) => {
     dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
   };
 
-  const getLectureNote = () => {
-    console.log("123123123");
+  const getLectureNote = async () => {
+    console.log("QUESTIONID", question.questionId);
     dispatch(noteAction.getLectureNote(question.questionId));
+    setLoading(true);
   };
-  const note = useSelector((state) => state.note.note);
-  console.log(note);
-
+  
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -135,7 +153,7 @@ const QuestionMain = ({ question }) => {
         <Item>
           {new Date(question.reservation).toLocaleString("ko-kr", {
             month: "short",
-            day: "2-digit", 
+            day: "2-digit",
             year: "numeric",
           })}
         </Item>
@@ -147,14 +165,11 @@ const QuestionMain = ({ question }) => {
             알고리즘
           </Bar>
 
-          <Bar item xs={2} margin={1}>
-            {algorithm}
-          </Bar>
-          {/* {algorithm.length>0 ? algorithm.map((element)=>{
+          {algorithm.length>0 ? algorithm.map((element)=>{
             <Bar item xs={2} margin={1}>
             {element}
-          </Bar>
-          }): <div></div>} */}
+            </Bar>
+          }): <div></div>}
         </Grid>
       </Bar>
       <br />
@@ -193,9 +208,9 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
-
-      <button onClick={deleteQuestion}>글 삭제</button>
-      <button onClick={getLectureNote}>강의실 입장</button>
+      <Bar>
+        <Button onClick={getLectureNote}>강의실 입장</Button>
+      </Bar>
     </Box>
   );
 };

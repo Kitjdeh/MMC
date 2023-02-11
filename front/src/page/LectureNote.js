@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 });
 
 const LectureNote = () => {
+  console.log("test2");
   const classes = useStyles();
   const [content, setContent] = useState("Question");
   const [check, setCheck] = useState(0);

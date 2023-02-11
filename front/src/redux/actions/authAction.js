@@ -5,8 +5,8 @@ import jwtDecode from "jwt-decode";
 
 import { apiInstance } from "../../api/index";
 
-// let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1";
-let baseUrl=`http://localhost:8080/api/v1`;
+let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1";
+// let baseUrl=`http://localhost:8080/api/v1`;
 
 const api = apiInstance();
 
@@ -147,7 +147,7 @@ function getUserInfo(token){
   // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
   console.log("GETUSERINFOOOOO", decodeToken);
   return async (dispatch) => {
-    let url = `${baseUrl}users/${decodeToken.userId}`;
+    let url = `${baseUrl}/users/${decodeToken.userId}`;
     api.defaults.headers["jwt-auth-token"] = token;
     let response = await api
       .get(url)
@@ -169,7 +169,7 @@ function tokenRegeneration(refreshtoken, userId) {
   };
   console.log("리셋토큰데이터", data);
   return async (dispatch, getstate) => {
-    let url = `http://localhost:8080/api/v1/users/refresh`;
+    let url = `${baseUrl}/users/refresh`;
     // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
       .post(url, JSON.stringify(data), {
