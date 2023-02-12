@@ -34,4 +34,6 @@ function signUp(inputs) {
         });
   };
 }
+
+
 export const userinfoAction = { signUp, getUserInfo };

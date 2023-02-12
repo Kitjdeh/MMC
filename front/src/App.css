@@ -56,3 +56,8 @@
   background-color: white;
   border-radius: 10px;
 }
+.react-datepicker {
+  width:100%;
+  font-size: 1.5em;
+  border: 1px solid;
+}

@@ -48,22 +48,19 @@ const algo = [
   "기타",
 ];
 const source = ["백준", "프로그래머스"];
-
 const QuestionMain = ({ question }) => {
-  console.log("props", question);
   let time = new Date(question.reservation);
+  // const [trainer,setTrainer] = useState([])
   const [algorithm, setAlgorithm] = useState([]);
-  console.log({ question });
-  console.log("main페이지확인", { question });
   useEffect(() => {
     transBitmask();
   }, []);
   // const trainers = useSelector((state) => state.question.trainers);
   const store = useStore();
   const trainers = store.getState().question.trainers;
+  console.log("강사",trainers)
   const cookie = new Cookies();
   const userId = cookie.get("userId");
-
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;
@@ -90,13 +87,17 @@ const QuestionMain = ({ question }) => {
     dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
   };
 
+
   const getLectureNote = () => {
     console.log("123123123");
     dispatch(noteAction.getLectureNote(question.questionId));
   };
   const note = useSelector((state) => state.note.note);
-  console.log(note);
-
+  const selectTrainer = (item) => {
+    const { name } = item;
+    console.log({ name }, name);
+    console.log("클릭클릭", item.target, name);
+  };
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -135,7 +136,7 @@ const QuestionMain = ({ question }) => {
         <Item>
           {new Date(question.reservation).toLocaleString("ko-kr", {
             month: "short",
-            day: "2-digit", 
+            day: "2-digit",
             year: "numeric",
           })}
         </Item>
@@ -163,7 +164,11 @@ const QuestionMain = ({ question }) => {
       </Bar>
       <Box>
         <Bar>
-          <Button onClick={addTrainer}>문제풀이 신청</Button>
+          {question?.userId !== userId ? (
+            <Button onClick={addTrainer}>문제풀이 신청</Button>
+          ) : (
+            <Box></Box>
+          )}
         </Bar>
         <Container>
           <Grid container justifyContent="space-between">
@@ -173,16 +178,18 @@ const QuestionMain = ({ question }) => {
               </Item>
               <Item>
                 <TeacherRegister nickname="프로필" temperature="온도" />
-                {trainers ? (
+                {trainers.length != 0 ? (
                   trainers.map((item) => (
-                    <TeacherRegister
-                      nickname={item.nickname}
-                      temperature={item.temperature}
-                      writeId={item.userId}
-                    />
+                    <Button name={item} onClick={selectTrainer(item)}>
+                      <TeacherRegister
+                        nickname={item.nickname}
+                        temperature={item.temperature}
+                        writeId={item.userId}
+                      />
+                    </Button>
                   ))
                 ) : (
-                  <div>답변자 리스트가 없습니다.</div>
+                  <Item>답변자 리스트가 없습니다.</Item>
                 )}
               </Item>
             </Grid>
@@ -196,6 +203,7 @@ const QuestionMain = ({ question }) => {
 
       <button onClick={deleteQuestion}>글 삭제</button>
       <button onClick={getLectureNote}>강의실 입장</button>
+      
     </Box>
   );
 };

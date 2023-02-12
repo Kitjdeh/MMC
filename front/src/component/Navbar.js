@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -13,27 +13,26 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { getCookieToken, getUserId} from "../storage/Cookie";
+import { getCookieToken, getUserId } from "../storage/Cookie";
 import alarm from "./alarm";
-import { Cookies } from 'react-cookie';
+import { Cookies } from "react-cookie";
 const Navbar = () => {
   // const authcookie = getCookieToken();
   const store = useStore();
   console.log(store.getState());
   // const authenticated = store.getState().authToken.isLogin;
-  const [authenticated, setAuthenticated] = useState(false)
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     const cookie = new Cookies();
     setAuthenticated(cookie.get("userId") !== undefined ? true : false);
-  })
-  console.log(authenticated)
-  
+  });
+  console.log(authenticated);
   const cookie = new Cookies();
-  const userId= cookie.get("userId");
+  const userId = cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  let openalarm = false
+  let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

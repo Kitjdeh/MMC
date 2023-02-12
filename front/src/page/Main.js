@@ -1,13 +1,15 @@
-import React from "react";
+import React , { useEffect, useState }from "react";
 import HeaderBox from "../component/HeaderBox";
 import MainBodyBox from "../component/MainBodyBox";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import { mainInfo } from "../redux/reducers/question";
 import { useDispatch, useSelector } from "react-redux";
+import Grid from "@mui/material/Grid";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import SchoolIcon from "@mui/icons-material/School";
+import PeopleIcon from "@mui/icons-material/People";
 import Container from "@mui/material/Container";
+import { questionAction } from "../redux/actions/questionAction";
 const Item = styled(Container)(({ theme }) => ({
   backgroundColor: "#f6edff",
   ...theme.typography.body2,
@@ -37,43 +39,77 @@ const mainbodylist = [
 ];
 
 const Main = () => {
+  const [donequestion,setdonequestion] = useState(0);
+  const [doingquestion,setdoingquestion] = useState(0);
+  const dispatch = useDispatch();
+  const questionList = useSelector((state) => state.question.questions);
+  const usercount = useSelector((state)=>state.question.usercount)
+  const getallQuestions = () => {
+    dispatch(questionAction.getQuestions());
+  };
+  const getuserCount = () => {
+    dispatch(questionAction.userCount());
+  };
+
+  const distinctUser = () =>{
+    for (let item in questionList) {
+      console.log(item)
+    }
+    // questionList.forEach((item,index) => {
+    //   if (item.progress == 0) {
+    //     setdonequestion(doingquestion+1)
+    //     console.log(item.progress,"!111")
+    //   }
+    //     else {
+    //       setdoingquestion(doingquestion+1)
+    //     }
+    //   })
+    };
+  
+  useEffect(() => getallQuestions(),[]);
+  useEffect(() => getuserCount(),[]);
+  useEffect(()=> distinctUser(),[])
+
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: "#f6edff" }}>
-    <Grid container spacing={2} sx={{ mt: 2 }}>
-      <Grid item xs={4}>
-        <Item >
-          <HeaderBox icon="faUser" title="전체회원" number="3435" />
-        </Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item>
-          <HeaderBox
-            icon="faGraduationCap"
-            title="진행중인질문"
-            number="213"
-          />
-        </Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item>
-          <HeaderBox icon="ff" title="완료된질문" number="434512" />
-        </Item>
-      </Grid>
-      <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
-        <Item sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
-          {" "}
-          {mainbodylist.map((item) => (
-            <MainBodyBox
-              title={item.title}
-              mention={item.mention}
-              img={item.img}
+      <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Grid item xs={4}>
+          <Item>
+            <PeopleIcon sx={{ fontSize: 50 }}></PeopleIcon>
+            <HeaderBox icon="faUser" title="전체회원" number="3435" />
+          </Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>
+            <LibraryBooksIcon sx={{ fontSize: 50 }}></LibraryBooksIcon>
+            <HeaderBox
+              icon="faGraduationCap"
+              title="진행중인질문"
+              number={doingquestion}
             />
-          ))}
-        </Item>
+          </Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>
+            <SchoolIcon sx={{ fontSize: 50 }}></SchoolIcon>
+            <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
+          </Item>
+        </Grid>
+        <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
+          <Item sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
+            {" "}
+            {mainbodylist.map((item) => (
+              <MainBodyBox
+                title={item.title}
+                mention={item.mention}
+                img={item.img}
+              />
+            ))}
+          </Item>
+        </Grid>
       </Grid>
-    </Grid>
-  </Box>
-);
+    </Box>
+  );
 };
 
 export default Main;
