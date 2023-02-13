@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useSelector } from 'react-redux';
 
 const socket = new WebSocket(`ws://localhost:8000`);
 

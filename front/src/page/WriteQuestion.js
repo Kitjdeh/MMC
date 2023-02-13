@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import moment from "moment";
 import { Cookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#9575cd"),
   padding: theme.spacing(0.5),
@@ -47,7 +47,7 @@ const WriteQuestion = () => {
     reservation: "",
     code: "",
     point: 0,
-    date: moment().format('yyyy-MM-DD HH:mm:ss')
+    date: moment().format("yyyy-MM-DD HH:mm:ss"),
   });
 
   const lang = ["Python", "Java", "C++"];
@@ -84,242 +84,238 @@ const WriteQuestion = () => {
   };
 
   const onChangeMultiHandler = async (e) => {
-    const {value} = e.target;
-    console.log("VALUE",value)
-    await setAlgorithm(
-        typeof value === 'string' ? value.split(',') : value,
-    );
+    const { value } = e.target;
+    console.log("VALUE", value);
+    await setAlgorithm(typeof value === "string" ? value.split(",") : value);
 
-  const transBitmask = () => {
-    let algobit = 0;
-    algorithm.map((element) => {
-      algobit = algobit | (1 << element);
-    });
-    console.log(algorithm);
-    const nextInputs = {
-      ...inputs,
-      algorithm: algobit,
-      reservation: startDate,
+    const transBitmask = () => {
+      let algobit = 0;
+      algorithm.map((element) => {
+        algobit = algobit | (1 << element);
+      });
+      console.log(algorithm);
+      const nextInputs = {
+        ...inputs,
+        algorithm: algobit,
+        reservation: startDate,
+      };
+      console.log(nextInputs);
+      setInputs(nextInputs);
     };
-    console.log(nextInputs);
-    setInputs(nextInputs);
-  };
 
-  return (
-    <Box component="form">
-      <Item sx={{ mb: 3,mt:3 }}>
-        <TextField
-          required
-          fullWidth
-          id="title"
-          label="제목을 입력해 주세요"
-          name="title"
-          variant="outlined"
-          value={inputs.title}
-          onChange={onChangeHandler}
-          autoFocus
-          style={{ background: "#f5f5f5" }}
-        />
-      </Item>
-      <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
-        <Bar item xs={3}>
-          <Item>
-            <TextField
-              select
-              required
-              fullWidth
-              id="language"
-              label="언어"
-              name="language"
-              value={inputs.language}
-              onChange={onChangeHandler}
-              style={{ background: "#f0ebf7" }}
-              autoFocus
-            >
-              {lang.map((name, index) => (
-            <MenuItem
-              key={index}
-              value={index}
-            >
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Item>
-        </Bar>
-        <Bar item xs={3}>
-          <Item>
-            <TextField
-              select
-              required
-              fullWidth
-              id="category"
-              label="카테고리"
-              name="category"
-              value={inputs.category}
-              onChange={onChangeHandler}
-              autoFocus
-              style={{ background: "#f0ebf7" }}
-            >
-              {category.map((name, index) => (
-                <MenuItem key={index} value={index}>
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Item>
-        </Bar>
-        <Bar item xs={3}>
-          <Item>
-            <Select
-              required
-              fullWidth
-              multiple
-              id="algorithm"
-              label="알고리즘"
-              name="algorithm"
-              value={algorithm}
-              onChange={onChangeMultiHandler}
-              autoFocus
-              style={{ background: "#f0ebf7" }}
-            >
-              {algo.map((name, index) => (
-                <MenuItem key={index} value={index}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </Item>
-        </Bar>
-      </Grid>
+    return (
+      <Box component="form">
+        <Item sx={{ mb: 3, mt: 3 }}>
+          <TextField
+            required
+            fullWidth
+            id="title"
+            label="제목을 입력해 주세요"
+            name="title"
+            variant="outlined"
+            value={inputs.title}
+            onChange={onChangeHandler}
+            autoFocus
+            style={{ background: "#f5f5f5" }}
+          />
+        </Item>
+        <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
+          <Bar item xs={3}>
+            <Item>
+              <TextField
+                select
+                required
+                fullWidth
+                id="language"
+                label="언어"
+                name="language"
+                value={inputs.language}
+                onChange={onChangeHandler}
+                style={{ background: "#f0ebf7" }}
+                autoFocus
+              >
+                {lang.map((name, index) => (
+                  <MenuItem key={index} value={index}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Item>
+          </Bar>
+          <Bar item xs={3}>
+            <Item>
+              <TextField
+                select
+                required
+                fullWidth
+                id="category"
+                label="카테고리"
+                name="category"
+                value={inputs.category}
+                onChange={onChangeHandler}
+                autoFocus
+                style={{ background: "#f0ebf7" }}
+              >
+                {category.map((name, index) => (
+                  <MenuItem key={index} value={index}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Item>
+          </Bar>
+          <Bar item xs={3}>
+            <Item>
+              <Select
+                required
+                fullWidth
+                multiple
+                id="algorithm"
+                label="알고리즘"
+                name="algorithm"
+                value={algorithm}
+                onChange={onChangeMultiHandler}
+                autoFocus
+                style={{ background: "#f0ebf7" }}
+              >
+                {algo.map((name, index) => (
+                  <MenuItem key={index} value={index}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Item>
+          </Bar>
+        </Grid>
 
-      <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
-        <Bar item xs={2}>
-          <Item>
-            <TextField
-              select
-              required
-              fullWidth
-              id="source"
-              label="문제출처"
-              name="source"
-              value={inputs.source}
-              onChange={onChangeHandler}
-              autoFocus
-              style={{ background: "#f0ebf7" }}
+        <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
+          <Bar item xs={2}>
+            <Item>
+              <TextField
+                select
+                required
+                fullWidth
+                id="source"
+                label="문제출처"
+                name="source"
+                value={inputs.source}
+                onChange={onChangeHandler}
+                autoFocus
+                style={{ background: "#f0ebf7" }}
+              >
+                {source.map((name, index) => (
+                  <MenuItem key={index} value={index}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Item>
+          </Bar>
+          <Bar item xs={2}>
+            <Item>
+              <TextField
+                int
+                required
+                fullWidth
+                id="point"
+                label="포인트설정"
+                name="point"
+                value={inputs.point}
+                onChange={onChangeHandler}
+                autoFocus
+                style={{ background: "#f0ebf7" }}
+              ></TextField>
+            </Item>
+          </Bar>
+          <Bar item xs={2}>
+            <Item>
+              <TextField
+                int
+                required
+                fullWidth
+                id="question_number"
+                label="문제번호"
+                name="questionNumber"
+                value={inputs.questionNumber}
+                onChange={onChangeHandler}
+                autoFocus
+                style={{ background: "#f0ebf7" }}
+              ></TextField>
+            </Item>
+          </Bar>
+          <Bar item xs={2}>
+            <Typography
+              component="h5"
+              variant="body1"
+              style={{ backgroundColor: "#ffffff" }}
             >
-              {source.map((name, index) => (
-                <MenuItem key={index} value={index}>
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Item>
-        </Bar>
-        <Bar item xs={2}>
-          <Item>
-            <TextField
-              int
-              required
-              fullWidth
-              id="point"
-              label="포인트설정"
-              name="point"
-              value={inputs.point}
-              onChange={onChangeHandler}
-              autoFocus
-              style={{ background: "#f0ebf7" }}
-            ></TextField>
-          </Item>
-        </Bar>
-        <Bar item xs={2}>
-          <Item>
-            <TextField
-              int
-              required
-              fullWidth
-              id="question_number"
-              label="문제번호"
-              name="questionNumber"
-              value={inputs.questionNumber}
-              onChange={onChangeHandler}
-              autoFocus
-              style={{ background: "#f0ebf7" }}
-            ></TextField>
-          </Item>
-        </Bar>
-        <Bar item xs={2}>
-          <Typography
-            component="h5"
-            variant="body1"
-            style={{ backgroundColor: "#ffffff" }}
+              시간을 입력해 주세요
+            </Typography>
+            <Item>
+              <DatePicker
+                className="react-datepicker"
+                fullWidth
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="yyyy-MM-dd hh:mm:ss a"
+                form="external-form"
+                sx={{ backgroundColor: "#f0ebf7" }}
+              />
+            </Item>
+          </Bar>
+        </Grid>
+
+        <Item sx={{ mb: 3 }}>
+          <TextField
+            required
+            fullWidth
+            multiline
+            id="content"
+            label="궁금한 내용을 적어주세요"
+            name="content"
+            autoFocus
+            value={inputs.content}
+            onChange={onChangeHandler}
+            style={{ backgroundColor: "#f0ebf7" }}
+            rows={4}
+          />
+        </Item>
+
+        <Item sx={{ mb: 3 }}>
+          <TextField
+            required
+            fullWidth
+            id="code"
+            label="질문할 코드를 입력해 주세요"
+            name="code"
+            autoFocus
+            multiline
+            value={inputs.code}
+            rows={4}
+            onChange={onChangeHandler}
+            style={{ backgroundColor: "#f0ebf7" }}
+          />
+        </Item>
+        <Item elevation={0} sx={{ backgroundColor: "#ffffff" }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{
+              textAlign: "center",
+              margin: 2,
+              width: 100,
+            }}
+            onClick={submitQuestion}
           >
-            시간을 입력해 주세요
-          </Typography>
-          <Item>
-            <DatePicker
-              className="react-datepicker"
-              fullWidth
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="yyyy-MM-dd hh:mm:ss a"
-              form="external-form"
-              sx={{ backgroundColor: "#f0ebf7" }}
-            />
-          </Item>
-        </Bar>
-      </Grid>
-
-      <Item sx={{ mb: 3 }}>
-        <TextField
-          required
-          fullWidth
-          multiline
-          id="content"
-          label="궁금한 내용을 적어주세요"
-          name="content"
-          autoFocus
-          value={inputs.content}
-          onChange={onChangeHandler}
-          style={{ backgroundColor: "#f0ebf7" }}
-          rows={4}
-        />
-      </Item>
-
-      <Item sx={{ mb: 3 }}>
-        <TextField
-          required
-          fullWidth
-          id="code"
-          label="질문할 코드를 입력해 주세요"
-          name="code"
-          autoFocus
-          multiline
-          value={inputs.code}
-          rows={4}
-          onChange={onChangeHandler}
-          style={{ backgroundColor: "#f0ebf7" }}
-        />
-      </Item>
-      <Item elevation={0} sx={{ backgroundColor: "#ffffff" }}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          sx={{
-            textAlign: "center",
-            margin: 2,
-            width: 100,
-          }}
-          onClick={submitQuestion}
-        >
-          등록
-        </Button>
-      </Item>
-    </Box>
-  );
+            등록
+          </Button>
+        </Item>
+      </Box>
+    );
+  };
 };
 export default WriteQuestion;
