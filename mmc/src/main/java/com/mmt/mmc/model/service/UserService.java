@@ -6,6 +6,7 @@ import com.mmt.mmc.model.dto.UserDto;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -34,11 +35,8 @@ public interface UserService {
     //유효 토큰 확인
     Map<String, Object> validRefreshToken(UserDto userDto);
 
+    //전체 회원 수 조회
+    public int findAllUser();
 
-
-    //회원 정보 모두 조회(강사 리스트 조회시 사용)
-//    public List<UserDto> findAllUser();
-//
-//    UserDto getUser(int userId);
 
 }

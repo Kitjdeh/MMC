@@ -92,4 +92,13 @@ public class UserRestController {
         return new ResponseEntity<>(resultMap, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/users/count")
+    public ResponseEntity<Map<String,Object>> userCount(){
+        Map<String,Object> map = new HashMap<>();
+        int userCount = userService.findAllUser();
+        map.put("result",SUCCESS);
+        map.put("users",userCount);
+        return new ResponseEntity<>(map, HttpStatus.ACCEPTED);
+    }
+
 }
