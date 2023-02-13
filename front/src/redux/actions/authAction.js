@@ -154,8 +154,7 @@ function getUserInfo(token){
       .then((response) => {
         let data = response.data.userId;
         console.log(data);
-        dispatch({ type: "GET_USERINFO_SUCCESS", payload: { data } });
-      })
+        dispatch({ type: "GET_USER_INFO_SUCCESS", payload: { data } });      })
       .catch(async(error) => {
         console.log("getUser", error);
       });

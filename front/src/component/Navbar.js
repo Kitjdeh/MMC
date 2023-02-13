@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
+import Avatar from '@mui/material/Avatar';
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
@@ -16,16 +17,51 @@ import { useNavigate } from "react-router-dom";
 import { getCookieToken, getUserId} from "../storage/Cookie";
 import alarm from "./alarm";
 import { Cookies } from 'react-cookie';
+import { userinfoAction } from './../redux/actions/userinfoAction';
+import { display } from "@mui/system";
+import styled from 'styled-components';
+
+const MenuName = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 5px;
+`;
+
+const MenuInfo = styled.div`
+  width:160px;
+  height:30px;
+  display:flex;
+  margin: 10px 10px 5px 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  justify-content: space-between;
+  background-color: #e5e5e5;
+`;
+
+const Point = styled.span`
+  color: rgba(69, 64, 225, 0.6);
+  font-size: 14px;
+`;
+
+const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
+  textAlign:"right",
+}));
+
 const Navbar = () => {
   // const authcookie = getCookieToken();
   const store = useStore();
-  console.log(store.getState());
+  // console.log(store.getState());
   // const authenticated = store.getState().authToken.isLogin;
+  const userInfo=useSelector((state)=>state.userinfo.userinfo)
+  // console.log("USERINFO", userInfo);
   const [authenticated, setAuthenticated] = useState(false)
-
+  const [flag, setFlag] = useState(false)
   useEffect(() => {
     const cookie = new Cookies();
     setAuthenticated(cookie.get("userId") !== undefined ? true : false);
+    if(authenticated){
+      dispatch(userinfoAction.getUserInfo(userId));
+    }
   })
   console.log(authenticated)
   
@@ -145,6 +181,14 @@ const Navbar = () => {
                         "aria-labelledby": "mypage-button",
                       }}
                     >
+                                            <MenuItem>
+                      <Avatar src={userInfo.profileImage} sx={{ width: 32, height: 32}}/> 
+                      <MenuName>{userInfo.nickname}</MenuName>
+                      </MenuItem>
+                      <MenuInfo>
+                          <div>포인트</div>
+                          <div><Point>{userInfo.point}</Point> points</div>
+                      </MenuInfo>
                       <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
                       <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
                       <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>

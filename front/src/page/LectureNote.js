@@ -6,7 +6,7 @@ import LectureCode from "../component/LectureCode";
 import LectureGraffiti from "../component/LectureGraffiti";
 import LectureWebRTC from "../component/LectureWebRTC";
 import LectureChat from "../component/LectureChat";
-
+import { userinfoAction } from './../redux/actions/userinfoAction';
 const useStyles = makeStyles({
   bar: {
     backgroundColor: "#f6edff",

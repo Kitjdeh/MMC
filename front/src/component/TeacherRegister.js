@@ -29,6 +29,7 @@ const TeacherRegister = ({ nickname, temperature,writeId }) => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const question = useSelector((state) => state.question.question);
+  const trainer = useSelector((state) => state.userinfo.userinfo);
   const dispatch = useDispatch();
   const deleteTrainer = () => {
     dispatch(questionAction.deleteTrainer(question.questionId, userId));

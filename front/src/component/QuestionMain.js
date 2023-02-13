@@ -60,6 +60,7 @@ const QuestionMain = ({ question }) => {
 
   const trainers = store.getState().question.trainers;
   const noteId = useSelector((state) => state.note.note);
+  const trainer = useSelector((state) => state.userinfo.userinfo);
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
@@ -81,20 +82,14 @@ const QuestionMain = ({ question }) => {
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;
-     for (let x of question?.algorithm.toString(2).split("").reverse().join("")) {
+    let updated = [];
+    for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
       algobit = algobit && x;
       if (algobit === "1") {
-        console.log(index, algo[index]);
-        // setAlgorithm([...algorithm, algo[index++]]);
-        setAlgorithm((prev)=>{
-          const updated=[...prev];
-          updated[index]=algo[index];
-          console.log(updated);
-          return updated;
-        });
-        index++;
+        updated=updated.concat(algo[index++]);
       }
     }
+    setAlgorithm(updated);
     // question.algorithm.map((element)=>{
     //   algobit = algobit | 1>>element;
     //   console.log(algobit);
@@ -168,11 +163,11 @@ const QuestionMain = ({ question }) => {
             알고리즘
           </Bar>
 
-          {algorithm.length>0 ? algorithm.map((element)=>{
+          {algorithm.map((element) => (
             <Bar item xs={2} margin={1}>
-            {element}
+              {element}
             </Bar>
-          }): <div></div>}
+          ))}
         </Grid>
       </Bar>
       <br />
@@ -212,7 +207,13 @@ const QuestionMain = ({ question }) => {
             </Grid>
 
             <Grid item margin={1} xs={5}>
-              <TeacherCard />
+            {trainer.length !== 0 ? (
+                <TeacherCard />
+              ) : (
+                <div>
+                  강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
+                </div>
+              )}
             </Grid>
           </Grid>
         </Container>

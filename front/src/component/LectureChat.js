@@ -17,9 +17,12 @@ function makeMessage(type, payload, nickName, lectureNoteId) {
 
 const LectureChat = () => {
   const messageListRef = useRef();
-  const messageFormRef = useRef();
-  const nickName = "SSAFY";
-  const lectureNoteId = "2";
+  const messageFormRef = useRef();  
+  const nickName = useSelector((state)=> state.userinfo.userinfo);
+  console.log("NICK",nickName);
+  const lectureNoteId = useSelector((state)=>state.note.note);
+  // const nickName = "SSAFY";
+  // const lectureNoteId = "2";
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);

@@ -36,7 +36,7 @@ function tokenReducer(state = initialState, action) {
     case "SET_AUTH_TOKEN":
       console.log("SET_AUTH_TOKEN",payload)
       return { ...state, accessToken: payload };
-    case "GET_USERINFO_SUCCESS":
+    case "GET_USER_INFO_SUCCESS":
       return { ...state, userId: payload.data};
     default:
       return { ...state };

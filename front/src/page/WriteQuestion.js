@@ -47,7 +47,7 @@ const WriteQuestion = () => {
     reservation: "",
     code: "",
     point: 0,
-    // date: moment().format('yyyy-MM-DD HH:mm:ss')
+    date: moment().format('yyyy-MM-DD HH:mm:ss')
   });
 
   const lang = ["Python", "Java", "C++"];
@@ -83,16 +83,12 @@ const WriteQuestion = () => {
     setInputs(nextInputs);
   };
 
-  const onChangeMultiHandler = (e) => {
-    const { value } = e.target;
-    setAlgorithm(typeof value === "string" ? value.split(",") : value);
-    // if(e.target.name==="algorithm"){
-    //   setAlgorithm(
-    //     typeof value === 'string' ? value.split(',') : value,
-    //   );
-    // }
-    transBitmask();
-  };
+  const onChangeMultiHandler = async (e) => {
+    const {value} = e.target;
+    console.log("VALUE",value)
+    await setAlgorithm(
+        typeof value === 'string' ? value.split(',') : value,
+    );
 
   const transBitmask = () => {
     let algobit = 0;

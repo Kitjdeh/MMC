@@ -39,8 +39,7 @@ function apiInstance() {
           case 400:   //Access토큰 기간 만료
             const userId = cookie.get("userId");
             const refreshToken = cookie.get("jwt-refresh-token");
-            let url = `http://localhost:8080/api/v1/users/refresh`;
-            let data = {
+            let url = `http://i8a508.p.ssafy.io:8083/api/v1/users/refresh`;            let data = {
               userId: userId,
               refreshToken: refreshToken,
             };
