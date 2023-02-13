@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
@@ -15,7 +15,6 @@ import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
 import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -82,8 +81,7 @@ const QuestionMain = ({ question }) => {
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;
-    console.log(question.algorithm.toString(2).split("").reverse().join(""));
-    for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
+     for (let x of question?.algorithm.toString(2).split("").reverse().join("")) {
       algobit = algobit && x;
       if (algobit === "1") {
         console.log(index, algo[index]);
@@ -114,7 +112,12 @@ const QuestionMain = ({ question }) => {
     dispatch(noteAction.getLectureNote(question.questionId));
     setLoading(true);
   };
-  
+  const note = useSelector((state) => state.note.note);
+  const selectTrainer = (item) => {
+    const { name } = item;
+    console.log({ name }, name);
+    console.log("클릭클릭", item.target, name);
+  };
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -178,7 +181,11 @@ const QuestionMain = ({ question }) => {
       </Bar>
       <Box>
         <Bar>
+          {question?.userId !== userId ? (
           <Button onClick={addTrainer}>문제풀이 신청</Button>
+          ) : (
+            <Box></Box>
+          )}
         </Bar>
         <Container>
           <Grid container justifyContent="space-between">
@@ -188,16 +195,18 @@ const QuestionMain = ({ question }) => {
               </Item>
               <Item>
                 <TeacherRegister nickname="프로필" temperature="온도" />
-                {trainers ? (
+                {trainers.length != 0 ? (
                   trainers.map((item) => (
+                    <Button name={item} onClick={selectTrainer(item)}>
                     <TeacherRegister
                       nickname={item.nickname}
                       temperature={item.temperature}
                       writeId={item.userId}
                     />
+                    </Button>
                   ))
                 ) : (
-                  <div>답변자 리스트가 없습니다.</div>
+                  <Item>답변자 리스트가 없습니다.</Item>
                 )}
               </Item>
             </Grid>
@@ -208,9 +217,10 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
-      <Bar>
-        <Button onClick={getLectureNote}>강의실 입장</Button>
-      </Bar>
+
+      <button onClick={deleteQuestion}>글 삭제</button>
+      <button onClick={getLectureNote}>강의실 입장</button>
+      
     </Box>
   );
 };

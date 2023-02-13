@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -13,6 +13,9 @@ import QuestionMain from "../component/QuestionMain";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
+import { Cookies } from "react-cookie";
+import QuestionModify from "../component/QuestionModify";
+
 const QuestionDetail = () => {
   let questionId = useParams();
   let id = questionId.id;
@@ -35,6 +38,18 @@ const QuestionDetail = () => {
   // const question = store.getState().question;
 
   const [content, setContent] = useState();
+  const [userauth, setUserauth] = useState(false);
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
+
+  useEffect(() => {
+    console.log("id확인전",userauth)
+    console.log("문제아이디", question["userId"]);
+    console.log("유저아이디", userId);
+    setUserauth(userId == question["userId"] ? true : false);
+    console.log("id확인후",userauth)
+  },[question]);
+
   const selectquestion = (item) => {
     const { name } = item.target;
     setContent(name);
@@ -43,6 +58,7 @@ const QuestionDetail = () => {
     main: <QuestionMain question={question} />,
     question: <QuestionAbout question={question} />,
     code: <QuestionCode question={question} />,
+    modify: <QuestionModify question={question} />,
   };
   const aboutcomponent = ["메인", "문제", "코드"];
   const Word = styled(Grid)(({ theme }) => ({
@@ -51,7 +67,7 @@ const QuestionDetail = () => {
   return (
     <Box>
       <Grid container direction="row" alignItems="flex-start" margin={2}>
-        <Word item xs={4}>
+        <Word item xs={3}>
           <Button
             onClick={selectquestion}
             name="main"
@@ -62,7 +78,7 @@ const QuestionDetail = () => {
             메인
           </Button>
         </Word>
-        <Word item xs={4}>
+        <Word item xs={3}>
           <Button
             onClick={selectquestion}
             name="question"
@@ -72,7 +88,7 @@ const QuestionDetail = () => {
             문제
           </Button>
         </Word>
-        <Word item xs={4}>
+        <Word item xs={3}>
           <Button
             onClick={selectquestion}
             name="code"
@@ -82,8 +98,26 @@ const QuestionDetail = () => {
             코드
           </Button>
         </Word>
-      </Grid>
-      {content && <Box>{category[content]}</Box>}
+          {userauth === true ? (
+            <Word item xs={3}>
+              <Button
+                onClick={selectquestion}
+                name="modify"
+                variant="contained"
+                sx={{ backgroundColor: "#c1abff" }}
+              >
+                수정
+              </Button>
+            </Word>
+          ) : (
+            <Word item xs={3}>
+              {" "}
+              ????{" "}
+            </Word>
+          )}
+     
+      </Grid>{content ? (<Box>{category[content]}</Box>) : (<Box><QuestionMain question={question} /></Box>)}
+
     </Box>
   );
 };

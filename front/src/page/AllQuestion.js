@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import QuestionCard from "../component/QuestionCard";
+import Spinner from "../icon/Spinner"
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -11,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import { useSearchParams } from "react-router-dom";
 import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
 const AllQuestion = () => {
   const [searchList, setSearch] = useState("");
   const [isfindpython, setfindpython] = React.useState(true);
@@ -20,8 +22,16 @@ const AllQuestion = () => {
   const [debugging, setdebugging] = React.useState(true);
   const [filteredList, setFilteredList] = React.useState([]);
   const [language, setLanguage] = React.useState([]);
+  const [category, setCategory] = useState([]);
+  // const [is_loaded,setLoaded] = useState(false)
   const languageGroup = [isfindpython, isfindjava, isfindC];
+  const categoryGroup = [algorithm, debugging];
   const questionList = useSelector((state) => state.question.questions);
+ 
+  const is_loaded = useSelector((state) => state.question.is_loaded);
+ 
+ 
+  console.log(is_loaded, "111111111111111111111111");
   const dispatch = useDispatch();
   const getallQuestions = () => {
     dispatch(questionAction.getQuestions());
@@ -30,52 +40,96 @@ const AllQuestion = () => {
   useEffect(() => {
     getFilteredList();
   }, [searchList]);
+
+  useEffect(() => {
+    const getLanguage = () => {
+      let temp = [];
+      languageGroup.forEach((item, index) => {
+        if (item === true) {
+          temp.push(index);
+        }
+      });
+      setLanguage(temp);
+      console.log("언어세팅", language);
+      return language;
+    };
+    const getFilteredList = () => {
+      // 1. 3가지 언어 중 체크 여부 확인
+      let setLanguage = getLanguage();
+      // 2. 받아온걸로 filter
+      let result = questionList.filter(
+        (item) =>
+          item["title"].includes(searchList) &&
+          setLanguage.includes(item["language"])
+      );
+      setFilteredList(result);
+      console.log("필터적용", filteredList);
+      return;
+    };
+    getFilteredList();
+  }, [isfindpython, isfindjava]);
+
+  useEffect(() => {
+    const getCategory = () => {
+      let temp = [];
+      categoryGroup.forEach((item, index) => {
+        if (item === true) {
+          temp.push(index);
+        }
+      });
+      setCategory(temp);
+    };
+  }, [algorithm, debugging]);
   //함수 selectList 구성 effect({},[language,search,category])
   //1. 검색어 title 모으는 titleList
   //2. 언어 체크리스트 모으는 lanugageGroup
   //3. 유형 체크리스트 모으는 categoryGroup
   //4. 3가지 함수를 await로 대기 한 후 filter
-  const getLanguage = () => {
-    let temp = [];
-    languageGroup.forEach((item, index) => {
-      if (item === true) {
-        temp.push(index);
-        console.log(language);
-      }
-    });
-    setLanguage(temp);
-    return language;
-  };
+  // const getLanguage = () => {
+  //   let temp = [];
+  //   languageGroup.forEach((item, index) => {
+  //     if (item === true) {
+  //       temp.push(index);
+  //     }
+  //   });
+  //   setLanguage(temp);
+  //   return language;
+  // };
 
   const getFilteredList = async (event) => {
-    let setLanguage = await getLanguage();
+    // 1. 3가지 언어 중 체크 여부 확인
+    // let setLanguage = await getLanguage();
+    // 2. 검색창 입력갑 받음
     let setTitle = await searchList;
-    // let filterLanguage = await setLanguage;
+    // 3. 받아온걸로 filter
     let result = await questionList.filter(
       (item) =>
         item["title"].includes(searchList) &&
-        setLanguage.includes(item["language"])
+        setLanguage.includes(item["language"]) &&
+        setCategory.includes(item["category"])
     );
     setFilteredList(result);
-    console.log("필터", result);
     return;
   };
-  const findpython = (event) => {
-    setfindpython(event.target.checked);
-  };
-  const findjava = (event) => {
-    setfindjava(event.target.checked);
-  };
-  const findC = (event) => {
-    setfindC(event.target.checked);
-  };
+  // console.log("필터", result);
+  // const findpython = (event) => {
+  //   setfindpython(event.target.checked);
+  // };
+  // const findjava = (event) => {
+  //   setfindjava(event.target.checked);
+  // };
+  // const findC = (event) => {
+  //   setfindC(event.target.checked);
+  // };
   const findalgorithm = (event) => {
     setalorithm(event.target.checked);
   };
   const finddebugging = (event) => {
     setdebugging(event.target.checked);
   };
+
   return (
+
     <div>
       <Container sx={{ mt: 5, alignItems: "center" }}>
         <Container>
@@ -116,19 +170,19 @@ const AllQuestion = () => {
             주언어
             <Checkbox
               checked={isfindpython}
-              onChange={findpython}
+              onChange={(event) => setfindpython(event.target.checked)}
               inputProps={{ "aria-label": "controlled" }}
             />
             python
             <Checkbox
               checked={isfindjava}
-              onChange={findjava}
+              onChange={(event) => setfindjava(event.target.checked)}
               inputProps={{ "aria-label": "controlled" }}
             />
             java
             <Checkbox
               checked={isfindC}
-              onChange={findC}
+              onChange={(event) => setfindC(event.target.checked)}
               inputProps={{ "aria-label": "controlled" }}
             />
             c++
@@ -160,12 +214,23 @@ const AllQuestion = () => {
       </Container>
       <Container>
         <Grid container spacing={1}>
-          {filteredList.slice(0).reverse()?.map((question) => (
-            <Grid item xl={3} lg={4} md={6} key={question}>
-              <QuestionCard question={question} />
-              <br />
-            </Grid>
-          ))}
+          {searchList?.length < 1 && language?.length === 3
+            ? questionList.map((question) => (
+                <Grid item xl={3} lg={4} md={6} key={question.questionId}>
+                  <Button>
+                    <QuestionCard question={question} />
+                  </Button>
+                  <br />
+                </Grid>
+              ))
+            : filteredList.slice(0).reverse()?.map((question) => (
+                <Grid item xl={3} lg={4} md={6} key={question.questionId}>
+                  <Button>
+                    <QuestionCard question={question} />
+                  </Button>
+                  <br />
+                </Grid>
+              ))}
         </Grid>
       </Container>
     </div>

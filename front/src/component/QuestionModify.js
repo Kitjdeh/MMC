@@ -13,8 +13,7 @@ import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import moment from "moment";
-import { Cookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#9575cd"),
   padding: theme.spacing(0.5),
@@ -28,27 +27,10 @@ const Bar = styled(Grid)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const WriteQuestion = () => {
-  const cookie = new Cookies();
-  const userId = cookie.get("userId");
-  console.log("유저아이디", userId);
+const QuestionModify = ({ question }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [algorithm, setAlgorithm] = useState([]);
-  const [inputs, setInputs] = useState({
-    userId: userId, //수정 필요
-    language: 0,
-    progress: 0,
-    category: 0,
-    algorithm: 0,
-    source: 0,
-    questionNumber: 0,
-    title: "",
-    content: "",
-    reservation: "",
-    code: "",
-    point: 0,
-    // date: moment().format('yyyy-MM-DD HH:mm:ss')
-  });
+  const [inputs, setInputs] = useState(question);
 
   const lang = ["Python", "Java", "C++"];
   const category = ["알고리즘", "디버깅"];
@@ -69,11 +51,9 @@ const WriteQuestion = () => {
   ];
   const source = ["백준", "프로그래머스"];
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const submitQuestion = () => {
-    dispatch(questionAction.writeQuestion(inputs));
-    navigate(`/question`);
+    dispatch(questionAction.modifyQuestion(inputs));
   };
 
   const onChangeHandler = (e) => {
@@ -108,17 +88,18 @@ const WriteQuestion = () => {
     console.log(nextInputs);
     setInputs(nextInputs);
   };
-
+  console.log("문제props확인", question);
   return (
     <Box component="form">
-      <Item sx={{ mb: 3,mt:3 }}>
+      <Item sx={{ mb: 3 }}>
         <TextField
           required
+          hiddenLabel
+          variant="standard"
           fullWidth
           id="title"
-          label="제목을 입력해 주세요"
+          label="제목"
           name="title"
-          variant="outlined"
           value={inputs.title}
           onChange={onChangeHandler}
           autoFocus
@@ -141,10 +122,7 @@ const WriteQuestion = () => {
               autoFocus
             >
               {lang.map((name, index) => (
-            <MenuItem
-              key={index}
-              value={index}
-            >
+                <MenuItem key={index} value={index}>
                   {name}
                 </MenuItem>
               ))}
@@ -241,6 +219,7 @@ const WriteQuestion = () => {
             <TextField
               int
               required
+              hiddenLabel
               fullWidth
               id="question_number"
               label="문제번호"
@@ -264,6 +243,7 @@ const WriteQuestion = () => {
             <DatePicker
               className="react-datepicker"
               fullWidth
+              defaultValue={question.startDate}
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               showTimeSelect
@@ -283,8 +263,8 @@ const WriteQuestion = () => {
           required
           fullWidth
           multiline
+          defaultValue={question.content}
           id="content"
-          label="궁금한 내용을 적어주세요"
           name="content"
           autoFocus
           value={inputs.content}
@@ -298,8 +278,8 @@ const WriteQuestion = () => {
         <TextField
           required
           fullWidth
+          defaultValue={question.code}
           id="code"
-          label="질문할 코드를 입력해 주세요"
           name="code"
           autoFocus
           multiline
@@ -326,4 +306,4 @@ const WriteQuestion = () => {
     </Box>
   );
 };
-export default WriteQuestion;
+export default QuestionModify;
