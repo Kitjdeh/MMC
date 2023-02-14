@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {useSelector } from "react-redux";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const socket = new WebSocket(`ws://localhost:8000`);
 
@@ -29,7 +28,7 @@ const LectureQuestion = ({ check, setCheck }) => {
 
   const noteId = useSelector((state) => state.note.note);
 
-  console.log("NOTEIDQUESTION",noteId);
+  console.log("NOTEIDQUESTION", noteId);
   const lectureNoteId = noteId;
 
   useEffect(() => {
@@ -39,11 +38,18 @@ const LectureQuestion = ({ check, setCheck }) => {
     }
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.lectureNoteId === lectureNoteId && message.type === "picture1") {
+      if (
+        message.lectureNoteId === lectureNoteId &&
+        message.type === "picture1"
+      ) {
         const Data2Array = JSON.parse(message.payload);
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d", { willReadFrequently: true });
-        const Data2 = new ImageData(new Uint8ClampedArray(Data2Array), canvas.width, canvas.height);
+        const Data2 = new ImageData(
+          new Uint8ClampedArray(Data2Array),
+          canvas.width,
+          canvas.height
+        );
         context.putImageData(Data2, 0, 0);
       }
     });
@@ -126,7 +132,11 @@ const LectureQuestion = ({ check, setCheck }) => {
       />
       <div>
         <label htmlFor="color">Color:</label>
-        <select id="color" value={color} onChange={(event) => setColor(event.target.value)}>
+        <select
+          id="color"
+          value={color}
+          onChange={(event) => setColor(event.target.value)}
+        >
           <option value="black">Black</option>
           <option value="red">Red</option>
           <option value="green">Green</option>

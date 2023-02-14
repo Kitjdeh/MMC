@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const socket = new WebSocket(`ws://localhost:8000`);
 
@@ -17,16 +18,19 @@ function makeMessage(type, payload, nickName, lectureNoteId) {
 
 const LectureChat = () => {
   const messageListRef = useRef();
-  const messageFormRef = useRef();  
-  const nickName = useSelector((state)=> state.userinfo.userinfo);
-  console.log("NICK",nickName);
-  const lectureNoteId = useSelector((state)=>state.note.note);
+  const messageFormRef = useRef();
+  const nickName = useSelector((state) => state.userinfo.userinfo);
+  console.log("NICK", nickName);
+  const lectureNoteId = useSelector((state) => state.note.note);
   // const nickName = "SSAFY";
   // const lectureNoteId = "2";
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.lectureNoteId === lectureNoteId && message.type === "new_message") {
+      if (
+        message.lectureNoteId === lectureNoteId &&
+        message.type === "new_message"
+      ) {
         const li = document.createElement("li");
         li.style.listStyle = "none";
         if (nickName === message.nickName) {
@@ -45,7 +49,9 @@ const LectureChat = () => {
   function handleSubmit(event) {
     event.preventDefault();
     const input = messageFormRef.current.querySelector("input");
-    socket.send(makeMessage("new_message", input.value, nickName, lectureNoteId));
+    socket.send(
+      makeMessage("new_message", input.value, nickName, lectureNoteId)
+    );
     input.value = "";
   }
 

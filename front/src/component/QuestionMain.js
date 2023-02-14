@@ -53,7 +53,7 @@ const source = ["백준", "프로그래머스"];
 const QuestionMain = ({ question }) => {
   const [algorithm, setAlgorithm] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [adoptuser, setAdoptuser] = useState("");
   const store = useStore();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,7 +65,11 @@ const QuestionMain = ({ question }) => {
   const userId = cookie.get("userId");
 
   let time = new Date(question.reservation);
-
+  useEffect(() => {
+    if (question.progress) {
+      setAdoptuser(question.progress);
+    }
+  }, []);
   useEffect(() => {
     transBitmask();
   }, []);
@@ -176,7 +180,7 @@ const QuestionMain = ({ question }) => {
       </Bar>
       <Box>
         <Bar>
-          {question?.userId !== userId ? (
+          {question?.userId !== userId  &&question?.progress <1 ? (
           <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
@@ -189,7 +193,8 @@ const QuestionMain = ({ question }) => {
                 문제설명을 신청한 강사 리스트
               </Item>
               <Item>
-                <TeacherRegister nickname="프로필" temperature="온도" />
+                <TeacherRegister nickname="프로필" temperature="온도"
+                cancelregister="신청취소" select="선택하기" />
                 {trainers.length != 0 ? (
                   trainers.map((item) => (
                     <Button name={item} onClick={selectTrainer(item)}>
@@ -218,10 +223,17 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
+      {userId == question?.userId ? (
+        <button onClick={deleteQuestion}>글 삭제</button>
+      ) : (
+        <Box></Box>
+      )}
 
-      <button onClick={deleteQuestion}>글 삭제</button>
-      <button onClick={getLectureNote}>강의실 입장</button>
-      
+      {adoptuser == userId || question?.userId == userId ? (
+        <button onClick={getLectureNote}>강의실 입장</button>
+      ) : (
+        <Box>!!</Box>
+      )}
     </Box>
   );
 };

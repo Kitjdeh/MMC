@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
-  maxWidth: 400,
+
 }));
 const Word = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.3),
@@ -25,7 +25,7 @@ const Word = styled(Grid)(({ theme }) => ({
   minWidth: 60,
 }));
 
-const TeacherRegister = ({ nickname, temperature,writeId }) => {
+const TeacherRegister = ({ nickname, temperature,writeId,select, cancelregister  }) => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const question = useSelector((state) => state.question.question);
@@ -35,6 +35,7 @@ const TeacherRegister = ({ nickname, temperature,writeId }) => {
     dispatch(questionAction.deleteTrainer(question.questionId, userId));
   };
   const acceptTrainer = () => {
+    question.progress = writeId;
     dispatch(questionAction.acceptTrainer(question.questionId, userId));
     console.log("before");
     dispatch(noteAction.makeLectureNote(question.questionId));
@@ -47,16 +48,23 @@ const TeacherRegister = ({ nickname, temperature,writeId }) => {
   return (
     <Word>
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
-        divider={<Divider orientation="vertical" flexItem />}
+        // divider={<Divider orientation="vertical" flexItem />}
       >
         <Item sx={{ maxWidth: 50 }} onClick={(e)=>getUserInfo(e)}>
           {nickname}
         </Item>
-        <Item>{temperature}</Item>
-        <Item onClick={acceptTrainer}>채택하기</Item>
-        <Item onClick={deleteTrainer}>신청 취소</Item>
+        {userId == question?.userId && question?.progress == 0 ? (
+          <Item onClick={acceptTrainer}>채택하기</Item>
+        ) : (
+          <Item >{select}</Item>
+        )}
+        {userId == writeId && question?.progress == 0 ? (
+          <Item onClick={deleteTrainer}>신청 취소</Item>
+        ) : (
+          <Item>{cancelregister}</Item>
+        )}
       </Stack>
     </Word>
   );

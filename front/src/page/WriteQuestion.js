@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import moment from "moment";
 import { Cookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#9575cd"),
   padding: theme.spacing(0.5),
@@ -47,7 +47,7 @@ const WriteQuestion = () => {
     reservation: "",
     code: "",
     point: 0,
-    date: moment().format('yyyy-MM-DD HH:mm:ss')
+    date: moment().format("yyyy-MM-DD HH:mm:ss"),
   });
 
   const lang = ["Python", "Java", "C++"];
@@ -84,12 +84,10 @@ const WriteQuestion = () => {
   };
 
   const onChangeMultiHandler = async (e) => {
-    const {value} = e.target;
-    console.log("VALUE",value)
-    await setAlgorithm(
-        typeof value === 'string' ? value.split(',') : value,
-    );
-
+    const { value } = e.target;
+    console.log("VALUE", value);
+    await setAlgorithm(typeof value === "string" ? value.split(",") : value);
+  };
   const transBitmask = () => {
     let algobit = 0;
     algorithm.map((element) => {
@@ -107,7 +105,7 @@ const WriteQuestion = () => {
 
   return (
     <Box component="form">
-      <Item sx={{ mb: 3,mt:3 }}>
+      <Item sx={{ mb: 3, mt: 3 }}>
         <TextField
           required
           fullWidth
@@ -137,10 +135,7 @@ const WriteQuestion = () => {
               autoFocus
             >
               {lang.map((name, index) => (
-            <MenuItem
-              key={index}
-              value={index}
-            >
+                <MenuItem key={index} value={index}>
                   {name}
                 </MenuItem>
               ))}

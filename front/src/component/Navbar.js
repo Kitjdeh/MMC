@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -9,17 +9,17 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@mui/material/Avatar";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { getCookieToken, getUserId} from "../storage/Cookie";
+import { getCookieToken, getUserId } from "../storage/Cookie";
 import alarm from "./alarm";
-import { Cookies } from 'react-cookie';
-import { userinfoAction } from './../redux/actions/userinfoAction';
+import { Cookies } from "react-cookie";
+import { userinfoAction } from "./../redux/actions/userinfoAction";
 import { display } from "@mui/system";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const MenuName = styled.div`
   font-size: 14px;
@@ -28,9 +28,9 @@ const MenuName = styled.div`
 `;
 
 const MenuInfo = styled.div`
-  width:160px;
-  height:30px;
-  display:flex;
+  width: 160px;
+  height: 30px;
+  display: flex;
   margin: 10px 10px 5px 10px;
   padding: 5px 10px;
   font-size: 12px;
@@ -44,7 +44,7 @@ const Point = styled.span`
 `;
 
 const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
-  textAlign:"right",
+  textAlign: "right",
 }));
 
 const Navbar = () => {
@@ -52,24 +52,22 @@ const Navbar = () => {
   const store = useStore();
   // console.log(store.getState());
   // const authenticated = store.getState().authToken.isLogin;
-  const userInfo=useSelector((state)=>state.userinfo.userinfo)
+  const userInfo = useSelector((state) => state.userinfo.userinfo);
   // console.log("USERINFO", userInfo);
-  const [authenticated, setAuthenticated] = useState(false)
-  const [flag, setFlag] = useState(false)
+  const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
     const cookie = new Cookies();
     setAuthenticated(cookie.get("userId") !== undefined ? true : false);
-    if(authenticated){
+    if (authenticated) {
       dispatch(userinfoAction.getUserInfo(userId));
-    }
-  })
-  console.log(authenticated)
-  
+    };
+  },[authenticated])
+  console.log(authenticated);
   const cookie = new Cookies();
-  const userId= cookie.get("userId");
+  const userId = cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  let openalarm = false
+  let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -97,6 +95,7 @@ const Navbar = () => {
     // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
     console.log(userId);
     dispatch(authAction.onLogout(userId));
+    setAuthenticated(false)
     navigate("/");
   };
 
@@ -142,12 +141,12 @@ const Navbar = () => {
                 <div>
                   <Grid item>
                     <Button
+                      id="alarm-button"
                       aria-controls={openalarm ? "alarm-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={openalarm ? "true" : undefined}
                       onClick={handleClick}
-                      id="alarm-button"
-                      open={openalarm}
+                      // open={openalarm}
                     >
                       알람
                     </Button>
@@ -165,9 +164,9 @@ const Navbar = () => {
                     </Menu>
                     <Button
                       id="mypage-button"
-                      aria-controls={openmypage ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={openmypage ? "true" : undefined}
+                      // aria-controls={openmypage ? "basic-menu" : undefined}
+                      // aria-haspopup="true"
+                      // aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
                     >
                       마이페이지
@@ -181,13 +180,18 @@ const Navbar = () => {
                         "aria-labelledby": "mypage-button",
                       }}
                     >
-                                            <MenuItem>
-                      <Avatar src={userInfo.profileImage} sx={{ width: 32, height: 32}}/> 
-                      <MenuName>{userInfo.nickname}</MenuName>
+                      <MenuItem>
+                        <Avatar
+                          src={userInfo.profileImage}
+                          sx={{ width: 32, height: 32 }}
+                        />
+                        <MenuName>{userInfo.nickname}</MenuName>
                       </MenuItem>
                       <MenuInfo>
-                          <div>포인트</div>
-                          <div><Point>{userInfo.point}</Point> points</div>
+                        <div>포인트</div>
+                        <div>
+                          <Point>{userInfo.point}</Point> points
+                        </div>
                       </MenuInfo>
                       <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
                       <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>

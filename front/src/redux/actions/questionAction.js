@@ -193,6 +193,27 @@ function getBackJoon(user_backjoon) {
       });
   };
 }
+function modifyQuestion(question) {
+  console.log("quset", question);
+  let question_id = question["questionId"];
+  return async () => {
+    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
+    let url = baseUrl + `/${question_id}`;
+    let response = await api
+      .patch(url, JSON.stringify(question), {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
+      .then((response) => {
+        console.log("질문수정들어감");
+        let data = response.data;
+      })
+      .catch((error) => {
+        console.log("ERROR질문수정", error);
+      });
+  };
+}
 function userCount() {
   return async (dispatch, getState) => {
     let url = "http://i8a508.p.ssafy.io:8083/api/v1/users/count";
@@ -221,4 +242,5 @@ export const questionAction = {
   getQuestionImage,
   getBackJoon,
   userCount,
+  modifyQuestion
 };

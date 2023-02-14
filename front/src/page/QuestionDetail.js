@@ -116,7 +116,14 @@ const QuestionDetail = () => {
             </Word>
           )}
      
-      </Grid>{content ? (<Box>{category[content]}</Box>) : (<Box><QuestionMain question={question} /></Box>)}
+      </Grid>    {content && <Box>{category[content]}</Box>}
+      {/* {content ? (
+        <Box>{category[content]}</Box>
+      ) : (
+        <Box>
+          <QuestionMain question={question} />
+        </Box>
+      )} */}
 
     </Box>
   );
