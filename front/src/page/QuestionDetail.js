@@ -20,7 +20,7 @@ const QuestionDetail = () => {
   let questionId = useParams();
   let id = questionId.id;
 
-  // const store = useStore();
+  const store = useStore();
   const question = useSelector((state) => state.question.question);
 
   const dispatch = useDispatch();
@@ -35,20 +35,21 @@ const QuestionDetail = () => {
     getAllTrainers();
   }, []);
 
-  // const question = store.getState().question;
+  // console.log("question",question);
+  console.log("question", question)
 
   const [content, setContent] = useState();
   const [userauth, setUserauth] = useState(false);
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
-  useEffect(() => {
-    console.log("id확인전",userauth)
-    console.log("문제아이디", question["userId"]);
-    console.log("유저아이디", userId);
-    setUserauth(userId == question["userId"] ? true : false);
-    console.log("id확인후",userauth)
-  },[question]);
+  // useEffect(() => {
+  //   console.log("id확인전",userauth)
+  //   console.log("문제아이디", question["userId"]);
+  //   console.log("유저아이디", userId);
+  //   setUserauth(userId == question["userId"] ? true : false);
+  //   console.log("id확인후",userauth)
+  // },[question]);
 
   const selectquestion = (item) => {
     const { name } = item.target;
@@ -116,8 +117,9 @@ const QuestionDetail = () => {
             </Word>
           )}
      
-      </Grid>{content ? (<Box>{category[content]}</Box>) : (<Box><QuestionMain question={question} /></Box>)}
-
+      {/* </Grid>{content ? (<Box>{category[content]}</Box>) : (<Box><QuestionMain question={question} /></Box>)} */}
+               </Grid>
+      {content && <Box>{category[content]}</Box>}
     </Box>
   );
 };

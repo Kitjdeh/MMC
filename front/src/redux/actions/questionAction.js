@@ -28,6 +28,7 @@ function getQuestionDetail(user_id) {
       .get(url)
       .then((response) => {
         let data = response.data.question;
+        console.log(data)
         dispatch({ type: "GET_QUESTION_DETAIL_SUCCESS", payload: { data } });
       })
       .catch((error) => {
@@ -209,6 +210,7 @@ function userCount() {
       });
   };
 }
+
 export const questionAction = {
   getQuestions,
   getQuestionDetail,

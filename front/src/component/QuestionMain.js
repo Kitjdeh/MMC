@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
@@ -53,16 +53,20 @@ const source = ["백준", "프로그래머스"];
 const QuestionMain = ({ question }) => {
   const [algorithm, setAlgorithm] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   const store = useStore();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const trainers = store.getState().question.trainers;
+  // const trainers = store.getState().question.trainers;
+  const trainers = useSelector((state) => state.question.trainers);
   const noteId = useSelector((state) => state.note.note);
   const trainer = useSelector((state) => state.userinfo.userinfo);
   const cookie = new Cookies();
   const userId = cookie.get("userId");
+
+  console.log("Trainer", trainer);
 
   let time = new Date(question.reservation);
 
@@ -75,26 +79,26 @@ const QuestionMain = ({ question }) => {
       navigate(`/lecture/${noteId}`);
     }
   }, [noteId]);
-  useEffect(()=>{
-    algorithm.map((e)=>console.log(e))
-  },[algorithm])
+  useEffect(() => {
+    algorithm.map((e) => console.log(e));
+  }, [algorithm]);
 
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;
     let updated = [];
-    for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
+    let algori = question.algorithm;
+    for (let x of algori.toString(2).split("").reverse().join("")) {
+      x.toString(2).split("").reverse().join("");
       algobit = algobit && x;
       if (algobit === "1") {
-        updated=updated.concat(algo[index++]);
+        updated = updated.concat(algo[index++]);
+        console.log("123");
       }
     }
     setAlgorithm(updated);
-    // question.algorithm.map((element)=>{
-    //   algobit = algobit | 1>>element;
-    //   console.log(algobit);
-    // });
   };
+
   const deleteQuestion = () => {
     dispatch(questionAction.deleteQuestion(question.questionId));
   };
@@ -177,7 +181,7 @@ const QuestionMain = ({ question }) => {
       <Box>
         <Bar>
           {question?.userId !== userId ? (
-          <Button onClick={addTrainer}>문제풀이 신청</Button>
+            <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
@@ -193,11 +197,11 @@ const QuestionMain = ({ question }) => {
                 {trainers.length != 0 ? (
                   trainers.map((item) => (
                     <Button name={item} onClick={selectTrainer(item)}>
-                    <TeacherRegister
-                      nickname={item.nickname}
-                      temperature={item.temperature}
-                      writeId={item.userId}
-                    />
+                      <TeacherRegister
+                        nickname={item.nickname}
+                        temperature={item.temperature}
+                        writeId={item.userId}
+                      />
                     </Button>
                   ))
                 ) : (
@@ -207,7 +211,7 @@ const QuestionMain = ({ question }) => {
             </Grid>
 
             <Grid item margin={1} xs={5}>
-            {trainer.length !== 0 ? (
+              {trainer.length !== 0 ? (
                 <TeacherCard />
               ) : (
                 <div>
@@ -218,10 +222,9 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
-
-      <button onClick={deleteQuestion}>글 삭제</button>
-      <button onClick={getLectureNote}>강의실 입장</button>
-      
+      <Bar>
+        <Button onClick={getLectureNote}>강의실 입장</Button>
+      </Bar>
     </Box>
   );
 };

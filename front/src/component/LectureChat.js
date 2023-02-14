@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import {useSelector} from "react-redux";
 
 const socket = new WebSocket(`ws://localhost:8000`);
 
@@ -22,7 +23,6 @@ const LectureChat = () => {
   console.log("NICK",nickName);
   const lectureNoteId = useSelector((state)=>state.note.note);
   // const nickName = "SSAFY";
-  // const lectureNoteId = "2";
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);

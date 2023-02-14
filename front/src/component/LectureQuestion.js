@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import {useSelector } from "react-redux";
 import { useSelector } from 'react-redux';
 
 const socket = new WebSocket(`ws://localhost:8000`);
@@ -19,18 +18,13 @@ function updatePicture(type, payload, lectureNoteId) {
   return JSON.stringify(msg);
 }
 
-const LectureQuestion = ({ check, setCheck }) => {
+const LectureQuestion = ({ check, setCheck, lectureNoteId }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("black");
   const [thickness, setThickness] = useState(2);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-
-  const noteId = useSelector((state) => state.note.note);
-
-  console.log("NOTEIDQUESTION",noteId);
-  const lectureNoteId = noteId;
 
   useEffect(() => {
     if (check !== 1) {
