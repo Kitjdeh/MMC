@@ -9,7 +9,15 @@ const server = http.createServer(app);
 
 const wsServer = io(server, { cors: { origin: "*" } });
 const port = 8001;
-const status = {};
+const status = {
+  123: {
+    hour: 0,
+    min: 0,
+    sec: 0,
+    ttlTime: 0,
+    change: 0,
+  },
+};
 
 const roomNumber = "123";
 
@@ -34,14 +42,16 @@ function publicRooms() {
 function countRoom(roomName) {
   return wsServer.sockets.adapter.rooms.get(roomName)?.size;
 }
+const handleListen = () => console.log(`Listening on localhost:${port}`);
 
-wsServer.listen(port);
+wsServer.listen(port, handleListen);
 
 wsServer.on("connection", (socket) => {
   console.log("connect client by Socket.io");
 
   socket.on("join_room", (roomName) => {
     socket.join(roomName);
+    console.log(roomName);
     socket.to(roomName).emit("welcome");
   });
   socket.on("offer", (offer, roomName) => {
@@ -97,6 +107,8 @@ wsServer.on("connection", (socket) => {
   socket.on("disconnect", (data) => {
     //console.log(wsServer.sockets.adapter);
     const roomNum = roomNumber;
+    console.log("byebye");
+    socket.to("12345").emit("goodbye");
     socket.to(roomNum).emit("stopTime");
     let time = new Date();
     console.log(status[roomNum]);
