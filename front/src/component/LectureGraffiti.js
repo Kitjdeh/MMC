@@ -1,15 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const socket = new WebSocket(`ws://localhost:8000`);
-
-socket.addEventListener("open", () => {
-  console.log("Connected to Server ✅");
-});
-
-socket.addEventListener("close", () => {
-  console.log("Disconnected from Server ❌");
-});
-
 let savedStates = [];
 
 function updatePicture(type, payload, lectureNoteId) {
@@ -17,14 +7,13 @@ function updatePicture(type, payload, lectureNoteId) {
   return JSON.stringify(msg);
 }
 
-const LectureGraffiti = ({ check, setCheck }) => {
+const LectureGraffiti = ({ lectureNoteId, check, img, pdfimg, setCheck, socket }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("black");
-  const [thickness, setThickness] = useState(2);
+  const [thickness, setThickness] = useState(5);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-  const lectureNoteId = "2";
 
   useEffect(() => {
     if (check !== 3) {
@@ -34,18 +23,22 @@ const LectureGraffiti = ({ check, setCheck }) => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
       if (message.lectureNoteId === lectureNoteId && message.type === "picture2") {
-        const Data2Array = JSON.parse(message.payload);
         const canvas = canvasRef.current;
-        const context = canvas.getContext("2d", { willReadFrequently: true });
+        const context = canvas.getContext("2d");
+        context.imageSmoothingEnabled = false;
+        const Data2JSON = message.payload;
+        const Data2Array = JSON.parse(Data2JSON);
         const Data2 = new ImageData(new Uint8ClampedArray(Data2Array), canvas.width, canvas.height);
         context.putImageData(Data2, 0, 0);
+        pdfimg.Graffiti = canvas.toDataURL();
       }
     });
   }, []);
 
   const startDrawing = (event) => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     savedStates.push(context.getImageData(0, 0, canvas.width, canvas.height));
     setIsDrawing(true);
     const rect = canvas.getBoundingClientRect();
@@ -56,7 +49,8 @@ const LectureGraffiti = ({ check, setCheck }) => {
   const stopDrawing = () => {
     setIsDrawing(false);
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     const Data1 = context.getImageData(0, 0, canvas.width, canvas.height);
     const Data1Array = Array.from(Data1.data);
     const Data1JSON = JSON.stringify(Data1Array);
@@ -68,7 +62,8 @@ const LectureGraffiti = ({ check, setCheck }) => {
       return;
     }
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     context.lineWidth = thickness;
     context.lineCap = "round";
     context.strokeStyle = color;
@@ -87,7 +82,8 @@ const LectureGraffiti = ({ check, setCheck }) => {
 
   const clear = () => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     context.clearRect(0, 0, canvas.width, canvas.height);
     const Data1 = context.getImageData(0, 0, canvas.width, canvas.height);
     const Data1Array = Array.from(Data1.data);
@@ -97,7 +93,8 @@ const LectureGraffiti = ({ check, setCheck }) => {
 
   const restore = () => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     if (savedStates.length > 0) {
       context.putImageData(savedStates.pop(), 0, 0);
     }
@@ -111,12 +108,15 @@ const LectureGraffiti = ({ check, setCheck }) => {
     <div>
       <canvas
         ref={canvasRef}
-        width={500}
-        height={500}
+        width={img.width}
+        height={img.height - 800}
         onMouseDown={startDrawing}
         onMouseMove={drawing}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
+        style={{
+          backgroundColor: "white",
+        }}
       />
       <div>
         <label htmlFor="color">Color:</label>
