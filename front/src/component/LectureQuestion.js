@@ -1,15 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from 'react-redux';
-
-const socket = new WebSocket(`ws://localhost:8000`);
-
-socket.addEventListener("open", () => {
-  console.log("Connected to Server ✅");
-});
-
-socket.addEventListener("close", () => {
-  console.log("Disconnected from Server ❌");
-});
 
 let savedStates = [];
 
@@ -18,39 +7,42 @@ function updatePicture(type, payload, lectureNoteId) {
   return JSON.stringify(msg);
 }
 
-const LectureQuestion = ({ check, setCheck }) => {
+const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("black");
-  const [thickness, setThickness] = useState(2);
+  const [thickness, setThickness] = useState(5);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-
-  const noteId = useSelector((state) => state.note.note);
-
-  console.log("NOTEIDQUESTION",noteId);
-  const lectureNoteId = noteId;
 
   useEffect(() => {
     if (check !== 1) {
       setCheck(1);
+      const canvas = canvasRef.current;
+      canvas.style.backgroundImage = `url(${img.src})`;
+      const context = canvas.getContext("2d");
+      context.imageSmoothingEnabled = false;
       socket.send(updatePicture("first1", "", lectureNoteId));
     }
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
       if (message.lectureNoteId === lectureNoteId && message.type === "picture1") {
-        const Data2Array = JSON.parse(message.payload);
         const canvas = canvasRef.current;
-        const context = canvas.getContext("2d", { willReadFrequently: true });
+        const context = canvas.getContext("2d");
+        context.imageSmoothingEnabled = false;
+        const Data2JSON = message.payload;
+        const Data2Array = JSON.parse(Data2JSON);
         const Data2 = new ImageData(new Uint8ClampedArray(Data2Array), canvas.width, canvas.height);
         context.putImageData(Data2, 0, 0);
+        pdfimg.Question = canvas.toDataURL();
       }
     });
   }, []);
 
   const startDrawing = (event) => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     savedStates.push(context.getImageData(0, 0, canvas.width, canvas.height));
     setIsDrawing(true);
     const rect = canvas.getBoundingClientRect();
@@ -61,7 +53,8 @@ const LectureQuestion = ({ check, setCheck }) => {
   const stopDrawing = () => {
     setIsDrawing(false);
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     const Data1 = context.getImageData(0, 0, canvas.width, canvas.height);
     const Data1Array = Array.from(Data1.data);
     const Data1JSON = JSON.stringify(Data1Array);
@@ -73,7 +66,8 @@ const LectureQuestion = ({ check, setCheck }) => {
       return;
     }
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     context.lineWidth = thickness;
     context.lineCap = "round";
     context.strokeStyle = color;
@@ -92,7 +86,8 @@ const LectureQuestion = ({ check, setCheck }) => {
 
   const clear = () => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     context.clearRect(0, 0, canvas.width, canvas.height);
     const Data1 = context.getImageData(0, 0, canvas.width, canvas.height);
     const Data1Array = Array.from(Data1.data);
@@ -102,7 +97,8 @@ const LectureQuestion = ({ check, setCheck }) => {
 
   const restore = () => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
     if (savedStates.length > 0) {
       context.putImageData(savedStates.pop(), 0, 0);
     }
@@ -116,8 +112,8 @@ const LectureQuestion = ({ check, setCheck }) => {
     <div>
       <canvas
         ref={canvasRef}
-        width={500}
-        height={500}
+        width={img.width}
+        height={img.height - 800}
         onMouseDown={startDrawing}
         onMouseMove={drawing}
         onMouseUp={stopDrawing}

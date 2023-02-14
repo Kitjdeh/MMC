@@ -92,14 +92,13 @@ socket.on("setScreen", (num) => {
   console.log(isScreen);
 });
 
-const LectureWebRTC = ({ check, setCheck }) => {
+const LectureWebRTC = ({ lectureNoteId, check, setCheck }) => {
   useEffect(() => {
     if (check !== 4) {
       setCheck(4);
     }
   }, []);
 
-  console.log("aaa");
   const myFace = useRef();
   const muteBtn = useRef();
   const cameraBtn = useRef();
