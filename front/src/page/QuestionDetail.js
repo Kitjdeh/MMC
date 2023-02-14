@@ -43,12 +43,12 @@ const QuestionDetail = () => {
   const userId = cookie.get("userId");
 
   useEffect(() => {
-    console.log("id확인전",userauth)
+    console.log("id확인전", userauth);
     console.log("문제아이디", question["userId"]);
     console.log("유저아이디", userId);
     setUserauth(userId == question["userId"] ? true : false);
-    console.log("id확인후",userauth)
-  },[question]);
+    console.log("id확인후", userauth);
+  }, [question]);
 
   const selectquestion = (item) => {
     const { name } = item.target;
@@ -98,26 +98,32 @@ const QuestionDetail = () => {
             코드
           </Button>
         </Word>
-          {userauth === true ? (
-            <Word item xs={3}>
-              <Button
-                onClick={selectquestion}
-                name="modify"
-                variant="contained"
-                sx={{ backgroundColor: "#c1abff" }}
-              >
-                수정
-              </Button>
-            </Word>
-          ) : (
-            <Word item xs={3}>
-              {" "}
-              ????{" "}
-            </Word>
-          )}
-     
-      </Grid>{content ? (<Box>{category[content]}</Box>) : (<Box><QuestionMain question={question} /></Box>)}
-
+        {userauth === true ? (
+          <Word item xs={3}>
+            <Button
+              onClick={selectquestion}
+              name="modify"
+              variant="contained"
+              sx={{ backgroundColor: "#c1abff" }}
+            >
+              수정
+            </Button>
+          </Word>
+        ) : (
+          <Word item xs={3}>
+            {" "}
+            ????{" "}
+          </Word>
+        )}
+      </Grid>
+      {content && <Box>{category[content]}</Box>}
+      {/* {content ? (
+        <Box>{category[content]}</Box>
+      ) : (
+        <Box>
+          <QuestionMain question={question} />
+        </Box>
+      )} */}
     </Box>
   );
 };

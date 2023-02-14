@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
@@ -53,7 +53,7 @@ const source = ["백준", "프로그래머스"];
 const QuestionMain = ({ question }) => {
   const [algorithm, setAlgorithm] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [adoptuser, setAdoptuser] = useState("");
   const store = useStore();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,7 +65,11 @@ const QuestionMain = ({ question }) => {
   const userId = cookie.get("userId");
 
   let time = new Date(question.reservation);
-
+  useEffect(() => {
+    if (question.progress) {
+      setAdoptuser(question.progress);
+    }
+  }, []);
   useEffect(() => {
     transBitmask();
   }, []);
@@ -75,18 +79,21 @@ const QuestionMain = ({ question }) => {
       navigate(`/lecture/${noteId}`);
     }
   }, [noteId]);
-  useEffect(()=>{
-    algorithm.map((e)=>console.log(e))
-  },[algorithm])
+  useEffect(() => {
+    algorithm.map((e) => console.log(e));
+  }, [algorithm]);
 
   const transBitmask = () => {
     let algobit = 1;
     let index = 0;
     let updated = [];
-    for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
+    let algori = question.algorithm + "";
+    for (let x of algori.toString(2).split("").reverse().join("")) {
+      x.toString(2).split("").reverse().join("");
+
       algobit = algobit && x;
       if (algobit === "1") {
-        updated=updated.concat(algo[index++]);
+        updated = updated.concat(algo[index++]);
       }
     }
     setAlgorithm(updated);
@@ -113,6 +120,7 @@ const QuestionMain = ({ question }) => {
     console.log({ name }, name);
     console.log("클릭클릭", item.target, name);
   };
+  console.log(userId, question.userId, "아이디 확인", question.progress);
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
@@ -163,7 +171,7 @@ const QuestionMain = ({ question }) => {
             알고리즘
           </Bar>
 
-          {algorithm.map((element) => (
+          {algorithm?.map((element) => (
             <Bar item xs={2} margin={1}>
               {element}
             </Bar>
@@ -176,10 +184,10 @@ const QuestionMain = ({ question }) => {
       </Bar>
       <Box>
         <Bar>
-          {question?.userId !== userId ? (
-          <Button onClick={addTrainer}>문제풀이 신청</Button>
+          {question?.userId !== userId &&question?.progress <1 ? (
+            <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
-            <Box></Box>
+            <Box>1</Box>
           )}
         </Bar>
         <Container>
@@ -189,15 +197,17 @@ const QuestionMain = ({ question }) => {
                 문제설명을 신청한 강사 리스트
               </Item>
               <Item>
-                <TeacherRegister nickname="프로필" temperature="온도" />
+                <TeacherRegister nickname="프로필" temperature="온도"
+                cancelregister="신청취소" select="선택하기" />
                 {trainers.length != 0 ? (
                   trainers.map((item) => (
                     <Button name={item} onClick={selectTrainer(item)}>
-                    <TeacherRegister
-                      nickname={item.nickname}
-                      temperature={item.temperature}
-                      writeId={item.userId}
-                    />
+                      <TeacherRegister
+                        nickname={item.nickname}
+                        temperature={item.temperature}
+                        writeId={item.userId}
+                        question={question}
+                      />
                     </Button>
                   ))
                 ) : (
@@ -207,8 +217,8 @@ const QuestionMain = ({ question }) => {
             </Grid>
 
             <Grid item margin={1} xs={5}>
-            {trainer.length !== 0 ? (
-                <TeacherCard />
+              {trainer.length !== 0 ? (
+                <TeacherCard/>
               ) : (
                 <div>
                   강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
@@ -218,10 +228,17 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
+      {userId == question?.userId ? (
+        <button onClick={deleteQuestion}>글 삭제</button>
+      ) : (
+        <Box></Box>
+      )}
 
-      <button onClick={deleteQuestion}>글 삭제</button>
-      <button onClick={getLectureNote}>강의실 입장</button>
-      
+      {adoptuser == userId || question?.userId == userId ? (
+        <button onClick={getLectureNote}>강의실 입장</button>
+      ) : (
+        <Box>!!</Box>
+      )}
     </Box>
   );
 };

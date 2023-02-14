@@ -62,9 +62,7 @@ const Navbar = () => {
     if(authenticated){
       dispatch(userinfoAction.getUserInfo(userId));
     }
-  })
-  console.log(authenticated)
-  
+  },[authenticated])
   const cookie = new Cookies();
   const userId= cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
