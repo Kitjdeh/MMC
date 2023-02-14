@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
@@ -94,10 +94,6 @@ const QuestionMain = ({ question }) => {
       }
     }
     setAlgorithm(updated);
-    // question.algorithm.map((element)=>{
-    //   algobit = algobit | 1>>element;
-    //   console.log(algobit);
-    // });
   };
   const deleteQuestion = () => {
     dispatch(questionAction.deleteQuestion(question.questionId));

@@ -28,10 +28,8 @@ const Bar = styled(Grid)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const WriteQuestion = () => {
-  const cookie = new Cookies();
-  const userId = cookie.get("userId");
-  console.log("유저아이디", userId);
+const WriteQuestion = ({ userId }) => {
+
   const [startDate, setStartDate] = useState(new Date());
   const [algorithm, setAlgorithm] = useState([]);
   const [inputs, setInputs] = useState({
@@ -87,6 +85,7 @@ const WriteQuestion = () => {
     const { value } = e.target;
     console.log("VALUE", value);
     await setAlgorithm(typeof value === "string" ? value.split(",") : value);
+    transBitmask();
   };
   const transBitmask = () => {
     let algobit = 0;
@@ -317,5 +316,4 @@ const WriteQuestion = () => {
       </Box>
     );
   };
-};
-export default WriteQuestion;
+  export default WriteQuestion;

@@ -7,7 +7,14 @@ function updatePicture(type, payload, lectureNoteId) {
   return JSON.stringify(msg);
 }
 
-const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket }) => {
+const LectureQuestion = ({
+  lectureNoteId,
+  check,
+  img,
+  pdfimg,
+  setCheck,
+  socket,
+}) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("black");
@@ -26,13 +33,20 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket }
     }
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (message.lectureNoteId === lectureNoteId && message.type === "picture1") {
+      if (
+        message.lectureNoteId === lectureNoteId &&
+        message.type === "picture1"
+      ) {
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         context.imageSmoothingEnabled = false;
         const Data2JSON = message.payload;
         const Data2Array = JSON.parse(Data2JSON);
-        const Data2 = new ImageData(new Uint8ClampedArray(Data2Array), canvas.width, canvas.height);
+        const Data2 = new ImageData(
+          new Uint8ClampedArray(Data2Array),
+          canvas.width,
+          canvas.height
+        );
         context.putImageData(Data2, 0, 0);
         pdfimg.Question = canvas.toDataURL();
       }

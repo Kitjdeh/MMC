@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -13,6 +15,12 @@ import { useSearchParams } from "react-router-dom";
 import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
+import { styled as styledM } from "@mui/material/styles";
+
+const TextFieldM = styledM(TextField)(() => ({
+  border: `5px solid rgba(69, 64, 225, 0.2)`,
+  // borderRadius: 20,
+}));
 const AllQuestion = () => {
   const [searchList, setSearch] = useState("");
   const [isfindpython, setfindpython] = React.useState(true);
@@ -111,6 +119,13 @@ const AllQuestion = () => {
     setFilteredList(result);
     return;
   };
+  const resetFilterList = () => {
+    setfindpython(true);
+    setfindjava(true);
+    setfindC(true);
+    setalorithm(true);
+    setdebugging(true);
+  };
   // console.log("필터", result);
   // const findpython = (event) => {
   //   setfindpython(event.target.checked);
@@ -134,36 +149,25 @@ const AllQuestion = () => {
       <Container sx={{ mt: 5, alignItems: "center" }}>
         <Container>
           <Box className="searchbar">
-            <Grid
-              direction="row"
-              container
-              spacing={2}
-              maxWidth="lg"
-              alignItems="center"
-            >
-              <Grid item xs={3}>
-                <Typography color="text.secondary">키워드 검색</Typography>
-              </Grid>
-              <Grid item xs={8} textAlign="left">
-                <TextField
-                  className="searchbar"
+          <Grid item xs={12} textAlign="left">
+                <TextFieldM
+                  // variant="standard"
                   required
                   fullWidth
                   id="usersearch"
                   label="키워드 검색"
                   name="userid"
                   onChange={(event) => setSearch(event.target.value)}
-                  autoFocus
+                  // InputProps={{disableUnderline:true}}
                 />
-                <Grid item xs={1}>
-                  <SearchIcon />
-                </Grid>
-              </Grid>
             </Grid>
           </Box>
         </Container>
 
-        <Box className="searchbox" sx={{ mt: 3, alignItems: "center" }}>
+        <Box
+          className="searchbox"
+          sx={{ mt: 3, alignItems: "center", position: "relative" }}
+        >
           <Box sx={{}}></Box>
           상세설정
           <Box sx={{}}>
@@ -202,6 +206,14 @@ const AllQuestion = () => {
             />
             디버깅
           </Box>
+          <Grid
+            item
+            xs={1}
+            sx={{ position: "absolute", top: "40%", right: "5%" }}
+          >
+            <SearchIcon onClick={() => getFilteredList()} sx={{ mr: "20px" }} />
+            <RotateLeftIcon onClick={() => resetFilterList()} />
+          </Grid>
         </Box>
         <Link
           variant="button"

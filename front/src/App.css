@@ -15,7 +15,7 @@
 }
 .main-header {
   border: 1px solid rgba(69, 64, 225, 0.2);
-  background-color: rgba(69, 64, 225, 0.4);
+  /* background-color: rgba(69, 64, 225, 0.4); */
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
@@ -38,10 +38,6 @@
 .signup {
   display: flex;
   align-items: center;
-}
-.searchbar {
-  border: 5px solid rgba(69, 64, 225, 0.2);
-  border-radius: 20px
 }
 .searchbox {
   border: 3px solid rgba(69, 64, 225, 0.2);

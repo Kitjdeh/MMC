@@ -6,6 +6,15 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { questionAction } from './../redux/actions/questionAction';
+import { styled } from "@mui/material/styles";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#FEFBE2",
+  padding: theme.spacing(0.3),
+  textAlign: "center",
+  minWidth: 60,
+  maxWidth: 400,
+}));
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
@@ -14,7 +23,7 @@ const QuestionCard = ({ question }) => {
     navigate(`/question/${question.questionId}`);
   };
   return (
-    <Paper
+    <Item
       sx={{
         p: 2,
         margin: "50",
@@ -59,7 +68,7 @@ const QuestionCard = ({ question }) => {
           </Grid>
         </Grid>
       </Box>
-    </Paper>
+    </Item>
   );
 };
 
