@@ -87,7 +87,7 @@ const QuestionMain = ({ question }) => {
     for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
       algobit = algobit && x;
       if (algobit === "1") {
-        updated=updated.concat(algo[index++]);
+        updated = updated.concat(algo[index++]);
       }
     }
     setAlgorithm(updated);
@@ -105,6 +105,8 @@ const QuestionMain = ({ question }) => {
   const getLectureNote = async () => {
     console.log("QUESTIONID", question.questionId);
     dispatch(noteAction.getLectureNote(question.questionId));
+    dispatch(adminAction.getUserInfo(question.progress));
+    console.log(question.progress);
     setLoading(true);
   };
   const note = useSelector((state) => state.note.note);
@@ -253,11 +255,7 @@ const QuestionMain = ({ question }) => {
           <Bar>채택이 완료된 질문입니다!</Bar>
         )}
       </Box>
-      {userId == question?.userId ? (
-        <button onClick={deleteQuestion}>글 삭제</button>
-      ) : (
-        <Box></Box>
-      )}
+      {userId == question?.userId ? <button onClick={deleteQuestion}>글 삭제</button> : <Box></Box>}
 
         {question.progress ===0 ? <Box></Box> :
       (adoptuser == userId || question?.userId == userId)? (

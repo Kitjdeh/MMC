@@ -42,17 +42,17 @@ function modifyUser(user){
 
 function signUp(inputs) {
   console.log("회원가입 action", inputs);
-    return async () => {
-      let url = baseUrl;
-      let response = await axios
-        .post(url, inputs)
-        .then((response) => {
-          let data = response.data;
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log("ERROR", error);
-        });
+  return async () => {
+    let url = baseUrl;
+    let response = await axios
+      .post(url, inputs)
+      .then((response) => {
+        let data = response.data;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+      });
   };
 }
 export const userinfoAction = { signUp, getUserInfo, modifyUser };

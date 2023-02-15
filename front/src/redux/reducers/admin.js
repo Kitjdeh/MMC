@@ -13,5 +13,5 @@ let initialState = {
         return { ...state };
     }
   }
-  export default adminReducer;
-  
+}
+export default adminReducer;

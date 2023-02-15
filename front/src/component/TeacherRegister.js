@@ -43,7 +43,6 @@ const TeacherRegister = ({ nickname, temperature,writeId, cancelregister, select
     dispatch(noteAction.makeLectureNote(question.questionId));
     console.log("after");
     dispatch(questionAction.modifyQuestion(question));
-    // dispatch(noteAction.getLectureNote(question.questionId));
   };
   
   const getUserInfo = () => {
