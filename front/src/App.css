@@ -22,7 +22,13 @@
 .body {
   margin-left: 200px;
   margin-right: 200px;
+  -ms-overflow-style: none;
 }
+ 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .main-header {
   border: 1px solid rgba(69, 64, 225, 0.2);
   /* background-color: rgba(69, 64, 225, 0.4); */
@@ -48,10 +54,6 @@
 .signup {
   display: flex;
   align-items: center;
-}
-.searchbox {
-  border: 4px solid #F0E4D4; 
-  /* background-color: #F5F4D7;  */
 }
 .questiontitlebar{
   height: 50px;

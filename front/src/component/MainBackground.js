@@ -16,7 +16,7 @@ const MainBackground = () => {
     return (
         <Mainbox>
             <Box sx={{ mb: -80, minWidth: 300, ml: -30, mr: -30 }} >
-                <img src=" /img/main3.png" width={1200} />
+                <img src=" /img/main3.png" width={1200}/>
             </Box>
             <Main />
         </Mainbox>

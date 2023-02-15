@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState,useEffect}  from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -16,8 +16,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Cookies } from 'react-cookie';
 import { styled } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { adminAction } from './../redux/actions/adminAction';
+import { userinfoAction } from '../redux/actions/userinfoAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#f6edff",
@@ -90,6 +91,27 @@ const CustomPaginationActionsTable=({pointList})=> {
   const userId = cookie.get("userId");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const userInfo = useSelector((state)=>state.admin.user);
+  const [inputs, setInputs] = useState({
+    userId:"",
+    identity: "",
+    password: "",
+    nickname: "",
+    language: 0,
+    name: "",
+    email: "",
+    phone: "",
+    academicAbility: "",
+    workplace: "",
+    baekjoonId: "",
+    award: "",
+    lectureCount:10,
+    point:0,
+    temperature:0,
+    profileImage:"",
+  });
+  const [flag, setFlag] = useState(false);
+  const [point, setPoint] = useState(0);
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pointList.length) : 0;
@@ -108,13 +130,30 @@ const CustomPaginationActionsTable=({pointList})=> {
     setPage(0);
   };
 
+  useEffect(() => {
+    if(flag){
+      calculate(userInfo);
+    }
+  }, [userInfo])
+  
+
   const dispatch=useDispatch();
   const acceptTrade = (e,row) =>{
     dispatch(adminAction.updatePoints(row.tradeId));
+    setPoint(row.amount);
+    dispatch(adminAction.getUserInfo(row.userId));
+    setFlag(true);
   }
 
   const cancelTrade = (e,row) => {
     dispatch(adminAction.deletePoints(row.tradeId));
+  }
+
+  const calculate = (userInfo) => {
+    let temp = userInfo;
+    temp.point+=parseInt(point);
+    setInputs(temp);
+    dispatch(adminAction.modifyUser(temp));
   }
 
   return (

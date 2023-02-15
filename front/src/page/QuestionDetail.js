@@ -15,6 +15,8 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 import { Cookies } from "react-cookie";
 import QuestionModify from "../component/QuestionModify";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { SvgIcon } from "@mui/material";
 
 const QuestionDetail = () => {
   let questionId = useParams();
@@ -67,7 +69,7 @@ const QuestionDetail = () => {
   return (
     <Box>
       <Grid container direction="row" alignItems="flex-start" margin={2}>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="main"
@@ -78,7 +80,7 @@ const QuestionDetail = () => {
             메인
           </Button>
         </Word>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="question"
@@ -88,7 +90,7 @@ const QuestionDetail = () => {
             문제
           </Button>
         </Word>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="code"
@@ -110,10 +112,7 @@ const QuestionDetail = () => {
               </Button>
             </Word>
           ) : (
-            <Word item xs={3}>
-              {" "}
-              ????{" "}
-            </Word>
+            ""
           )}
      
       </Grid>    {content && <Box>{category[content]}</Box>}

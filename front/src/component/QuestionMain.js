@@ -56,13 +56,12 @@ const QuestionMain = ({ question }) => {
   const [algorithm, setAlgorithm] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adoptuser, setAdoptuser] = useState("");
-  const store = useStore();
+  const [selected, setSelected] = useState(-1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const trainers = store.getState().question.trainers;
+  const trainers = useSelector((state)=>state.question.trainers);
   const noteId = useSelector((state) => state.note.note);
-  const trainer = useSelector((state) => state.userinfo.userinfo);
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
@@ -71,8 +70,6 @@ const QuestionMain = ({ question }) => {
     if (question.progress) {
       setAdoptuser(question.progress);
     }
-  }, []);
-  useEffect(() => {
     transBitmask();
   }, []);
   useEffect(() => {
@@ -81,9 +78,7 @@ const QuestionMain = ({ question }) => {
       navigate(`/lecture/${noteId}`);
     }
   }, [noteId]);
-  useEffect(()=>{
-    algorithm.map((e)=>console.log(e))
-  },[algorithm])
+
 
   const transBitmask = () => {
     let algobit = 1;
@@ -103,6 +98,9 @@ const QuestionMain = ({ question }) => {
   const addTrainer = () => {
     dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
   };
+  const select = (num) => {
+    setSelected(num);
+  }
 
   const getLectureNote = async () => {
     console.log("QUESTIONID", question.questionId);
@@ -203,49 +201,57 @@ const QuestionMain = ({ question }) => {
       </Item>
       <Box>
         <Bar>
-          {question?.userId !== userId  &&question?.progress <1 ? (
-          <Button sx={{ fontFamily: "BMHANNAProOTF" }} onClick={addTrainer}>문제풀이 신청</Button>
+          {question?.userId !== parseInt(userId) && question?.progress < 1 ? (
+            <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
         </Bar>
-        <Container>
-          <Grid container sx={{ fontFamily: "BMHANNAProOTF" }} justifyContent="space-between">
-            <Grid item margin={1} xs={5} sx={{ fontFamily: "BMHANNAProOTF" }}>
-              <Item sx={{ minWidth: 100, backgroundColor: "#F9D9CA" , color: "#917B56" }}>
-                문제설명을 신청한 강사 리스트
-              </Item>
-              <Item>
-                <TeacherRegister sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" , fontFamily: "BMHANNAProOTF" }} nickname="프로필" temperature="온도"
-                cancelregister="신청취소" select="선택하기" />
-                {trainers.length != 0 ? (
-                  trainers.map((item) => (
-                    <Button sx={{ fontFamily: "BMHANNAProOTF" }}name={item} onClick={selectTrainer(item)}>
-                    <TeacherRegister
-                      nickname={item.nickname}
-                      temperature={item.temperature}
-                      writeId={item.userId}
-                      sx={{ fontFamily: "BMHANNAProOTF" }}
-                    />
-                    </Button>
-                  ))
-                ) : (
-                  <Item>답변자 리스트가 없습니다.</Item>
-                )}
-              </Item>
-            </Grid>
+        {question.progress === 0 ? (
+          <Container>
+            <Grid container justifyContent="space-between">
+              <Grid item margin={1} xs={5}>
+                <Item sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
+                  답변자 리스트
+                </Item>
+                <Item>
+                  <TeacherRegister
+                    nickname="프로필"
+                    temperature="온도"
+                    cancelregister="신청취소"
+                    select="선택하기"
+                  />
+                  {trainers.length != 0 ? (
+                    trainers.map((item) => (
+                      // <Button name={item} onClick={selectTrainer(item)}>
+                      <TeacherRegister
+                        nickname={item.nickname}
+                        temperature={item.temperature}
+                        writeId={item.userId}
+                        select={select}
+                      />
+                      // </Button>
+                    ))
+                  ) : (
+                    <Item>답변자 리스트가 없습니다.</Item>
+                  )}
+                </Item>
+              </Grid>
 
-            <Grid item margin={1} xs={5}>
-            {trainer.length !== 0 ? (
-                <TeacherCard />
-              ) : (
-                <div>
-                  강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
-                </div>
-              )}
+              <Grid item margin={1} xs={5}>
+                {selected !== -1 ? (
+                  <TeacherCard />
+                ) : (
+                  <div>
+                    강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
+                  </div>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        ) : (
+          <Bar>채택이 완료된 질문입니다!</Bar>
+        )}
       </Box>
       {userId == question?.userId ? (
         <button onClick={deleteQuestion}>글 삭제</button>
@@ -253,10 +259,13 @@ const QuestionMain = ({ question }) => {
         <Box></Box>
       )}
 
-      {adoptuser == userId || question?.userId == userId ? (
-        <button onClick={getLectureNote}>강의실 입장</button>
+        {question.progress ===0 ? <Box></Box> :
+      (adoptuser == userId || question?.userId == userId)? (
+        <Bar>
+          <Button onClick={getLectureNote}>강의실 입장</Button>
+        </Bar>
       ) : (
-        <Box>!!</Box>
+        <Box></Box>
       )}
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -20,13 +20,12 @@ import { Cookies } from "react-cookie";
 import { userinfoAction } from "./../redux/actions/userinfoAction";
 import { display } from "@mui/system";
 import styled from "styled-components";
-
+import { ConstructionOutlined } from "@mui/icons-material";
 const MenuName = styled.div`
-  font-size: 14px;
-  font-weight: bold;
+font-size: 14px;
+font-weight: bold;
   margin-left: 5px;
-`;
-
+  `;
 const MenuInfo = styled.div`
   width: 160px;
   height: 30px;
@@ -36,38 +35,49 @@ const MenuInfo = styled.div`
   font-size: 12px;
   justify-content: space-between;
   background-color: #e5e5e5;
-`;
-
+  `;
 const Point = styled.span`
   color: rgba(69, 64, 225, 0.6);
   font-size: 14px;
-`;
-
+  `;
 const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
   textAlign: "right",
 }));
-
 const Navbar = () => {
-  // const authcookie = getCookieToken();
-  const store = useStore();
-  // console.log(store.getState());
-  // const authenticated = store.getState().authToken.isLogin;
-  const userInfo = useSelector((state) => state.userinfo.userinfo);
-  // console.log("USERINFO", userInfo);
-  const [authenticated, setAuthenticated] = useState(false);
-  useEffect(() => {
-    const cookie = new Cookies();
-    setAuthenticated(cookie.get("userId") !== undefined ? true : false);
-    if (authenticated) {
-      dispatch(userinfoAction.getUserInfo(userId));
-    };
-  },[authenticated])
-  console.log(authenticated);
-  const cookie = new Cookies();
+  const [authenticated, setAuthenticated] = useState(false)
+  const [userInfo, setUserInfo] = useState([])
+  const is_loaded = useSelector((state) => state.question.is_loaded);
+  const getUserInfo = useSelector(state => state.userinfo.userinfo)
+  const getAuthenticated = useSelector(state => state.authToken.authenticated)
+  console.log("인증", authenticated)
+  const cookie = new Cookies()
   const userId = cookie.get("userId");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (
+      is_loaded === true
+    ) {
+      console.log('111')
+      console.log("쿠키유저아이디", userId)
+      console.log("인증", authenticated)
+      setAuthenticated(true)
+    }
+  }, [is_loaded])
+  useEffect(() => {
+    if (userId !== 0) {
+      console.log('유저아이디 들어가는거 확인', userId)
+      dispatch(userinfoAction.getUserInfo(userId))
+    }
+  }, [authenticated])
+  useEffect(() => {
+    setUserInfo(getUserInfo)
+    console.log("유저정보확인", getUserInfo)
+  }, [getUserInfo])
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -75,8 +85,6 @@ const Navbar = () => {
   const handleClose = (event) => {
     setAnchorEl(null);
   };
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const goPoint = () => {
     handleClose();
@@ -98,7 +106,6 @@ const Navbar = () => {
     setAuthenticated(false)
     navigate("/");
   };
-
   return (
     <div>
       <AppBar
@@ -117,11 +124,9 @@ const Navbar = () => {
             alignItems="center"
           >
             <Grid item xs={6}>
-
-            <Link variant="button" href="/" sx={{ my: 1, mx: 1.5 }}>
-              <img width="60" src="/img/mmclogo.png" alt="logo" />
-            </Link>
-
+              <Link variant="button" href="/" sx={{ my: 1, mx: 1.5 }}>
+                <img width="60" src="/img/mmclogo.png" alt="logo" />
+              </Link>
               <Link
                 variant="button"
                 color="text.primary"
@@ -142,23 +147,21 @@ const Navbar = () => {
                   <Grid item>
                     <Button
                       id="alarm-button"
-                      aria-controls={openalarm ? "alarm-menu" : undefined}
                       aria-haspopup="true"
-                      aria-expanded={openalarm ? "true" : undefined}
                       onClick={handleClick}
                       // open={openalarm}
                       sx = {{ color: "#917B56" }}
                       >
-                      알람
-                    </Button>
-                    <Menu
-                      id="alarm-menu"
-                      anchorEl={anchorEl}
-                      open={openalarm}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        "aria-labelledby": "alarm-menu",
-                      }}
+                        마이페이지
+                      </Button>
+                      <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={openmypage}
+                        onClose={handleClose}
+                        MenuListProps={{
+                          "aria-labelledby": "mypage-button",
+                        }}
                       >
                       <MenuItem>알람이 없습니다.</MenuItem>
                       <MenuItem>알람이 없습니다.</MenuItem>
@@ -188,38 +191,37 @@ const Navbar = () => {
                           src={userInfo.profileImage}
                           sx={{ width: 32, height: 32 }}
                           />
-                        <MenuName>{userInfo.nickname}</MenuName>
-                      </MenuItem>
-                      <MenuInfo>
-                        <div>포인트</div>
-                        <div>
-                          <Point>{userInfo.point}</Point> points
-                        </div>
-                      </MenuInfo>
-                      <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
-                      <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
-                      <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
-                      <MenuItem onClick={logout}>로그아웃</MenuItem>
-                    </Menu>
-                  </Grid>
-                </div>
-              ) : (
-                <Button
-                href="/login"
-                variant="outlined"
-                color="secondary"
-                sx={{ my: 1, mx: 1.5 }}
-                >
-                  Login
-                </Button>
-              )}
-            </Box>
+                          <MenuName>{userInfo?.nickname}</MenuName>
+                        </MenuItem>
+                        <MenuInfo>
+                          <div>포인트</div>
+                          <div>
+                            <Point>{userInfo?.point}</Point> points
+                          </div>
+                        </MenuInfo>
+                        <MenuItem onClick={goPoint}>포인트 페이지</MenuItem>
+                        <MenuItem onClick={goquestion}>내 질문 페이지</MenuItem>
+                        <MenuItem onClick={golecture}>내 강의 페이지</MenuItem>
+                        <MenuItem onClick={logout}>로그아웃</MenuItem>
+                      </Menu>
+                    </Grid>
+                  </div>
+                ) : (
+                  <Button
+                    href="/login"
+                    variant="outlined"
+                    color="secondary"
+                    sx={{ my: 1, mx: 1.5 }}
+                  >
+                    Login
+                  </Button>
+                )}
+              </Box>
+            </Grid>
           </Grid>
-              </Grid>
         </Toolbar>
       </AppBar>
     </div>
   );
 };
-
 export default Navbar;

@@ -42,7 +42,7 @@ const Login = () => {
     <div>
       <Grid
         container
-        component="form"
+
         sx={{ height: "80vh" }}
         xs
       >

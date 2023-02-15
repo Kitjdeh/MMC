@@ -16,13 +16,23 @@ import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { styled as styledM } from "@mui/material/styles";
+
+import styled from "styled-components";
+
 const TypographyOtf = styledM(Typography)({
   fontFamily: "BMHANNAProOTF"
 });
 const TextFieldM = styledM(TextField)(() => ({
   border: `5px solid #DFD3C3`,
-  // borderRadius: 20,
+  marginBottom: 20
 }));
+
+const BoxTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0,0,0,0.7);
+`;
+
 const AllQuestion = () => {
   const [searchList, setSearch] = useState("");
   const [isfindpython, setfindpython] = React.useState(true);
@@ -40,8 +50,6 @@ const AllQuestion = () => {
  
   const is_loaded = useSelector((state) => state.question.is_loaded);
  
- 
-  console.log(is_loaded,"is_loaded");
   const dispatch = useDispatch();
   const getallQuestions = () => {
     dispatch(questionAction.getQuestions());
@@ -166,15 +174,18 @@ const AllQuestion = () => {
             </Grid>
           </Box>
         </Container>
-
+        <Box sx={{ padding:"0 0 0 8px", fontSize: 14, mt:7, mb:0.5, fontWeight:700, color: "#917B56" }}>
+            상세설정
+          </Box>
         <Box
-          className="searchbox"
-          sx={{ mt: 3, alignItems: "center", position: "relative" }}
+          sx={{  alignItems: "center", position: "relative",   border: "3px solid rgba(69, 64, 225, 0.2)", padding:"10px 15px"}}
         >
+
           <Box sx={{ color: "#6C5D53"}}>상세설정</Box>
           
-          <Box sx={{ color: "#6C5D53" }}>
+          <Box sx={{ color: "#6C5D53" ,fontSize: 14}}>
             주언어
+
             <Checkbox
               checked={isfindpython}
               onChange={(event) => setfindpython(event.target.checked)}
@@ -194,8 +205,9 @@ const AllQuestion = () => {
             />
             c++
           </Box>
-          <Box sx={{ color: "#6C5D53" }}>
+          <Box sx={{ color: "#6C5D53", fontSize:14 }}>
             문제유형
+
             <Checkbox
               checked={algorithm}
               onChange={findalgorithm}
