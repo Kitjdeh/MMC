@@ -79,9 +79,9 @@ const QuestionMain = ({ question }) => {
       navigate(`/lecture/${noteId}`);
     }
   }, [noteId]);
-  useEffect(()=>{
-    algorithm.map((e)=>console.log(e))
-  },[algorithm])
+  useEffect(() => {
+    algorithm.map((e) => console.log(e));
+  }, [algorithm]);
 
   const transBitmask = () => {
     let algobit = 1;
@@ -90,7 +90,7 @@ const QuestionMain = ({ question }) => {
     for (let x of question.algorithm.toString(2).split("").reverse().join("")) {
       algobit = algobit && x;
       if (algobit === "1") {
-        updated=updated.concat(algo[index++]);
+        updated = updated.concat(algo[index++]);
       }
     }
     setAlgorithm(updated);
@@ -105,6 +105,8 @@ const QuestionMain = ({ question }) => {
   const getLectureNote = async () => {
     console.log("QUESTIONID", question.questionId);
     dispatch(noteAction.getLectureNote(question.questionId));
+    dispatch(adminAction.getUserInfo(question.progress));
+    console.log(question.progress);
     setLoading(true);
   };
   const note = useSelector((state) => state.note.note);
@@ -116,11 +118,7 @@ const QuestionMain = ({ question }) => {
   return (
     <Box sx={{ minWidth: 100 }}>
       <Bar sx={{ backgroundColor: "#f6edff" }}>
-        <Bar
-          container
-          spacing={1}
-          sx={{ minWidth: 100, backgroundColor: "#f6edff" }}
-        >
+        <Bar container spacing={1} sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
           <Grid item xs={3}>
             <Item sx={{ backgroundColor: "#f6edff" }}>제목</Item>
           </Grid>
@@ -171,13 +169,11 @@ const QuestionMain = ({ question }) => {
         </Grid>
       </Bar>
       <br />
-      <Bar sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>
-        {question.content}
-      </Bar>
+      <Bar sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>{question.content}</Bar>
       <Box>
         <Bar>
-          {question?.userId !== userId  &&question?.progress <1 ? (
-          <Button onClick={addTrainer}>문제풀이 신청</Button>
+          {question?.userId !== userId && question?.progress < 1 ? (
+            <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
@@ -189,16 +185,20 @@ const QuestionMain = ({ question }) => {
                 문제설명을 신청한 강사 리스트
               </Item>
               <Item>
-                <TeacherRegister nickname="프로필" temperature="온도"
-                cancelregister="신청취소" select="선택하기" />
+                <TeacherRegister
+                  nickname="프로필"
+                  temperature="온도"
+                  cancelregister="신청취소"
+                  select="선택하기"
+                />
                 {trainers.length != 0 ? (
                   trainers.map((item) => (
                     <Button name={item} onClick={selectTrainer(item)}>
-                    <TeacherRegister
-                      nickname={item.nickname}
-                      temperature={item.temperature}
-                      writeId={item.userId}
-                    />
+                      <TeacherRegister
+                        nickname={item.nickname}
+                        temperature={item.temperature}
+                        writeId={item.userId}
+                      />
                     </Button>
                   ))
                 ) : (
@@ -208,7 +208,7 @@ const QuestionMain = ({ question }) => {
             </Grid>
 
             <Grid item margin={1} xs={5}>
-            {trainer.length !== 0 ? (
+              {trainer.length !== 0 ? (
                 <TeacherCard />
               ) : (
                 <div>
@@ -219,16 +219,12 @@ const QuestionMain = ({ question }) => {
           </Grid>
         </Container>
       </Box>
-      {userId == question?.userId ? (
-        <button onClick={deleteQuestion}>글 삭제</button>
-      ) : (
-        <Box></Box>
-      )}
+      {userId == question?.userId ? <button onClick={deleteQuestion}>글 삭제</button> : <Box></Box>}
 
       {adoptuser == userId || question?.userId == userId ? (
         <button onClick={getLectureNote}>강의실 입장</button>
       ) : (
-        <Box>!!</Box>
+        <Box></Box>
       )}
     </Box>
   );

@@ -8,9 +8,12 @@ import LectureWebRTC from "../component/LectureWebRTC";
 import LectureChat from "../component/LectureChat";
 import Clock from "../component/Clock";
 import jsPDF from "jspdf";
-// import { useSelector } from "react-redux";
 import io from "socket.io-client";
-
+import { useSelector, useDispatch } from "react-redux";
+import { userinfoAction } from "../redux/actions/userinfoAction";
+import { questionAction } from "../redux/actions/questionAction";
+import { useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
 //webRTC setting
 const socketRTC = io("localhost:8001", { transports: ["websocket"] });
 
@@ -46,12 +49,36 @@ socket.addEventListener("close", () => {
 });
 
 const LectureNote = () => {
+  const img = new Image();
+  // img.src =
+  //   "https://ssafy-mmc.s3.ap-northeast-2.amazonaws.com/13793120a9ba4c50a4e2bd9f390abf1f.jpg";
   const [start, setStart] = useState(false); // 둘다 들어올시 시작
   const [openModal, setOpenModal] = useState(false); // 준비 버튼 누를시 모달창 뜸
-  // const nickName = useSelector((state) => state.userinfo.userinfo).nickName;
-  // const lectureNoteId = useSelector((state) => state.note.note);
-  const lectureNoteId = 2;
-  const nickName = "SSAFY";
+  const [time, setTime] = useState(false);
+  const user = useSelector((state) => state.userinfo.userinfo);
+  const lecture = useSelector((state) => state.note.note);
+  const question = useSelector((state) => state.question.question);
+  const nickName = user.nickname;
+  const lectureNoteId = lecture;
+  const userId = user.userId;
+  const studentId = question.userId;
+  const teacherId = question.progress;
+  const teacher = useSelector((state) => state.admin.user);
+  const dispatch = useDispatch();
+  img.src = question.imageUrl;
+  const [temperature, setTemperature] = useState(0);
+  console.log("USER", user);
+  console.log("LECTURE", lecture);
+  console.log("QUESTION", question);
+  console.log("teacher", teacher);
+
+  // const lectureNoteId = 2;
+  // const nickName = "SSAFY";
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const classes = useStyles();
   const [content, setContent] = useState("Question");
   const [check, setCheck] = useState(0);
@@ -77,12 +104,32 @@ const LectureNote = () => {
     Question: "",
     Graffiti: "",
   });
-  const img = new Image();
-  img.src =
-    "https://ssafy-mmc.s3.ap-northeast-2.amazonaws.com/13793120a9ba4c50a4e2bd9f390abf1f.jpg";
+  const [clk, setClk] = useState({
+    hour: 0,
+    min: 0,
+    sec: 0,
+    ttlTime: 0,
+    change: 0,
+  });
 
+  // modal
+  const navigate = useNavigate();
+  const goHome = () => {
+    navigate("/");
+  };
+  const update = () => {
+    setTime(13);
+    question.progress = 2;
+    user.point -= question.point;
+    teacher.point += question.point;
+    teacher.lectureCount++;
+    teacher.temperature += value * 2;
+    dispatch(questionAction.modifyQuestion(question));
+    dispatch(userinfoAction.modifyUser(user));
+    dispatch(userinfoAction.modifyUser(teacher));
+  };
   // webRTC
-  const enterCode = "123";
+
   const handleAddStream = (data) => {
     setPeerStream(data.stream);
   };
@@ -93,19 +140,9 @@ const LectureNote = () => {
 
   const handleOpen = () => {
     socketRTC.emit("join_room", lectureNoteId);
-    socketRTC.emit("modal", enterCode);
+    socketRTC.emit("timerStart", lectureNoteId);
     setOpenModal(true);
   };
-
-  socketRTC.on("settingTime", (obj) => {
-    setStart(true);
-
-    socketRTC.emit("setTime", enterCode);
-  });
-
-  socketRTC.on("setTime", (obj) => {
-    setStart(true);
-  });
 
   useEffect(() => {
     navigator.mediaDevices
@@ -161,6 +198,28 @@ const LectureNote = () => {
       console.log(num);
     });
 
+    socketRTC.on("settingTime", (obj) => {
+      setStart(true);
+      clk.hour = obj.hour;
+      clk.min = obj.min;
+      clk.sec = obj.sec;
+      clk.ttlTime = obj.ttlTime;
+      clk.change = obj.change;
+      console.log(clk);
+
+      socketRTC.emit("setTime", lectureNoteId);
+    });
+
+    socketRTC.on("setTime", (obj) => {
+      setStart(true);
+      clk.hour = obj.hour;
+      clk.min = obj.min;
+      clk.sec = obj.sec;
+      clk.ttlTime = obj.ttlTime;
+      clk.change = obj.change;
+      console.log(clk);
+    });
+
     socketRTC.on("goodbye", () => {
       // myPeerConnection.getSenders().map((sender) => sender.replaceTrack(null));
       // console.log(myPeerConnection.getSenders().map((sender) => sender.track));
@@ -194,6 +253,7 @@ const LectureNote = () => {
     () => ({
       WebRTC: (
         <LectureWebRTC
+          lectureNoteId={lectureNoteId}
           myStream={myStream}
           peerStream={peerStream}
           myPeerConnection={myPeerConnection}
@@ -225,9 +285,18 @@ const LectureNote = () => {
         />
       ),
       Chat: <LectureChat nickName={nickName} lectureNoteId={lectureNoteId} socket={socket} />,
-      Clock: <Clock lectureNoteId={lectureNoteId} socket={socket} />,
+      Clock: (
+        <Clock
+          clk={clk}
+          time={time}
+          setTime={setTime}
+          userId={userId}
+          studentId={studentId}
+          teacherId={teacherId}
+        />
+      ),
     }),
-    [myStream, peerStream, myPeerConnection]
+    [myStream, peerStream, myPeerConnection, clk]
   );
 
   return (
@@ -246,6 +315,55 @@ const LectureNote = () => {
         </>
       ) : (
         <>
+          {time === 9 ? (
+            <Modal open={openModal} className={classes.modal}>
+              <Box className={classes.paper}>
+                <h2>종류9분전</h2>
+                <p>!!</p>
+                <Button onClick={() => setTime(0)}>확인</Button>
+              </Box>
+            </Modal>
+          ) : time === 10 ? (
+            <Modal open={openModal} className={classes.modal}>
+              <Box className={classes.paper}>
+                <h2>선생입장종료</h2>
+                <p>!!</p>
+                <Button onClick={() => goHome()}>종료</Button>
+              </Box>
+            </Modal>
+          ) : time === 11 ? (
+            <Modal open={openModal} className={classes.modal}>
+              <Box className={classes.paper}>
+                <h2>학생입장pdf</h2>
+                <Button onClick={() => handleDownload()}>pdf출력</Button>
+                <Button onClick={() => setTime(12)}>건너띄기</Button>
+              </Box>
+            </Modal>
+          ) : time === 12 ? (
+            <Modal open={openModal} className={classes.modal}>
+              <Box className={classes.paper}>
+                <h2>학생입장선생평가</h2>
+                <p>!!</p>
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={handleChange}
+                  precision={1}
+                />
+                <Button onClick={() => update()}>평가</Button>
+              </Box>
+            </Modal>
+          ) : time === 13 ? (
+            <Modal open={openModal} className={classes.modal}>
+              <Box className={classes.paper}>
+                <h2>학생입장종료</h2>
+                <p>!!</p>
+                <Button onClick={() => goHome}>종료</Button>
+              </Box>
+            </Modal>
+          ) : (
+            <></>
+          )}
           <Grid item xs={1} className={classes.bar}>
             Buttons
             <Grid container direction="column" alignItems="flex-start" spacing={2}>
