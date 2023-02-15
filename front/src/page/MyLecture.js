@@ -26,7 +26,7 @@ const MyLecture = () => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
-  return 
+  return (
    lecturesList.length > 0 ? (
       <Container>
         <Grid container spacing={1}>
@@ -48,6 +48,7 @@ const MyLecture = () => {
   ) : (
     <div>내 강의가 없습니다.</div>
   )
+  );
 }
 
 export default MyLecture

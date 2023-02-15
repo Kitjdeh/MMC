@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -23,21 +23,21 @@ const Word = styled(Grid)(({ theme }) => ({
 const TeacherCard = () => {
   const store = useStore();
   const dispatch = new useDispatch();
-  const trainer = useSelector((state) => state.userinfo.userinfo);
-  // const trainer = store.getState().userinfo.userinfo;
-  console.log(trainer.baekjoonId)
+  const trainer = useSelector((state) => state.admin.user);
+  const [flag, setFlag] = useState(false);
   const backjoon = useSelector((state) => state.question.backjoon);
   useEffect(() => {
-    console.log("123")
-    dispatch(questionAction.getBackJoon(trainer.baekjoonId));
-    tier();
+    console.log("CARD",trainer)
+
+      dispatch(questionAction.getBackJoon(trainer.baekjoonId));
+      tier();
   },[trainer])
+  
 
 
   const tier = () =>{
     let rank = "";
     let sub = (backjoon.tier+1)%5;
-    console.log(parseInt((backjoon.tier-1)/5));
     switch(parseInt((backjoon.tier-1)/5)){
       case 0:
         rank="브론즈 " +sub;
@@ -61,9 +61,8 @@ const TeacherCard = () => {
     return rank;
   }
   
-
-  console.log("BACK",backjoon);
   return (
+    (trainer && 
     <Item sx={{ backgroundColor: "#f6edff" ,minWidth:300 }}>
       <Word container direction="row" justifyContent="center" alignItems="center" >
         <Word item xs={4}>
@@ -118,6 +117,7 @@ const TeacherCard = () => {
         </Item>
       </Box>
     </Item>
+    )
   );
 };
 
