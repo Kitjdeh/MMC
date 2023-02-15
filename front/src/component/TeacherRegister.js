@@ -17,7 +17,6 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
-
 }));
 const Word = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.3),
@@ -25,7 +24,7 @@ const Word = styled(Grid)(({ theme }) => ({
   minWidth: 60,
 }));
 
-const TeacherRegister = ({ nickname, temperature,writeId,select, cancelregister  }) => {
+const TeacherRegister = ({ nickname, temperature, writeId, select, cancelregister }) => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const question = useSelector((state) => state.question.question);
@@ -40,7 +39,7 @@ const TeacherRegister = ({ nickname, temperature,writeId,select, cancelregister 
     console.log("before");
     dispatch(noteAction.makeLectureNote(question.questionId));
     console.log("after");
-    // dispatch(noteAction.getLectureNote(question.questionId));
+    dispatch(questionAction.modifyQuestion(question));
   };
   const getUserInfo = (e) => {
     dispatch(userinfoAction.getUserInfo(writeId));
@@ -52,13 +51,13 @@ const TeacherRegister = ({ nickname, temperature,writeId,select, cancelregister 
         justifyContent="space-between"
         // divider={<Divider orientation="vertical" flexItem />}
       >
-        <Item sx={{ maxWidth: 50 }} onClick={(e)=>getUserInfo(e)}>
+        <Item sx={{ maxWidth: 50 }} onClick={(e) => getUserInfo(e)}>
           {nickname}
         </Item>
         {userId == question?.userId && question?.progress == 0 ? (
           <Item onClick={acceptTrainer}>채택하기</Item>
         ) : (
-          <Item >{select}</Item>
+          <Item>{select}</Item>
         )}
         {userId == writeId && question?.progress == 0 ? (
           <Item onClick={deleteTrainer}>신청 취소</Item>
