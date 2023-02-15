@@ -20,17 +20,7 @@ import { Cookies } from "react-cookie";
 import { userinfoAction } from "./../redux/actions/userinfoAction";
 import { display } from "@mui/system";
 import styled from "styled-components";
-import { styled as styledM } from "@mui/material/styles";
 
-const Item = styledM(AppBar)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(0.3),
-  textAlign: "center",
-  minWidth: 60,
-  maxWidth: 1520,
-  backgroundColor: "#fff",
-  borderBottom: `1px solid rgba(123,2,3,0.12)`,
-}));
 const MenuName = styled.div`
   font-size: 14px;
   font-weight: bold;
@@ -53,9 +43,9 @@ const Point = styled.span`
   font-size: 14px;
 `;
 
-const GridSort = styled.div`
-  display: flex;
-`;
+const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
+  textAlign: "right",
+}));
 
 const Navbar = () => {
   // const authcookie = getCookieToken();
@@ -111,43 +101,41 @@ const Navbar = () => {
 
   return (
     <div>
-      <Item
+      <AppBar
         position="static"
         elevation={0}
-        // sx={{
-        //   backgroundColor: "#f6edff",
-        //   borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-        // }}
+        sx={{
+          backgroundColor: "#ffffff",
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
-        <GridSort>
-            <Link variant="button" href="/" sx={{ my: 1, mx: 1.5 }}>
-              <img width="60" src="/img/mmclogo.png" alt="logo" />
-            </Link>
           <Grid
             container
             direction="row"
-            justifyContent="flex-start"
+            justifyContent="flex-between"
             alignItems="center"
           >
-            <Typography
-              variant="h5"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
+            <Grid item xs={6}>
+
+            <Link variant="button" href="/" sx={{ my: 1, mx: 1.5 }}>
+              <img width="60" src="/img/mmclogo.png" alt="logo" />
+            </Link>
+
               <Link
                 variant="button"
                 color="text.primary"
                 href="/question"
                 sx={{ my: 1, mx: 1.5 }}
-                underline="none"
                 >
                 전체질문
               </Link>
-            </Typography>
-            <Typography align="right">
-                <Box sx={{ minWidth: 1270 }}>
+
+                </Grid>
+ 
+          <Grid item xs={6} >
+
+            <Box sx={{ minWidth: 300  ,textAlign: 'right'}}>
               {authenticated === true ? (
                 <div>
                   <Grid item>
@@ -157,8 +145,8 @@ const Navbar = () => {
                       aria-haspopup="true"
                       aria-expanded={openalarm ? "true" : undefined}
                       onClick={handleClick}
-                      open={openalarm}
-                    >
+                      // open={openalarm}
+                      >
                       알람
                     </Button>
                     <Menu
@@ -169,17 +157,17 @@ const Navbar = () => {
                       MenuListProps={{
                         "aria-labelledby": "alarm-menu",
                       }}
-                    >
+                      >
                       <MenuItem>알람이 없습니다.</MenuItem>
                       <MenuItem>알람이 없습니다.</MenuItem>
                     </Menu>
                     <Button
                       id="mypage-button"
-                      aria-controls={openmypage ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={openmypage ? "true" : undefined}
+                      // aria-controls={openmypage ? "basic-menu" : undefined}
+                      // aria-haspopup="true"
+                      // aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
-                    >
+                      >
                       마이페이지
                     </Button>
                     <Menu
@@ -190,12 +178,12 @@ const Navbar = () => {
                       MenuListProps={{
                         "aria-labelledby": "mypage-button",
                       }}
-                    >
+                      >
                       <MenuItem>
                         <Avatar
                           src={userInfo.profileImage}
                           sx={{ width: 32, height: 32 }}
-                        />
+                          />
                         <MenuName>{userInfo.nickname}</MenuName>
                       </MenuItem>
                       <MenuInfo>
@@ -213,20 +201,19 @@ const Navbar = () => {
                 </div>
               ) : (
                 <Button
-                  href="/login"
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ my: 1, mx: 1.5 }}
+                href="/login"
+                variant="outlined"
+                color="secondary"
+                sx={{ my: 1, mx: 1.5 }}
                 >
                   Login
                 </Button>
               )}
-            </Box> 
-            </Typography>
-            </Grid>
-          </GridSort>
+            </Box>
+          </Grid>
+              </Grid>
         </Toolbar>
-      </Item>
+      </AppBar>
     </div>
   );
 };
