@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const wsServer = io(server, { cors: { origin: "*" } });
 const port = 8001;
 const status = {
-  123: {
+  2: {
     hour: 0,
     min: 0,
     sec: 0,
@@ -19,7 +19,7 @@ const status = {
   },
 };
 
-const roomNumber = "123";
+const roomNumber = "2";
 
 function publicRooms() {
   const {
@@ -51,7 +51,7 @@ wsServer.on("connection", (socket) => {
 
   socket.on("join_room", (roomName) => {
     socket.join(roomName);
-    console.log(roomName);
+
     socket.to(roomName).emit("welcome");
   });
   socket.on("offer", (offer, roomName) => {
@@ -67,13 +67,21 @@ wsServer.on("connection", (socket) => {
   });
 
   socket.on("setScreen", (roomName, num) => {
+    console.log("send", num);
     socket.to(roomName).emit("setScreen", num);
   });
+
+  /// modal
+  // socket.on("modal", (roomName) => {
+
+  //   socket.join(roomName);
+  //   socket.to(roomName).emit("settingTime", status[roomName]);
+  // });
 
   // 시간 설정
   socket.on("timerStart", (roomName) => {
     socket.join(roomName);
-
+    console.log(status[roomName]);
     wsServer.sockets.emit("room_change", publicRooms());
     //console.log(wsServer.sockets.adapter);
 
@@ -96,7 +104,7 @@ wsServer.on("connection", (socket) => {
     }
 
     status[roomName].change = countRoom(roomName);
-    //console.log(status[roomName]);
+    console.log(status[roomName]);
     socket.to(roomName).emit("settingTime", status[roomName]);
   });
 
@@ -113,11 +121,14 @@ wsServer.on("connection", (socket) => {
     let time = new Date();
     console.log(status[roomNum]);
     if (countRoom(roomNum) !== status[roomNum].change) {
+      console.log(time);
+
       status[roomNum].ttlTime +=
         time.getHours() * 3600 +
         time.getMinutes() * 60 +
         time.getSeconds() -
         (status[roomNum].hour * 3600 + status[roomNum].min * 60 + status[roomNum].sec);
+      console.log(status[roomNum]);
     }
 
     console.log(status[roomNum]);
