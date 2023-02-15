@@ -16,11 +16,19 @@ import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { styled as styledM } from "@mui/material/styles";
+import styled from "styled-components";
 
 const TextFieldM = styledM(TextField)(() => ({
   border: `5px solid rgba(69, 64, 225, 0.2)`,
-  // borderRadius: 20,
+  marginBottom: 20,
 }));
+
+const BoxTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0,0,0,0.7);
+`;
+
 const AllQuestion = () => {
   const [searchList, setSearch] = useState("");
   const [isfindpython, setfindpython] = React.useState(true);
@@ -161,15 +169,14 @@ const AllQuestion = () => {
             </Grid>
           </Box>
         </Container>
-
+        <Box sx={{ padding:"0 0 0 8px", fontSize: 14, mt:7, mb:0.5, fontWeight:700, color: "#917B56" }}>
+            상세설정
+          </Box>
         <Box
-          className="searchbox"
-          sx={{ mt: 3, alignItems: "center", position: "relative" }}
+          sx={{  alignItems: "center", position: "relative",   border: "3px solid rgba(69, 64, 225, 0.2)", padding:"10px 15px"}}
         >
-          <Box sx={{}}></Box>
-          상세설정
-          <Box sx={{}}>
-            주언어
+          <Box sx={{ fontSize: 14 }}>
+            <BoxTitle>주언어</BoxTitle>
             <Checkbox
               checked={isfindpython}
               onChange={(event) => setfindpython(event.target.checked)}
@@ -189,8 +196,8 @@ const AllQuestion = () => {
             />
             c++
           </Box>
-          <Box sx={{}}>
-            문제유형
+          <Box sx={{fontSize:14}}>
+            <BoxTitle>문제유형</BoxTitle>
             <Checkbox
               checked={algorithm}
               onChange={findalgorithm}
