@@ -74,21 +74,6 @@ function getUserInfo(user_id) {
   };
 }
 
-function getUserInfo(user_id) {
-    return async (dispatch) => {
-      let url = `http://i8a508.p.ssafy.io:8083/api/v1/users/${user_id}`;
-      let response = await api
-        .get(url)
-        .then((response) => {
-          let data = response.data;
-          dispatch({ type: "GET_OTHER_INFO_SUCCESS", payload: { data } });
-        })
-        .catch((error) => {
-          console.log("getUser", error);
-        });
-    };
-  }
-
   function modifyUser(user){
     console.log("USER",user)
     return async(dispatch)=>{

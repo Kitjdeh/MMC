@@ -257,7 +257,7 @@ const QuestionMain = ({ question }) => {
       </Box>
       {userId == question?.userId ? <button onClick={deleteQuestion}>글 삭제</button> : <Box></Box>}
 
-        {question.progress ===0 ? <Box></Box> :
+        {(question.progress === 0 || question.progress === 2)? <Box></Box> :
       (adoptuser == userId || question?.userId == userId)? (
         <Bar>
           <Button onClick={getLectureNote}>강의실 입장</Button>

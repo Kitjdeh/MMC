@@ -23,7 +23,7 @@ function getUserInfo(user_id) {
 function modifyUser(user){
   console.log("USER",user)
   return async(dispatch)=>{
-    let url = baseUrl + `${user.userId}`;
+    let url = baseUrl + `/${user.userId}`;
     let response = await api
     .patch(url, JSON.stringify(user), {
       headers: {

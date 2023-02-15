@@ -44,40 +44,26 @@ const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
   textAlign: "right",
 }));
 const Navbar = () => {
-  const [authenticated, setAuthenticated] = useState(false)
-  const [userInfo, setUserInfo] = useState([])
-  const is_loaded = useSelector((state) => state.question.is_loaded);
-  const getUserInfo = useSelector(state => state.userinfo.userinfo)
-  const getAuthenticated = useSelector(state => state.authToken.authenticated)
-  console.log("인증", authenticated)
-  const cookie = new Cookies()
+  // const authcookie = getCookieToken();
+  const store = useStore();
+  // console.log(store.getState());
+  // const authenticated = store.getState().authToken.isLogin;
+  const userInfo = useSelector((state) => state.userinfo.userinfo);
+  // console.log("USERINFO", userInfo);
+  const [authenticated, setAuthenticated] = useState(false);
+  useEffect(() => {
+    const cookie = new Cookies();
+    setAuthenticated(cookie.get("userId") !== undefined ? true : false);
+    if (authenticated) {
+      dispatch(userinfoAction.getUserInfo(userId));
+    };
+  },[authenticated])
+  console.log(authenticated);
+  const cookie = new Cookies();
   const userId = cookie.get("userId");
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (
-      is_loaded === true
-    ) {
-      console.log('111')
-      console.log("쿠키유저아이디", userId)
-      console.log("인증", authenticated)
-      setAuthenticated(true)
-    }
-  }, [is_loaded])
-  useEffect(() => {
-    if (userId !== 0) {
-      console.log('유저아이디 들어가는거 확인', userId)
-      dispatch(userinfoAction.getUserInfo(userId))
-    }
-  }, [authenticated])
-  useEffect(() => {
-    setUserInfo(getUserInfo)
-    console.log("유저정보확인", getUserInfo)
-  }, [getUserInfo])
-
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -85,6 +71,8 @@ const Navbar = () => {
   const handleClose = (event) => {
     setAnchorEl(null);
   };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const goPoint = () => {
     handleClose();

@@ -358,7 +358,7 @@ const LectureNote = () => {
               <Box className={classes.paper}>
                 <h2>학생입장종료</h2>
                 <p>!!</p>
-                <Button onClick={() => goHome}>종료</Button>
+                <Button onClick={() => goHome()}>종료</Button>
               </Box>
             </Modal>
           ) : (
