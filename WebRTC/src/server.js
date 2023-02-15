@@ -51,7 +51,7 @@ wsServer.on("connection", (socket) => {
 
   socket.on("join_room", (roomName) => {
     socket.join(roomName);
-    console.log(roomName);
+
     socket.to(roomName).emit("welcome");
   });
   socket.on("offer", (offer, roomName) => {
@@ -67,21 +67,20 @@ wsServer.on("connection", (socket) => {
   });
 
   socket.on("setScreen", (roomName, num) => {
-    console.log("send", num);
     socket.to(roomName).emit("setScreen", num);
   });
 
   /// modal
-  socket.on("modal", (roomName) => {
-    console.log(status[roomName]);
-    socket.join(roomName);
-    socket.to(roomName).emit("settingTime", status[roomName]);
-  });
+  // socket.on("modal", (roomName) => {
+
+  //   socket.join(roomName);
+  //   socket.to(roomName).emit("settingTime", status[roomName]);
+  // });
 
   // 시간 설정
   socket.on("timerStart", (roomName) => {
     socket.join(roomName);
-
+    console.log(status[roomName]);
     wsServer.sockets.emit("room_change", publicRooms());
     //console.log(wsServer.sockets.adapter);
 
@@ -96,7 +95,7 @@ wsServer.on("connection", (socket) => {
       };
     }
 
-    if (countRoom(roomName) === 4) {
+    if (countRoom(roomName) === 2) {
       let time = new Date();
       status[roomName].hour = time.getHours();
       status[roomName].min = time.getMinutes();
@@ -104,7 +103,7 @@ wsServer.on("connection", (socket) => {
     }
 
     status[roomName].change = countRoom(roomName);
-    //console.log(status[roomName]);
+    console.log(status[roomName]);
     socket.to(roomName).emit("settingTime", status[roomName]);
   });
 
@@ -119,17 +118,16 @@ wsServer.on("connection", (socket) => {
     socket.to("12345").emit("goodbye");
     socket.to(roomNum).emit("stopTime");
     let time = new Date();
-    console.log(status[roomNum]);
+
     if (countRoom(roomNum) !== status[roomNum].change) {
+      console.log(time);
+
       status[roomNum].ttlTime +=
         time.getHours() * 3600 +
         time.getMinutes() * 60 +
         time.getSeconds() -
         (status[roomNum].hour * 3600 + status[roomNum].min * 60 + status[roomNum].sec);
-      console.log(status[roomNum]);
     }
-
-    console.log(status[roomNum]);
 
     status[roomNum].change = countRoom(roomNum);
 
