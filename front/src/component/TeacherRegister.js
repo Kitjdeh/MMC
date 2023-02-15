@@ -12,12 +12,13 @@ import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#f6edff",
+  backgroundColor: "#F9D9CA" , 
+  color: "#917B56",
   ...theme.typography.body2,
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
-
+  fontFamily: "BMHANNAProOTF",
 }));
 const Word = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.3),

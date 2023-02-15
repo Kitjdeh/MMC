@@ -16,7 +16,7 @@ import moment from "moment";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: (theme.palette.mode = "#9575cd"),
+  backgroundColor: (theme.palette.mode = "#DFD3C3"),
   padding: theme.spacing(0.5),
   textAlign: "center",
   minWidth: 50,
@@ -115,7 +115,8 @@ const WriteQuestion = ({ userId }) => {
             value={inputs.title}
             onChange={onChangeHandler}
             autoFocus
-            style={{ background: "#f5f5f5" }}
+            style={{ background: "#fff" }}
+            sx={{ fontFamily: "BMHANNAProOTF"}}
           />
         </Item>
         <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
@@ -130,11 +131,12 @@ const WriteQuestion = ({ userId }) => {
                 name="language"
                 value={inputs.language}
                 onChange={onChangeHandler}
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
+                sx={{ fontFamily: "BMHANNAProOTF"}}
                 autoFocus
               >
                 {lang.map((name, index) => (
-                  <MenuItem key={index} value={index}>
+                  <MenuItem sx={{ fontFamily: "BMHANNAProOTF"}} key={index} value={index}>
                     {name}
                   </MenuItem>
                 ))}
@@ -153,7 +155,7 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.category}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
               >
                 {category.map((name, index) => (
                   <MenuItem key={index} value={index}>
@@ -175,7 +177,7 @@ const WriteQuestion = ({ userId }) => {
                 value={algorithm}
                 onChange={onChangeMultiHandler}
                 autoFocus
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
               >
                 {algo.map((name, index) => (
                   <MenuItem key={index} value={index}>
@@ -200,7 +202,7 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.source}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
               >
                 {source.map((name, index) => (
                   <MenuItem key={index} value={index}>
@@ -222,7 +224,7 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.point}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
               ></TextField>
             </Item>
           </Bar>
@@ -238,7 +240,7 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.questionNumber}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#f0ebf7" }}
+                style={{ background: "#fff" }}
               ></TextField>
             </Item>
           </Bar>
@@ -262,7 +264,7 @@ const WriteQuestion = ({ userId }) => {
                 timeCaption="time"
                 dateFormat="yyyy-MM-dd hh:mm:ss a"
                 form="external-form"
-                sx={{ backgroundColor: "#f0ebf7" }}
+                sx={{ backgroundColor: "#fff" }}
               />
             </Item>
           </Bar>
@@ -279,7 +281,7 @@ const WriteQuestion = ({ userId }) => {
             autoFocus
             value={inputs.content}
             onChange={onChangeHandler}
-            style={{ backgroundColor: "#f0ebf7" }}
+            style={{ backgroundColor: "#fff" }}
             rows={4}
           />
         </Item>
@@ -296,7 +298,7 @@ const WriteQuestion = ({ userId }) => {
             value={inputs.code}
             rows={4}
             onChange={onChangeHandler}
-            style={{ backgroundColor: "#f0ebf7" }}
+            style={{ backgroundColor: "#fff" }}
           />
         </Item>
         <Item elevation={0} sx={{ backgroundColor: "#ffffff" }}>

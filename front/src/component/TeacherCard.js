@@ -67,7 +67,7 @@ const TeacherCard = () => {
     <Item sx={{ backgroundColor: "#f6edff" ,minWidth:300 }}>
       <Word container direction="row" justifyContent="center" alignItems="center" >
         <Word item xs={4}>
-            <img src={trainer.profileImage} width="100%" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/>
+            <img src={trainer.profileImage} width="80px" height="93px" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/>
         </Word>
         <Word item xs={8}>
             {trainer.nickname}

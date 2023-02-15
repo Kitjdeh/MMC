@@ -22,6 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
   minWidth: 50,
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const Bar = styled(Grid)(({ theme }) => ({
@@ -29,6 +30,7 @@ const Bar = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const lang = ["Python", "Java", "C++"];
@@ -115,40 +117,40 @@ const QuestionMain = ({ question }) => {
   };
   return (
     <Box sx={{ minWidth: 100 }}>
-      <Bar sx={{ backgroundColor: "#f6edff" }}>
+      <Bar sx={{ backgroundColor: "#fff" }}>
         <Bar
           container
           spacing={1}
-          sx={{ minWidth: 100, backgroundColor: "#f6edff" }}
+          sx={{ minWidth: 100, backgroundColor: "#fff" }}
         >
           <Grid item xs={3}>
-            <Item sx={{ backgroundColor: "#f6edff" }}>제목</Item>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>제목</Item>
           </Grid>
 
           <Grid item xs={9}>
-            <Item>{question.title}</Item>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
           </Grid>
         </Bar>
       </Bar>
       <br />
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>언어</Item>
-        <Item>카테고리</Item>
-        <Item>출처</Item>
-        <Item>문제번호</Item>
-        <Item>포인트</Item>
-        <Item>예약시간</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>언어</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>카테고리</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>출처</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>문제번호</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>포인트</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>예약시간</Item>
       </Stack>
 
       <hr />
 
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>{lang[question.language]}</Item>
-        <Item>{category[question.category]}</Item>
-        <Item>{source[question.source]}</Item>
-        <Item>{question.questionNumber}</Item>
-        <Item>{question.point}</Item>
-        <Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{lang[question.language]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{category[question.category]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{source[question.source]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{question.questionNumber}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{question.point}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
           {new Date(question.reservation).toLocaleString("ko-kr", {
             month: "short",
             day: "2-digit",
@@ -157,10 +159,35 @@ const QuestionMain = ({ question }) => {
         </Item>
       </Stack>
       <br />
-      <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
+      <Bar sx={{ backgroundColor: "#fff" }}>
+        <Bar
+          container
+          spacing={1}
+          sx={{ minWidth: 100, backgroundColor: "#fff" }}
+        >
+          <Grid item xs={3}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>나의 풀이</Item>
+          </Grid>
+
+          {/* <Grid item xs={9}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
+          </Grid> */}
+          
+          <Grid item xs={9}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >
+            {algorithm.map((element) => (
+            <div item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
+              {element}
+            </div>
+          ))}</Item>
+          </Grid>
+        </Bar>
+      </Bar>
+      <br />
+      {/* <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
         <Grid container sx={{}}>
           <Bar item xs={2} margin={1}>
-            알고리즘
+            나의 풀이 
           </Bar>
 
           {algorithm.map((element) => (
@@ -170,34 +197,35 @@ const QuestionMain = ({ question }) => {
           ))}
         </Grid>
       </Bar>
-      <br />
-      <Bar sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>
+      <br /> */}
+      <Item sx={{ backgroundColor: "#D18063" , color: "#F0E4D4"}}>
         {question.content}
-      </Bar>
+      </Item>
       <Box>
         <Bar>
           {question?.userId !== userId  &&question?.progress <1 ? (
-          <Button onClick={addTrainer}>문제풀이 신청</Button>
+          <Button sx={{ fontFamily: "BMHANNAProOTF" }} onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
         </Bar>
         <Container>
-          <Grid container justifyContent="space-between">
-            <Grid item margin={1} xs={5}>
-              <Item sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
+          <Grid container sx={{ fontFamily: "BMHANNAProOTF" }} justifyContent="space-between">
+            <Grid item margin={1} xs={5} sx={{ fontFamily: "BMHANNAProOTF" }}>
+              <Item sx={{ minWidth: 100, backgroundColor: "#F9D9CA" , color: "#917B56" }}>
                 문제설명을 신청한 강사 리스트
               </Item>
               <Item>
-                <TeacherRegister nickname="프로필" temperature="온도"
+                <TeacherRegister sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" , fontFamily: "BMHANNAProOTF" }} nickname="프로필" temperature="온도"
                 cancelregister="신청취소" select="선택하기" />
                 {trainers.length != 0 ? (
                   trainers.map((item) => (
-                    <Button name={item} onClick={selectTrainer(item)}>
+                    <Button sx={{ fontFamily: "BMHANNAProOTF" }}name={item} onClick={selectTrainer(item)}>
                     <TeacherRegister
                       nickname={item.nickname}
                       temperature={item.temperature}
                       writeId={item.userId}
+                      sx={{ fontFamily: "BMHANNAProOTF" }}
                     />
                     </Button>
                   ))

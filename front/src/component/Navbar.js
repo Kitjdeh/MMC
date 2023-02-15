@@ -126,7 +126,8 @@ const Navbar = () => {
                 variant="button"
                 color="text.primary"
                 href="/question"
-                sx={{ my: 1, mx: 1.5 }}
+                underline="none"
+                sx={{ my: 1, mx: 1 , color: "#917B56" , fontWeight: '550', fontFamily: "BMHANNAProOTF"}}
                 >
                 전체질문
               </Link>
@@ -146,6 +147,7 @@ const Navbar = () => {
                       aria-expanded={openalarm ? "true" : undefined}
                       onClick={handleClick}
                       // open={openalarm}
+                      sx = {{ color: "#917B56" }}
                       >
                       알람
                     </Button>
@@ -167,6 +169,8 @@ const Navbar = () => {
                       // aria-haspopup="true"
                       // aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
+                      // sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
+                      sx = {{ color: "#917B56" }}
                       >
                       마이페이지
                     </Button>

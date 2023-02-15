@@ -16,6 +16,10 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
+const TypographyOtf = styled(Typography)({
+  fontFamily: "BMHANNAProOTF"
+});
+
 const MainBodyBox = (props) => {
   return (
     <Paper
@@ -42,12 +46,12 @@ const MainBodyBox = (props) => {
             justifyContent="center"
           >
             <Grid item xs={1} alignItems="center">
-              <Typography variant="h5" align="center">
+              <TypographyOtf variant="h5" align="center">
                 {props?.title}
-              </Typography>
+              </TypographyOtf>
             </Grid>
             <Grid item xs={5}>
-              <Typography variant="body1">{props?.mention}</Typography>
+              <TypographyOtf variant="body1">{props?.mention}</TypographyOtf>
             </Grid>
           </Grid>
         </Grid>

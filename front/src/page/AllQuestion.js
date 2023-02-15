@@ -16,9 +16,11 @@ import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { styled as styledM } from "@mui/material/styles";
-
+const TypographyOtf = styledM(Typography)({
+  fontFamily: "BMHANNAProOTF"
+});
 const TextFieldM = styledM(TextField)(() => ({
-  border: `5px solid rgba(69, 64, 225, 0.2)`,
+  border: `5px solid #DFD3C3`,
   // borderRadius: 20,
 }));
 const AllQuestion = () => {
@@ -152,6 +154,7 @@ const AllQuestion = () => {
           <Grid item xs={12} textAlign="left">
                 <TextFieldM
                   // variant="standard"
+                  font
                   required
                   fullWidth
                   id="usersearch"
@@ -168,9 +171,9 @@ const AllQuestion = () => {
           className="searchbox"
           sx={{ mt: 3, alignItems: "center", position: "relative" }}
         >
-          <Box sx={{}}></Box>
-          상세설정
-          <Box sx={{}}>
+          <Box sx={{ color: "#6C5D53"}}>상세설정</Box>
+          
+          <Box sx={{ color: "#6C5D53" }}>
             주언어
             <Checkbox
               checked={isfindpython}
@@ -191,7 +194,7 @@ const AllQuestion = () => {
             />
             c++
           </Box>
-          <Box sx={{}}>
+          <Box sx={{ color: "#6C5D53" }}>
             문제유형
             <Checkbox
               checked={algorithm}
@@ -219,16 +222,18 @@ const AllQuestion = () => {
           variant="button"
           color="text.primary"
           href="/question/write"
-          sx={{ my: 1, mx: 1.5 }}
+          underline="none"
         >
-          <Typography align="right">질문하기</Typography>
+          <TypographyOtf sx={{ color: "#917B56"}} align="right">질문하기</TypographyOtf>
         </Link>
       </Container>
       <Container>
-        <Grid container spacing={1}>
+        {/* <Grid container spacing={1} justifyContent="space-between"> */}
+        <Grid container direction="row" >
           {searchList?.length < 1 && language?.length === 3
             ? questionList.map((question) => (
-                <Grid item xl={3} lg={4} md={6} key={question.questionId}>
+                <Grid key={question.questionId} justifyContent="space-between">
+                {/* <Grid item xl={3} lg={3} md={6} key={question.questionId}> */}
                   <Button>
                     <QuestionCard question={question} />
                   </Button>
@@ -236,7 +241,7 @@ const AllQuestion = () => {
                 </Grid>
               ))
             : filteredList.slice(0).reverse()?.map((question) => (
-                <Grid item xl={3} lg={4} md={6} key={question.questionId}>
+                <Grid key={question.questionId} justifyContent="space-between">
                   <Button>
                     <QuestionCard question={question} />
                   </Button>

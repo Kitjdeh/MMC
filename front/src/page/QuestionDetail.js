@@ -73,7 +73,7 @@ const QuestionDetail = () => {
             name="main"
             value="main2"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             메인
           </Button>
@@ -83,7 +83,7 @@ const QuestionDetail = () => {
             onClick={selectquestion}
             name="question"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             문제
           </Button>
@@ -93,7 +93,7 @@ const QuestionDetail = () => {
             onClick={selectquestion}
             name="code"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             코드
           </Button>
@@ -104,7 +104,7 @@ const QuestionDetail = () => {
                 onClick={selectquestion}
                 name="modify"
                 variant="contained"
-                sx={{ backgroundColor: "#c1abff" }}
+                sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" }}
               >
                 수정
               </Button>
