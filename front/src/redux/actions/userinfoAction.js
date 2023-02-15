@@ -5,6 +5,7 @@ const api = apiInstance();
 let baseUrl = "http://i8a508.p.ssafy.io:8083/api/v1/users";
 
 function getUserInfo(user_id) {
+  console.log("USERINFO GETUSERINFO")
   return async (dispatch) => {
     let url = baseUrl + `/${user_id}`;
     let response = await api

@@ -38,8 +38,6 @@ const AllQuestion = () => {
  
   const is_loaded = useSelector((state) => state.question.is_loaded);
  
- 
-  console.log(is_loaded,"is_loaded");
   const dispatch = useDispatch();
   const getallQuestions = () => {
     dispatch(questionAction.getQuestions());
