@@ -22,6 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.5),
   textAlign: "center",
   minWidth: 50,
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const Bar = styled(Grid)(({ theme }) => ({
@@ -29,6 +30,7 @@ const Bar = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const lang = ["Python", "Java", "C++"];
@@ -54,13 +56,12 @@ const QuestionMain = ({ question }) => {
   const [algorithm, setAlgorithm] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adoptuser, setAdoptuser] = useState("");
-  const store = useStore();
+  const [selected, setSelected] = useState(-1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const trainers = store.getState().question.trainers;
+  const trainers = useSelector((state)=>state.question.trainers);
   const noteId = useSelector((state) => state.note.note);
-  const trainer = useSelector((state) => state.userinfo.userinfo);
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
@@ -69,8 +70,6 @@ const QuestionMain = ({ question }) => {
     if (question.progress) {
       setAdoptuser(question.progress);
     }
-  }, []);
-  useEffect(() => {
     transBitmask();
   }, []);
   useEffect(() => {
@@ -79,9 +78,7 @@ const QuestionMain = ({ question }) => {
       navigate(`/lecture/${noteId}`);
     }
   }, [noteId]);
-  useEffect(() => {
-    algorithm.map((e) => console.log(e));
-  }, [algorithm]);
+
 
   const transBitmask = () => {
     let algobit = 1;
@@ -101,6 +98,9 @@ const QuestionMain = ({ question }) => {
   const addTrainer = () => {
     dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
   };
+  const select = (num) => {
+    setSelected(num);
+  }
 
   const getLectureNote = async () => {
     console.log("QUESTIONID", question.questionId);
@@ -117,36 +117,40 @@ const QuestionMain = ({ question }) => {
   };
   return (
     <Box sx={{ minWidth: 100 }}>
-      <Bar sx={{ backgroundColor: "#f6edff" }}>
-        <Bar container spacing={1} sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
+      <Bar sx={{ backgroundColor: "#fff" }}>
+        <Bar
+          container
+          spacing={1}
+          sx={{ minWidth: 100, backgroundColor: "#fff" }}
+        >
           <Grid item xs={3}>
-            <Item sx={{ backgroundColor: "#f6edff" }}>제목</Item>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>제목</Item>
           </Grid>
 
           <Grid item xs={9}>
-            <Item>{question.title}</Item>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
           </Grid>
         </Bar>
       </Bar>
       <br />
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>언어</Item>
-        <Item>카테고리</Item>
-        <Item>출처</Item>
-        <Item>문제번호</Item>
-        <Item>포인트</Item>
-        <Item>예약시간</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>언어</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>카테고리</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>출처</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>문제번호</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>포인트</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>예약시간</Item>
       </Stack>
 
       <hr />
 
       <Stack direction="row" justifyContent="space-around" alignItems="center">
-        <Item>{lang[question.language]}</Item>
-        <Item>{category[question.category]}</Item>
-        <Item>{source[question.source]}</Item>
-        <Item>{question.questionNumber}</Item>
-        <Item>{question.point}</Item>
-        <Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{lang[question.language]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{category[question.category]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{source[question.source]}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{question.questionNumber}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>{question.point}</Item>
+        <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
           {new Date(question.reservation).toLocaleString("ko-kr", {
             month: "short",
             day: "2-digit",
@@ -155,10 +159,35 @@ const QuestionMain = ({ question }) => {
         </Item>
       </Stack>
       <br />
-      <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
+      <Bar sx={{ backgroundColor: "#fff" }}>
+        <Bar
+          container
+          spacing={1}
+          sx={{ minWidth: 100, backgroundColor: "#fff" }}
+        >
+          <Grid item xs={3}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>나의 풀이</Item>
+          </Grid>
+
+          {/* <Grid item xs={9}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
+          </Grid> */}
+          
+          <Grid item xs={9}>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >
+            {algorithm.map((element) => (
+            <div item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
+              {element}
+            </div>
+          ))}</Item>
+          </Grid>
+        </Bar>
+      </Bar>
+      <br />
+      {/* <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
         <Grid container sx={{}}>
           <Bar item xs={2} margin={1}>
-            알고리즘
+            나의 풀이 
           </Bar>
 
           {algorithm.map((element) => (
@@ -168,61 +197,71 @@ const QuestionMain = ({ question }) => {
           ))}
         </Grid>
       </Bar>
-      <br />
-      <Bar sx={{ minWidth: 400, backgroundColor: "#f6edff" }}>{question.content}</Bar>
+      <br /> */}
+      <Item sx={{ backgroundColor: "#D18063" , color: "#F0E4D4"}}>
+        {question.content}
+      </Item>
       <Box>
         <Bar>
-          {question?.userId !== userId && question?.progress < 1 ? (
+          {question?.userId !== parseInt(userId) && question?.progress < 1 ? (
             <Button onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
         </Bar>
-        <Container>
-          <Grid container justifyContent="space-between">
-            <Grid item margin={1} xs={5}>
-              <Item sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
-                문제설명을 신청한 강사 리스트
-              </Item>
-              <Item>
-                <TeacherRegister
-                  nickname="프로필"
-                  temperature="온도"
-                  cancelregister="신청취소"
-                  select="선택하기"
-                />
-                {trainers.length != 0 ? (
-                  trainers.map((item) => (
-                    <Button name={item} onClick={selectTrainer(item)}>
+        {question.progress === 0 ? (
+          <Container>
+            <Grid container justifyContent="space-between">
+              <Grid item margin={1} xs={5}>
+                <Item sx={{ minWidth: 100, backgroundColor: "#f6edff" }}>
+                  답변자 리스트
+                </Item>
+                <Item>
+                  <TeacherRegister
+                    nickname="프로필"
+                    temperature="온도"
+                    cancelregister="신청취소"
+                    select="선택하기"
+                  />
+                  {trainers.length != 0 ? (
+                    trainers.map((item) => (
+                      // <Button name={item} onClick={selectTrainer(item)}>
                       <TeacherRegister
                         nickname={item.nickname}
                         temperature={item.temperature}
                         writeId={item.userId}
+                        select={select}
                       />
-                    </Button>
-                  ))
-                ) : (
-                  <Item>답변자 리스트가 없습니다.</Item>
-                )}
-              </Item>
-            </Grid>
+                      // </Button>
+                    ))
+                  ) : (
+                    <Item>답변자 리스트가 없습니다.</Item>
+                  )}
+                </Item>
+              </Grid>
 
-            <Grid item margin={1} xs={5}>
-              {trainer.length !== 0 ? (
-                <TeacherCard />
-              ) : (
-                <div>
-                  강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
-                </div>
-              )}
+              <Grid item margin={1} xs={5}>
+                {selected !== -1 ? (
+                  <TeacherCard />
+                ) : (
+                  <div>
+                    강사 정보가 없습니다. <br></br>강사 프로필을 눌러주세요.
+                  </div>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        ) : (
+          <Bar>채택이 완료된 질문입니다!</Bar>
+        )}
       </Box>
       {userId == question?.userId ? <button onClick={deleteQuestion}>글 삭제</button> : <Box></Box>}
 
-      {adoptuser == userId || question?.userId == userId ? (
-        <button onClick={getLectureNote}>강의실 입장</button>
+        {question.progress ===0 ? <Box></Box> :
+      (adoptuser == userId || question?.userId == userId)? (
+        <Bar>
+          <Button onClick={getLectureNote}>강의실 입장</Button>
+        </Bar>
       ) : (
         <Box></Box>
       )}

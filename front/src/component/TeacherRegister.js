@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -10,13 +10,16 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { userinfoAction } from "./../redux/actions/userinfoAction";
 import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
+import { adminAction } from './../redux/actions/adminAction';
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#f6edff",
+  backgroundColor: "#F9D9CA" , 
+  color: "#917B56",
   ...theme.typography.body2,
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
+  fontFamily: "BMHANNAProOTF",
 }));
 const Word = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.3),
@@ -24,26 +27,33 @@ const Word = styled(Grid)(({ theme }) => ({
   minWidth: 60,
 }));
 
-const TeacherRegister = ({ nickname, temperature, writeId, select, cancelregister }) => {
+const TeacherRegister = ({ nickname, temperature,writeId, cancelregister, select  }) => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const question = useSelector((state) => state.question.question);
-  const trainer = useSelector((state) => state.userinfo.userinfo);
+  const trainer = useSelector((state) => state.admin.user);
   const dispatch = useDispatch();
   const deleteTrainer = () => {
     dispatch(questionAction.deleteTrainer(question.questionId, userId));
   };
   const acceptTrainer = () => {
     question.progress = writeId;
-    dispatch(questionAction.acceptTrainer(question.questionId, userId));
+    dispatch(questionAction.acceptTrainer(question.questionId, writeId));
     console.log("before");
     dispatch(noteAction.makeLectureNote(question.questionId));
     console.log("after");
     dispatch(questionAction.modifyQuestion(question));
   };
-  const getUserInfo = (e) => {
-    dispatch(userinfoAction.getUserInfo(writeId));
+  
+  const getUserInfo = () => {
+    console.log("GETUSERINFO")
+    dispatch(adminAction.getUserInfo(writeId));
+    console.log(trainer);
+    select(trainer.userId);
   };
+  
+  console.log(question)
+
   return (
     <Word>
       <Stack
@@ -51,15 +61,16 @@ const TeacherRegister = ({ nickname, temperature, writeId, select, cancelregiste
         justifyContent="space-between"
         // divider={<Divider orientation="vertical" flexItem />}
       >
-        <Item sx={{ maxWidth: 50 }} onClick={(e) => getUserInfo(e)}>
+        <Item sx={{ maxWidth: 50 }} onClick={()=>getUserInfo()}>
           {nickname}
         </Item>
-        {userId == question?.userId && question?.progress == 0 ? (
+        <Item sx={{ maxWidth: 50 }} onClick={()=>getUserInfo()}>
+          {temperature}
+        </Item>
+        
+        {userId == question?.userId ? (
           <Item onClick={acceptTrainer}>채택하기</Item>
-        ) : (
-          <Item>{select}</Item>
-        )}
-        {userId == writeId && question?.progress == 0 ? (
+        ) : userId == writeId ? (
           <Item onClick={deleteTrainer}>신청 취소</Item>
         ) : (
           <Item>{cancelregister}</Item>

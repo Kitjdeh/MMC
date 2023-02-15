@@ -15,6 +15,8 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 import { Cookies } from "react-cookie";
 import QuestionModify from "../component/QuestionModify";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { SvgIcon } from "@mui/material";
 
 const QuestionDetail = () => {
   let questionId = useParams();
@@ -67,33 +69,33 @@ const QuestionDetail = () => {
   return (
     <Box>
       <Grid container direction="row" alignItems="flex-start" margin={2}>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="main"
             value="main2"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             메인
           </Button>
         </Word>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="question"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             문제
           </Button>
         </Word>
-        <Word item xs={3}>
+        <Word item xs={4}>
           <Button
             onClick={selectquestion}
             name="code"
             variant="contained"
-            sx={{ backgroundColor: "#c1abff" }}
+            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
           >
             코드
           </Button>
@@ -104,16 +106,13 @@ const QuestionDetail = () => {
                 onClick={selectquestion}
                 name="modify"
                 variant="contained"
-                sx={{ backgroundColor: "#c1abff" }}
+                sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" }}
               >
                 수정
               </Button>
             </Word>
           ) : (
-            <Word item xs={3}>
-              {" "}
-              ????{" "}
-            </Word>
+            ""
           )}
      
       </Grid>    {content && <Box>{category[content]}</Box>}

@@ -88,9 +88,7 @@ export default function SingUp() {
     <div>
       <Grid container component="main" sx={{ height: "80vh" }}>
         <Grid item sm={6} md={6} square component={Paper}>
-          <Typography component="h1" variant="h5">
-            로그인
-          </Typography>
+          
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <ImageUploader
               withIcon={true}
@@ -246,7 +244,7 @@ export default function SingUp() {
               fullWidth
               variant="contained"
               onClick={regist}
-              sx={{ mt: 3, mb: 2, bgcolor: "violet", borderColor: "#005cbf" }}
+              sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56" , borderColor: "#005cbf" }}
             >
               회원가입
             </Button>
@@ -257,18 +255,16 @@ export default function SingUp() {
           component={Paper}
           sm={6}
           md={6}
-          maxWidth="xs"
+          xs="auto"
           sx={{
+            backgroundSize: 690,
             backgroundImage: "url(/img/mmclogo.png)",
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         />
+        
+
       </Grid>
     </div>
   );

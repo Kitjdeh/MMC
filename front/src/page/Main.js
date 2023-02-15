@@ -90,8 +90,8 @@ const Main = () => {
             <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
           </Item>
         </Grid>
-        <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
-          <Item sx={{ flexGrow: 1, backgroundColor: "#ffffff" }}>
+        <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "transparent" }}>
+          <Item sx={{ flexGrow: 1, backgroundColor: "transparent" }}>
             {" "}
             {mainbodylist.map((item) => (
               <MainBodyBox

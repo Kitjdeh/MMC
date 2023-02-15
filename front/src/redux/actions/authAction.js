@@ -145,7 +145,6 @@ function getUserInfo(token){
   console.log("OOOO",token)
   let decodeToken = jwtDecode(token);
   // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
-  console.log("GETUSERINFOOOOO", decodeToken);
   return async (dispatch) => {
     let url = `${baseUrl}/users/${decodeToken.userId}`;
     api.defaults.headers["jwt-auth-token"] = token;

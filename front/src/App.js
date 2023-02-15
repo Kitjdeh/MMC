@@ -14,9 +14,12 @@ const theme = createTheme({
   palette: {
     // mode: "dark",
     primary: {
-      main: "#d3c3ff",
+      main: "#917B56",
     },
   },
+  typography: {
+    "fontFamily": "Roboto"
+  }
 });
 function App() {
 

@@ -42,7 +42,7 @@ const Login = () => {
     <div>
       <Grid
         container
-        component="form"
+
         sx={{ height: "80vh" }}
         xs
       >
@@ -53,6 +53,8 @@ const Login = () => {
           md={6}
           maxWidth="xs"
           sx={{
+            // maxWidth: 300,
+            // maxHeight: 300,
             backgroundImage: "url(/img/mmclogo.png)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -68,7 +70,7 @@ const Login = () => {
             <Typography
               component="h1"
               variant="h5"
-             
+              sx={{ color: "#917B56" }}
             >
               로그인
             </Typography>
@@ -96,18 +98,18 @@ const Login = () => {
               fullWidth
               variant="contained"
               onClick={loginUser}
-              sx={{ mt: 3, mb: 2, bgcolor: "secondary.light" }}
+              sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
             >
               코딩하러가기
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/signup" variant="body2">
+                <Link href="/signup" variant="body2" underline="none" color="#917B56">
                   회원가입
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" underline="none" color="#917B56">
                   비밀번호 찾기
                 </Link>
               </Grid>
