@@ -251,3 +251,4 @@ const LectureGraffiti = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
 };
 
 export default LectureGraffiti;
+

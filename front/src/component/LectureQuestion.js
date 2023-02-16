@@ -252,3 +252,4 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
 };
 
 export default LectureQuestion;
+

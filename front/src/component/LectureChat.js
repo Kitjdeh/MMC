@@ -126,3 +126,4 @@ const LectureChat = ({ nickName, lectureNoteId, socket }) => {
   );
 };
 export default LectureChat;
+
