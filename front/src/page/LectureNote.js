@@ -30,11 +30,22 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
   },
+  // paper: {
+  //   backgroundColor: "white",
+  //   border: "2px solid #000",
+  //   boxShadow: 24,
+  //   padding: 16,
+  // },
   paper: {
     backgroundColor: "white",
     border: "2px solid #000",
-    boxShadow: 24,
-    padding: 16,
+    boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.25)",
+    padding: "32px",
+    width: "80%",
+    maxWidth: "600px",
+    maxHeight: "80%",
+    overflow: "auto",
+    borderRadius: "8px",
   },
 });
 
@@ -82,7 +93,7 @@ const LectureNote = () => {
     setValue(newValue);
   };
   const classes = useStyles();
-  const [content, setContent] = useState("Question");
+  const [content, setContent] = useState(null);
   const [check, setCheck] = useState(0);
   const [peerStream, setPeerStream] = useState();
   const [isScreen, setScreen] = useState(0);
@@ -120,7 +131,7 @@ const LectureNote = () => {
     navigate("/");
   };
   const update = () => {
-    setTime(13);
+    setTime(10);
     question.progress = 2;
     user.point -= question.point;
     teacher.point += question.point;
@@ -133,6 +144,8 @@ const LectureNote = () => {
   // webRTC
 
   const handleAddStream = (data) => {
+    console.log(data);
+    console.log(data.stream);
     setPeerStream(data.stream);
     let audioTrack = data.stream.getAudioTracks();
 
@@ -336,12 +349,34 @@ const LectureNote = () => {
       <audio ref={peersAudio}></audio>
       {!start ? (
         <>
-          <Button variant="contained" color="primary" onClick={handleOpen}>
-            준비가 됫으면 눌러주세요!!!!
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpen}
+              style={{
+                fontSize: "2em",
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                margin: "auto",
+              }}
+            >
+              준비되었으면 눌러주세요!!
+            </Button>
+          </div>
           <Modal open={openModal} className={classes.modal}>
             <Box className={classes.paper}>
-              <h2>대기중</h2>
+              <h2>대기 중</h2>
               <p>상대방이 아직 입장하지 않았습니다!!</p>
             </Box>
           </Modal>
@@ -351,54 +386,57 @@ const LectureNote = () => {
           {time === 9 ? (
             <Modal open={openModal} className={classes.modal}>
               <Box className={classes.paper}>
-                <h2>종류9분전</h2>
-                <p>!!</p>
+                <h2>종료 1분 전입니다.</h2>
                 <Button onClick={() => setTime(0)}>확인</Button>
               </Box>
             </Modal>
           ) : time === 10 ? (
             <Modal open={openModal} className={classes.modal}>
               <Box className={classes.paper}>
-                <h2>선생입장종료</h2>
-                <p>!!</p>
+                <h2>수업하시느라 수고하셨습니다.</h2>
                 <Button onClick={() => goHome()}>종료</Button>
               </Box>
             </Modal>
           ) : time === 11 ? (
             <Modal open={openModal} className={classes.modal}>
               <Box className={classes.paper}>
-                <h2>학생입장pdf</h2>
-                <Button onClick={() => handleDownload()}>pdf출력</Button>
-                <Button onClick={() => setTime(12)}>건너띄기</Button>
+                <h2>필기를 PDF로 다운받으실 수 있습니다.</h2>
+                <Button onClick={() => handleDownload()}>pdf 다운로드</Button>
+                <Button onClick={() => setTime(12)}>건너뛰기</Button>
               </Box>
             </Modal>
           ) : time === 12 ? (
             <Modal open={openModal} className={classes.modal}>
               <Box className={classes.paper}>
-                <h2>학생입장선생평가</h2>
-                <p>!!</p>
+                <h2>답변자에게 온도를 주세요!!</h2>
                 <Rating
                   name="simple-controlled"
                   value={value}
                   onChange={handleChange}
                   precision={1}
                 />
-                <Button onClick={() => update()}>평가</Button>
-              </Box>
-            </Modal>
-          ) : time === 13 ? (
-            <Modal open={openModal} className={classes.modal}>
-              <Box className={classes.paper}>
-                <h2>학생입장종료</h2>
-                <p>!!</p>
-                <Button onClick={() => goHome()}>종료</Button>
+                <Button onClick={() => update()}>온도 주기</Button>
               </Box>
             </Modal>
           ) : (
             <></>
           )}
           <Grid item xs={1} className={classes.bar}>
-            Buttons
+            <Box>{category["Clock"]}</Box>
+            {/* <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
+              Mute
+              </button> */}
+            <Button
+              id="mute"
+              type="button"
+              onClick={handleMuteClick}
+              ref={muteBtn}
+              variant="contained"
+              color="primary"
+            >
+              Mute
+            </Button>
+
             <Grid container direction="column" alignItems="flex-start" spacing={2}>
               <Grid item xs={4} className={classes.word}>
                 <Button onClick={() => setContent("Question")} variant="contained" color="primary">
@@ -423,15 +461,9 @@ const LectureNote = () => {
             </Grid>
           </Grid>
           <Grid item xs={9} className={classes.bar}>
-            Screen
-            <Box>{category["Clock"]}</Box>
-            <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
-              Mute
-            </button>
             {<Box>{category[content]}</Box>}
           </Grid>
           <Grid item xs={2} className={classes.bar}>
-            Chat Window
             <Box>{category["Chat"]}</Box>
           </Grid>
           <button onClick={handleDownload}>Download</button>

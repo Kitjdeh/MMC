@@ -246,9 +246,6 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
         onMouseMove={drawing}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
-        style={{
-          backgroundColor: "white",
-        }}
       />
     </div>
   );

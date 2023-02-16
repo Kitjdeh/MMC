@@ -25,6 +25,7 @@ const StyledHeader = styled.header`
 
 const StyledMain = styled.main`
   width: 100%;
+  height: 80vh; /* set height to 100 viewport height units */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,10 +81,7 @@ const LectureChat = ({ nickName, lectureNoteId, socket }) => {
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (
-        message.lectureNoteId === lectureNoteId &&
-        message.type === "new_message"
-      ) {
+      if (message.lectureNoteId === lectureNoteId && message.type === "new_message") {
         const li = document.createElement("li");
         li.style.listStyle = "none";
         if (nickName === message.nickName) {
@@ -101,23 +99,21 @@ const LectureChat = ({ nickName, lectureNoteId, socket }) => {
   function handleSubmit(event) {
     event.preventDefault();
     const input = messageFormRef.current.querySelector("input");
-    socket.send(
-      makeMessage("new_message", input.value, nickName, lectureNoteId)
-    );
+    socket.send(makeMessage("new_message", input.value, nickName, lectureNoteId));
     input.value = "";
   }
 
   return (
     <StyledContainer>
       <StyledHeader>
-        <h1>Noom</h1>
+        <h1>채팅</h1>
       </StyledHeader>
 
       <StyledMain>
         <StyledMessageList ref={messageListRef} />
         <StyledMessageForm onSubmit={handleSubmit} ref={messageFormRef}>
-          <StyledInput type="text" placeholder="write a msg" required />
-          <StyledButton>Send</StyledButton>
+          <StyledInput type="text" required />
+          <StyledButton>보내기</StyledButton>
         </StyledMessageForm>
       </StyledMain>
     </StyledContainer>
