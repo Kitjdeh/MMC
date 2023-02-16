@@ -67,27 +67,27 @@ const Main = () => {
   useEffect(() => distinctUser(), [questionList]);
   
   return (
-    <Box sx={{ backgroundColor: "transparent" }}>
+    <Box sx={{ backgroundColor: "#fff" }}>
     <Paper
       elevation={8}
       sx={{
         flexGrow: 1,
-        backgroundColor: "transparent",
+        backgroundColor: "#fff",
         backgroundImage: "/img/main3.png",
       }}
     >
-      <Grid container spacing={2} sx={{ mt: 6, elevation: 3, backgroundColor: "transparent",}}>
+      <Grid container spacing={2} sx={{ mt: 6, elevation: 3, backgroundColor: "#fff",}}>
         <Grid item xs={4}>
           <Item>
             <PeopleIcon
-              sx={{ fontSize: 120, backgroundColor: "#f6edff" }}
+              sx={{ fontSize: 150, backgroundColor: "#fff" }}
             ></PeopleIcon>
             <HeaderBox icon="faUser" title="전체회원" number={usercount} />
           </Item>
         </Grid>
         <Grid item xs={4}>
           <Item>
-            <LibraryBooksIcon sx={{ fontSize: 120 }}></LibraryBooksIcon>
+            <LibraryBooksIcon sx={{ fontSize: 150 }}></LibraryBooksIcon>
             <HeaderBox
               icon="faGraduationCap"
               title="진행중인질문"
@@ -98,13 +98,13 @@ const Main = () => {
 
         <Grid item xs={4}>
           <Item>
-            <SchoolIcon sx={{ fontSize: 120 }}></SchoolIcon>
+            <SchoolIcon sx={{ fontSize: 150 }}></SchoolIcon>
             <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
           </Item>
         </Grid>
       </Grid>
-      <Grid item xs={12} sx={{ backgroundColor: "transparent" }}>
-        <Item sx={{ backgroundColor: "transparent", mt: 0 }}>
+      <Grid item xs={12} >
+        <Item sx={{ pt: 5,  mt: 0 }}>
           {" "}
           {mainbodylist.map((item) => (
             <MainBodyBox

@@ -28,7 +28,7 @@ const MainBodyBox = (props) => {
         margin: "auto",
         mb: 5,
         maxWidth: 1000,
-        backgroundColor: "#f6edff",
+        backgroundColor: "#fff", ////////////////////////
       }}
     >
       <Grid container spacing={3}>

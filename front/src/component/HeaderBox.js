@@ -10,7 +10,6 @@ const TypographyOtf = styled(Typography)({
 const HeaderBox = (props) => {
   return (
     <Box sx={{ mb: 2 }} >
-      icon
       <TypographyOtf variant="h4" >{props?.title}</TypographyOtf>
       <TypographyOtf variant="subtitle2" >
         {props?.number}
