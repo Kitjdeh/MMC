@@ -3,6 +3,7 @@ package com.mmt.mmc.controller;
 import com.mmt.mmc.model.dto.QuestionDto;
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.UserDto;
+import com.mmt.mmc.model.service.LectureNoteService;
 import com.mmt.mmc.model.service.QuestionService;
 import com.mmt.mmc.model.service.S3FileUploadService;
 import org.slf4j.Logger;
