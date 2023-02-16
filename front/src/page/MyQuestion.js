@@ -6,13 +6,23 @@ import { useDispatch } from "react-redux";
 import { mypageAction } from "../redux/actions/mypageAction";
 import { useSelector } from "react-redux";
 import { Cookies } from "react-cookie";
+import { Box } from '@material-ui/core';
 import { styled } from "@mui/material/styles";
 const Mygrid = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#f6edff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
+  // backgroundColor: "#f6edff",
+  // ...theme.typography.body2,
+  // padding: theme.spacing(1),
+  // textAlign: "center",
+  // color: theme.palette.text.secondary,
+  fontFamily: "BMHANNAProOTF",
+}));
+const Myspan = styled(Box)(() => ({
+  fontFamily: "BMHANNAProOTF",
+  color: "#917B56",
+  padding: "5px 5px 5px 55px",
+}));
+const Title = styled(Box)(()=> ({
+  margin: "50px"
 }));
 const MyQuestion = () => {
   useEffect(() => {
@@ -30,24 +40,28 @@ const MyQuestion = () => {
 
   return questionList.length > 0 ? (
     <Container>
+      <Title><h1>나의 질문</h1></Title>
       <Grid container spacing={1}>
-        {questionList.map((question) =>
-        question.progress > 0 ?
-          (question.progress == 2 ? (
+      {questionList.map((question) =>
+          question.progress == 0 ? (
             <Mygrid item xl={3} lg={4} md={6}>
-              완료된 질문
+              <Myspan> 🔓 채택 전 강의 🔓 </Myspan>
               <QuestionCard question={question} />
             </Mygrid>
+          ) : question.progress == 2 ? (
+            // <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56" , textAlign: "center"}}>
+            <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
+              <Myspan> 🔒 종료된 강의 🔒 </Myspan>
+              <QuestionCard question={question} />
+              <br />
+            </Grid>
           ) : (
-            <Mygrid item xl={3} lg={4} md={6}>
-              채택된 질문
+            <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
+              <Myspan> 🔒 진행 중 강의 🔒 </Myspan>
               <QuestionCard question={question} />
-            </Mygrid>
+              <br />
+            </Grid>
           )
-          ):<Grid item xl={3} lg={4} md={6}>
-          <QuestionCard question={question} />
-          <br />
-        </Grid>
         )}
       </Grid>
     </Container>

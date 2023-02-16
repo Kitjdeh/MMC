@@ -14,11 +14,14 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
+  color: "#917B56",
+  background: "#F9D9CA",
 }));
 const Word = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(0.3),
   textAlign: "center",
   minWidth: 60,
+  color: "#917B56",
 }));
 const TeacherCard = () => {
   const store = useStore();
@@ -63,7 +66,7 @@ const TeacherCard = () => {
   
   return (
     (trainer && 
-    <Item sx={{ backgroundColor: "#f6edff" ,minWidth:300 }}>
+    <Item sx={{ backgroundColor: "#FFF0F0" ,minWidth:300 }}>
       <Word container direction="row" justifyContent="center" alignItems="center" >
         <Word item xs={4}>
             <img src={trainer.profileImage} width="80px" height="93px" component="form" noValidate xs sx={{ mt: 1, alignItems: "center" }}/>

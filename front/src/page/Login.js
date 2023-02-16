@@ -70,7 +70,8 @@ const Login = () => {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ color: "#917B56" }}
+              align="center"
+              sx={{ p: 1, fontFamily:"BMHANNAProOTF" , color: "#917B56" }}
             >
               로그인
             </Typography>
@@ -98,18 +99,18 @@ const Login = () => {
               fullWidth
               variant="contained"
               onClick={loginUser}
-              sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
+              sx={{ fontFamily:"BMHANNAProOTF", mt: 3, mb: 2, bgcolor: "#F0E4D4", color: "#917B56"}}
             >
-              코딩하러가기
+              코딩 하러가기
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/signup" variant="body2" underline="none" color="#917B56">
+                <Link sx={{ p:3 , fontFamily:"BMHANNAProOTF"}}href="/signup" variant="body2" underline="none" color="#917B56">
                   회원가입
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2" underline="none" color="#917B56">
+                <Link sx={{ p:3 , fontFamily:"BMHANNAProOTF"}}href="#" variant="body2" underline="none" color="#917B56">
                   비밀번호 찾기
                 </Link>
               </Grid>

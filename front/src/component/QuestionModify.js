@@ -15,16 +15,18 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: (theme.palette.mode = "#9575cd"),
+  backgroundColor: (theme.palette.mode = "#DFD3C3"),
   padding: theme.spacing(0.5),
   textAlign: "center",
   minWidth: 50,
+  fontFamily: "BMHANNAProOTF"
 }));
 
 const Bar = styled(Grid)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#ffffff"),
   padding: theme.spacing(0.5),
   textAlign: "center",
+  fontFamily: "BMHANNAProOTF"
 }));
 
 const QuestionModify = ({ question }) => {
@@ -103,7 +105,8 @@ const QuestionModify = ({ question }) => {
           value={inputs.title}
           onChange={onChangeHandler}
           autoFocus
-          style={{ background: "#f5f5f5" }}
+          inputProps={{style: { paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+          style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
         />
       </Item>
       <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
@@ -118,7 +121,8 @@ const QuestionModify = ({ question }) => {
               name="language"
               value={inputs.language}
               onChange={onChangeHandler}
-              style={{ background: "#f0ebf7" }}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
+              inputProps={{  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , style: { color: "#917B56" }}}
               autoFocus
             >
               {lang.map((name, index) => (
@@ -141,7 +145,8 @@ const QuestionModify = ({ question }) => {
               value={inputs.category}
               onChange={onChangeHandler}
               autoFocus
-              style={{ background: "#f0ebf7" }}
+              inputProps={{style: {  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
             >
               {category.map((name, index) => (
                 <MenuItem key={index} value={index}>
@@ -163,7 +168,8 @@ const QuestionModify = ({ question }) => {
               value={algorithm}
               onChange={onChangeMultiHandler}
               autoFocus
-              style={{ background: "#f0ebf7" }}
+              inputProps={{style: {  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
             >
               {algo.map((name, index) => (
                 <MenuItem key={index} value={index}>
@@ -188,7 +194,8 @@ const QuestionModify = ({ question }) => {
               value={inputs.source}
               onChange={onChangeHandler}
               autoFocus
-              style={{ background: "#f0ebf7" }}
+              inputProps={{style: {  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
             >
               {source.map((name, index) => (
                 <MenuItem key={index} value={index}>
@@ -210,7 +217,8 @@ const QuestionModify = ({ question }) => {
               value={inputs.point}
               onChange={onChangeHandler}
               autoFocus
-              style={{ background: "#f0ebf7" }}
+              inputProps={{style: {  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" }}
             ></TextField>
           </Item>
         </Bar>
@@ -227,7 +235,8 @@ const QuestionModify = ({ question }) => {
               value={inputs.questionNumber}
               onChange={onChangeHandler}
               autoFocus
-              style={{ background: "#f0ebf7" }}
+              inputProps={{style: {  paddingLeft: "10px" , fontFamily: "BMHANNAProOTF" , color: "#917B56" }}}
+              style={{ fontFamily: "BMHANNAProOTF" , background: "#fff" , color: "#917B56" }}
             ></TextField>
           </Item>
         </Bar>
@@ -235,7 +244,7 @@ const QuestionModify = ({ question }) => {
           <Typography
             component="h5"
             variant="body1"
-            style={{ backgroundColor: "#ffffff" }}
+            style={{ fontFamily: "BMHANNAProOTF" , backgroundColor: "#fff" , color: "#917B56"}}
           >
             시간을 입력해 주세요
           </Typography>
@@ -252,7 +261,8 @@ const QuestionModify = ({ question }) => {
               timeCaption="time"
               dateFormat="yyyy-MM-dd hh:mm:ss a"
               form="external-form"
-              sx={{ backgroundColor: "#f0ebf7" }}
+              
+              sx={{ fontFamily: "BMHANNAProOTF" , color: "#917B56", backgroundColor: "#fff" }}
             />
           </Item>
         </Bar>
@@ -269,7 +279,8 @@ const QuestionModify = ({ question }) => {
           autoFocus
           value={inputs.content}
           onChange={onChangeHandler}
-          style={{ backgroundColor: "#f0ebf7" }}
+          style={{ backgroundColor: "#fff" }}
+          inputProps={{style: {  paddingLeft: "10px" , color: "#917B56" , fontFamily: "BMHANNAProOTF"}}}
           rows={4}
         />
       </Item>
@@ -286,7 +297,8 @@ const QuestionModify = ({ question }) => {
           value={inputs.code}
           rows={4}
           onChange={onChangeHandler}
-          style={{ backgroundColor: "#f0ebf7" }}
+          style={{ backgroundColor: "#fff" }}
+          inputProps={{style: {  paddingLeft: "10px" , color: "#917B56" , fontFamily: "BMHANNAProOTF"}}}
         />
       </Item>
       <Item elevation={0} sx={{ backgroundColor: "#ffffff" }}>
@@ -297,6 +309,7 @@ const QuestionModify = ({ question }) => {
             textAlign: "center",
             margin: 2,
             width: 100,
+            fontFamily: "BMHANNAProOTF",
           }}
           onClick={submitQuestion}
         >

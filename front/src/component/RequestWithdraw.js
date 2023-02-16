@@ -18,13 +18,26 @@ const Main = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
+  fontFamily: "BMHANNAProOTF",
 }));
 const Bar = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#f6edff",
+  backgroundColor: "#E8DAC3",
+  borderRadius: "10px",
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
   margin: 1,
+  fontFamily: "BMHANNAProOTF",
+}));
+const Barb = styled(Grid)(({ theme }) => ({
+  backgroundColor: "#917B56",
+  color: "#F9D9CA",
+  borderRadius: "10px",
+  ...theme.typography.body2,
+  padding: 15,
+  textAlign: "center",
+  margin: 1,
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const RequestWithdraw = ({userId}) => {
@@ -47,11 +60,12 @@ const RequestWithdraw = ({userId}) => {
 		const nextInputs = { ...inputs,  [name]: value}
 		setInputs(nextInputs);      
   }
+  const userInfo = useSelector((state)=>state.userinfo.userinfo);
 
   return (
     <Bar sx={{ backgroundColor: "#ffffff", minWidth: 100 }}>
       <Bar
-        sx={{ backgroundColor: "#ffffff", minWidth: 50 }}
+        sx={{ borderRadius: "10px",backgroundColor: "#E8DAC3", minWidth: 50 }}
         container
         direction="column"
         justifyContent="center"
@@ -65,14 +79,14 @@ const RequestWithdraw = ({userId}) => {
           alignItems="center"
         >
           {" "}
-          <Bar>
-            <Typography variant="subtitle1" align="left">
+          <Bar sx={{ pl: 1}}>
+            <Typography sx={{ pl: 1 , fontFamily: "BMHANNAProOTF" }} variant="subtitle1" align="left">
               출금 가능
             </Typography>
           </Bar>
-          <Bar>
-            <Typography variant="subtitle2" align="right">
-              33030303
+          <Bar sx={{ pl: 1}}>
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }} variant="subtitle2" align="right">
+              {userInfo.point}
             </Typography>
           </Bar>
         </Bar>
@@ -81,22 +95,22 @@ const RequestWithdraw = ({userId}) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ margin: 0 }}
+          sx={{ pl: 1 ,margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
-              출금 한도
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }}  variant="subtitle2" align="right">
+              최소 출금 포인트
             </Typography>
           </Bar>
           <Bar>
-          <Typography variant="subtitle2" align="right">
-              10000000
+          <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }}  variant="subtitle2" align="right">
+              10,000
             </Typography>
           </Bar>
         </Bar>
       </Bar>
       <Bar
-        sx={{ backgroundColor: "#ffffff", minWidth: 200 }}
+        sx={{ pl: 1 , mt: "10px", borderRadius: "10px",backgroundColor: "#E8DAC3", minWidth: 50 }}
         container
         direction="column"
         justifyContent="center"
@@ -112,7 +126,7 @@ const RequestWithdraw = ({userId}) => {
         >
           {" "}
           <Bar>
-            <Typography variant="subtitle2" align="left">
+            <Typography sx={{ pl:1,fontFamily: "BMHANNAProOTF" }} variant="subtitle2" align="left">
               출금계좌
             </Typography>
           </Bar>
@@ -138,7 +152,7 @@ const RequestWithdraw = ({userId}) => {
           sx={{ margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{pl:1, fontFamily: "BMHANNAProOTF" }} variant="subtitle2" align="right">
               은행
             </Typography>
           </Bar>
@@ -163,7 +177,7 @@ const RequestWithdraw = ({userId}) => {
           sx={{ margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{ pl:1,fontFamily: "BMHANNAProOTF" }} variant="subtitle2" align="right">
               출금금액
             </Typography>
           </Bar>
@@ -190,16 +204,23 @@ const RequestWithdraw = ({userId}) => {
           textAlign: "center",
           margin: 2,
           width: 100,
+          color: "#F0E4D4" ,
+          fontFamily: "BMHANNAProOTF" ,
+          backgroundColor: "#D18063",
+          mb: 10,
+          m: 5,
         }}
         onClick={submitWithdraw}
       >
         출금신청
       </Button>
-      <ul>
-        {DepositWarning.map((menu) => (
-          <li sx={{ textAlign: "left" }}>{menu}</li>
-        ))}
-      </ul>
+      <Barb>
+        <ul>
+          {DepositWarning.map((menu) => (
+            <li sx={{ textAlign: "left" }}>{menu}</li>
+          ))}
+        </ul>
+      </Barb>
     </Bar>
   );
 };

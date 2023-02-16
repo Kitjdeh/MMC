@@ -15,8 +15,11 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 import { Cookies } from "react-cookie";
 import QuestionModify from "../component/QuestionModify";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { SvgIcon } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { border, color } from "@mui/system";
 
 const QuestionDetail = () => {
   let questionId = useParams();
@@ -32,6 +35,9 @@ const QuestionDetail = () => {
   const getAllTrainers = () => {
     dispatch(questionAction.getTrainers(id));
   };
+  const deleteQuestion = () => {
+    dispatch(questionAction.deleteQuestion(id));
+  };
   useEffect(() => {
     getQuestion();
     getAllTrainers();
@@ -45,12 +51,12 @@ const QuestionDetail = () => {
   const userId = cookie.get("userId");
 
   useEffect(() => {
-    console.log("id확인전",userauth)
+    console.log("id확인전", userauth);
     console.log("문제아이디", question["userId"]);
     console.log("유저아이디", userId);
     setUserauth(userId == question["userId"] ? true : false);
-    console.log("id확인후",userauth)
-  },[question]);
+    console.log("id확인후", userauth);
+  }, [question]);
 
   const selectquestion = (item) => {
     const { name } = item.target;
@@ -63,59 +69,85 @@ const QuestionDetail = () => {
     modify: <QuestionModify question={question} />,
   };
   const aboutcomponent = ["메인", "문제", "코드"];
-  const Word = styled(Grid)(({ theme }) => ({
-    textAlign: "center",
+  const TabLeft = styled(Grid)(({ theme }) => ({
+    textAlign: "left",
+  }));
+  const TabRight = styled(Grid)(({ theme }) => ({
+    textAlign: "right",
+    paddingRight: 25,
+  }));
+  const ButtonIcon = styled(Button)(({ theme }) => ({
+    backgroundColor: "#fff",
+    color: "#917B56",
+    border: "none",
   }));
   return (
     <Box>
       <Grid container direction="row" alignItems="flex-start" margin={2}>
-        <Word item xs={4}>
+        <TabLeft item xs={3}>
           <Button
             onClick={selectquestion}
             name="main"
             value="main2"
             variant="contained"
-            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
+            sx={{
+              backgroundColor: "#917B56",
+              color: "#F0E4D4",
+              fontFamily: "BMHANNAProOTF",
+            }}
           >
             메인
           </Button>
-        </Word>
-        <Word item xs={4}>
+
           <Button
             onClick={selectquestion}
             name="question"
             variant="contained"
-            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
+            sx={{
+              backgroundColor: "#917B56",
+              color: "#F0E4D4",
+              fontFamily: "BMHANNAProOTF",
+            }}
           >
             문제
           </Button>
-        </Word>
-        <Word item xs={4}>
+
           <Button
             onClick={selectquestion}
             name="code"
             variant="contained"
-            sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" , fontFamily: "BMHANNAProOTF"}}
+            sx={{
+              backgroundColor: "#917B56",
+              color: "#F0E4D4",
+              fontFamily: "BMHANNAProOTF",
+            }}
           >
             코드
           </Button>
-        </Word>
-          {userauth === true ? (
-            <Word item xs={3}>
-              <Button
-                onClick={selectquestion}
-                name="modify"
-                variant="contained"
-                sx={{ backgroundColor: "#917B56" , color: "#F0E4D4" }}
-              >
-                수정
-              </Button>
-            </Word>
-          ) : (
-            ""
-          )}
-     
-      </Grid>    {content && <Box>{category[content]}</Box>}
+        </TabLeft>
+        {userauth === true ? (
+          <TabRight item xs={9}>
+            <ButtonIcon
+              onClick={selectquestion}
+              name="modify"
+              variant="contained"
+            >
+              <BorderColorIcon></BorderColorIcon>
+            </ButtonIcon>
+            <ButtonIcon
+              onClick={deleteQuestion}
+              name="delete"
+              variant="contained"
+            >
+              {" "}
+              <DeleteIcon></DeleteIcon>
+            </ButtonIcon>
+          </TabRight>
+        ) : (
+          ""
+        )}
+      </Grid>
+      {content && <Box>{category[content]}</Box>}
       {/* {content ? (
         <Box>{category[content]}</Box>
       ) : (
@@ -123,7 +155,6 @@ const QuestionDetail = () => {
           <QuestionMain question={question} />
         </Box>
       )} */}
-
     </Box>
   );
 };

@@ -116,6 +116,7 @@ const WriteQuestion = ({ userId }) => {
             onChange={onChangeHandler}
             autoFocus
             style={{ background: "#fff" }}
+            inputProps={{style: { color: "#917B56" }}}
             sx={{ fontFamily: "BMHANNAProOTF"}}
           />
         </Item>
@@ -132,11 +133,12 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.language}
                 onChange={onChangeHandler}
                 style={{ background: "#fff" }}
-                sx={{ fontFamily: "BMHANNAProOTF"}}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+                sx={{  color: "#917B56" , fontFamily: "BMHANNAProOTF"}}
                 autoFocus
               >
                 {lang.map((name, index) => (
-                  <MenuItem sx={{ fontFamily: "BMHANNAProOTF"}} key={index} value={index}>
+                  <MenuItem sx={{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}} key={index} value={index}>
                     {name}
                   </MenuItem>
                 ))}
@@ -154,11 +156,13 @@ const WriteQuestion = ({ userId }) => {
                 name="category"
                 value={inputs.category}
                 onChange={onChangeHandler}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+                sx={{  color: "#917B56" , fontFamily: "BMHANNAProOTF"}}
                 autoFocus
                 style={{ background: "#fff" }}
               >
                 {category.map((name, index) => (
-                  <MenuItem key={index} value={index}>
+                  <MenuItem sx={{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}} key={index} value={index}>
                     {name}
                   </MenuItem>
                 ))}
@@ -177,10 +181,12 @@ const WriteQuestion = ({ userId }) => {
                 value={algorithm}
                 onChange={onChangeMultiHandler}
                 autoFocus
+                sx={{  color: "#917B56" , fontFamily: "BMHANNAProOTF"}}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
                 style={{ background: "#fff" }}
               >
                 {algo.map((name, index) => (
-                  <MenuItem key={index} value={index}>
+                  <MenuItem sx={{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}} key={index} value={index}>
                     {name}
                   </MenuItem>
                 ))}
@@ -202,10 +208,11 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.source}
                 onChange={onChangeHandler}
                 autoFocus
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
                 style={{ background: "#fff" }}
               >
                 {source.map((name, index) => (
-                  <MenuItem key={index} value={index}>
+                  <MenuItem sx={{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}}  key={index} value={index}>
                     {name}
                   </MenuItem>
                 ))}
@@ -224,7 +231,8 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.point}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#fff" }}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+                style={{ paddingLeft: "5px", background: "#fff" }}
               ></TextField>
             </Item>
           </Bar>
@@ -240,7 +248,8 @@ const WriteQuestion = ({ userId }) => {
                 value={inputs.questionNumber}
                 onChange={onChangeHandler}
                 autoFocus
-                style={{ background: "#fff" }}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+                style={{ paddingLeft: "5px", background: "#fff" }}
               ></TextField>
             </Item>
           </Bar>
@@ -248,7 +257,8 @@ const WriteQuestion = ({ userId }) => {
             <Typography
               component="h5"
               variant="body1"
-              style={{ backgroundColor: "#ffffff" }}
+              inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+              style={{ paddingLeft: "5px", backgroundColor: "#ffffff" }}
             >
               시간을 입력해 주세요
             </Typography>
@@ -264,7 +274,8 @@ const WriteQuestion = ({ userId }) => {
                 timeCaption="time"
                 dateFormat="yyyy-MM-dd hh:mm:ss a"
                 form="external-form"
-                sx={{ backgroundColor: "#fff" }}
+                inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+                sx={{ paddingLeft: "10px" , color: "#917B56" , backgroundColor: "#fff" }}
               />
             </Item>
           </Bar>
@@ -281,7 +292,9 @@ const WriteQuestion = ({ userId }) => {
             autoFocus
             value={inputs.content}
             onChange={onChangeHandler}
-            style={{ backgroundColor: "#fff" }}
+            style={{ paddingLeft: "10px" , color: "#917B56" , backgroundColor: "#fff" }}
+            inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
+
             rows={4}
           />
         </Item>
@@ -298,7 +311,8 @@ const WriteQuestion = ({ userId }) => {
             value={inputs.code}
             rows={4}
             onChange={onChangeHandler}
-            style={{ backgroundColor: "#fff" }}
+            style={{ paddingLeft: "10px", color: "#917B56" , backgroundColor: "#fff" }}
+            inputProps={{style: { color: "#917B56" ,fontFamily: "BMHANNAProOTF"}}}
           />
         </Item>
         <Item elevation={0} sx={{ backgroundColor: "#ffffff" }}>

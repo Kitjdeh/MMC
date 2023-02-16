@@ -133,7 +133,7 @@ const Navbar = () => {
               {authenticated === true ? (
                 <div>
                   <Grid item>
-                    <Button
+                    {/* <Button
                       id="alarm-button"
                       aria-haspopup="true"
                       onClick={handleClick}
@@ -141,7 +141,7 @@ const Navbar = () => {
                       sx = {{ color: "#917B56" }}
                       >
                         마이페이지
-                      </Button>
+                      </Button> */}
                       <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -161,7 +161,7 @@ const Navbar = () => {
                       // aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
                       // sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
-                      sx = {{ color: "#917B56" }}
+                      sx = {{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}}
                       >
                       마이페이지
                     </Button>
