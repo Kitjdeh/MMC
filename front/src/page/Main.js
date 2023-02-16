@@ -11,6 +11,7 @@ import { mainInfo } from "../redux/reducers/question";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import { questionAction } from "../redux/actions/questionAction";
+import Paper from "@mui/material/Paper";
 const Item = styled(Container)(({ theme }) => ({
   backgroundColor: "#f6edff",
   ...theme.typography.body2,
@@ -64,19 +65,29 @@ const Main = () => {
   useEffect(() => getallQuestions(), []);
   useEffect(() => getuserCount(), []);
   useEffect(() => distinctUser(), [questionList]);
-
+  
   return (
-    <Box sx={{ flexGrow: 1, backgroundColor: "#f6edff" }}>
-      <Grid container spacing={2} sx={{ mt: 2 }}>
+    <Box sx={{ backgroundColor: "transparent" }}>
+    <Paper
+      elevation={8}
+      sx={{
+        flexGrow: 1,
+        backgroundColor: "transparent",
+        backgroundImage: "/img/main3.png",
+      }}
+    >
+      <Grid container spacing={2} sx={{ mt: 6, elevation: 3, backgroundColor: "transparent",}}>
         <Grid item xs={4}>
           <Item>
-            <PeopleIcon sx={{ fontSize: 50 }}></PeopleIcon>
+            <PeopleIcon
+              sx={{ fontSize: 120, backgroundColor: "#f6edff" }}
+            ></PeopleIcon>
             <HeaderBox icon="faUser" title="전체회원" number={usercount} />
           </Item>
         </Grid>
         <Grid item xs={4}>
           <Item>
-            <LibraryBooksIcon sx={{ fontSize: 50 }}></LibraryBooksIcon>
+            <LibraryBooksIcon sx={{ fontSize: 120 }}></LibraryBooksIcon>
             <HeaderBox
               icon="faGraduationCap"
               title="진행중인질문"
@@ -84,28 +95,31 @@ const Main = () => {
             />
           </Item>
         </Grid>
+
         <Grid item xs={4}>
           <Item>
-            <SchoolIcon sx={{ fontSize: 50 }}></SchoolIcon>
+            <SchoolIcon sx={{ fontSize: 120 }}></SchoolIcon>
             <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
           </Item>
         </Grid>
-        <Grid item xs={12} sx={{ flexGrow: 1, backgroundColor: "transparent" }}>
-          <Item sx={{ flexGrow: 1, backgroundColor: "transparent" }}>
-            {" "}
-            {mainbodylist.map((item) => (
-              <MainBodyBox
-                title={item.title}
-                mention={item.mention}
-                img={item.img}
-                key={item.title}
-              />
-            ))}
-          </Item>
-        </Grid>
       </Grid>
-    </Box>
-  );
+      <Grid item xs={12} sx={{ backgroundColor: "transparent" }}>
+        <Item sx={{ backgroundColor: "transparent", mt: 0 }}>
+          {" "}
+          {mainbodylist.map((item) => (
+            <MainBodyBox
+              title={item.title}
+              mention={item.mention}
+              img={item.img}
+              key={item.title}
+            />
+          ))}
+        </Item>
+      </Grid>
+    </Paper>
+  </Box>
+
+);
 };
 
 export default Main;
