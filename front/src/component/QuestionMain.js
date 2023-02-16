@@ -166,21 +166,26 @@ const QuestionMain = ({ question }) => {
           sx={{ minWidth: 100, backgroundColor: "#fff" }}
         >
           <Grid item xs={3}>
-            <Item sx={{ backgroundColor: "#D18063" , color: "#F0E4D4" }}>나의 풀이</Item>
+            <Item sx={{ marginBottom: "15px" , backgroundColor: "#D18063" , color: "#F0E4D4" }}>나의 풀이</Item>
+            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >
+              {algorithm.map((element) => (
+              <div item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
+                {element}
+              </div>
+              ))}
+            </Item>
           </Grid>
 
           {/* <Grid item xs={9}>
             <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
           </Grid> */}
           
-          <Grid item xs={9}>
-            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >
-            {algorithm.map((element) => (
-            <div item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }}>
-              {element}
-            </div>
-          ))}</Item>
+          <Grid item xs={9}>  
+            <Item sx={{ backgroundColor: "#BD885C" , color: "#F0E4D4"}}>
+              {question.content}
+            </Item>
           </Grid>
+          
         </Bar>
       </Bar>
       <br />
@@ -198,13 +203,11 @@ const QuestionMain = ({ question }) => {
         </Grid>
       </Bar>
       <br /> */}
-      <Item sx={{ backgroundColor: "#BD885C" , color: "#F0E4D4"}}>
-        {question.content}
-      </Item>
+      
       <Box>
         <Bar>
           {question?.userId !== parseInt(userId) && question?.progress < 1 ? (
-            <Button onClick={addTrainer}>문제풀이 신청</Button>
+            <Button sx={{ margin: "0px 15px 15px 15px" , fontFamily: "BMHANNAProOTF" , backgroundColor: "#D18063" , color: "#F0E4D4" }} onClick={addTrainer}>문제풀이 신청</Button>
           ) : (
             <Box></Box>
           )}
@@ -235,12 +238,12 @@ const QuestionMain = ({ question }) => {
                       // </Button>
                     ))
                   ) : (
-                    <Item>답변자 리스트가 없습니다.</Item>
+                    <Item sx = {{ color: "#917B56" }}>답변자 리스트가 없습니다.</Item>
                   )}
                 </Item>
               </Grid>
 
-              <Grid item margin={1} xs={5}>
+              <Grid item margin={1} xs={5} sx = {{color: "#917B56"}} >
                 {selected !== -1 ? (
                   <TeacherCard />
                 ) : (
@@ -252,7 +255,7 @@ const QuestionMain = ({ question }) => {
             </Grid>
           </Container>
         ) : (
-          <Bar>채택이 완료된 질문입니다!</Bar>
+          <Bar sx={{color: "#917B56"}}>채택이 완료된 질문입니다!</Bar>
         )}
       </Box>
       {userId == question?.userId ? <button onClick={deleteQuestion}>글 삭제</button> : <Box></Box>}
@@ -260,7 +263,7 @@ const QuestionMain = ({ question }) => {
         {(question.progress === 0 || question.progress === 2)? <Box></Box> :
       (adoptuser == userId || question?.userId == userId)? (
         <Bar>
-          <Button onClick={getLectureNote}>강의실 입장</Button>
+          <Button sx={{ margin: "15px" , fontFamily: "BMHANNAProOTF" , backgroundColor: "#D18063" , color: "#F0E4D4" }} onClick={getLectureNote}>강의실 입장</Button>
         </Bar>
       ) : (
         <Box></Box>
