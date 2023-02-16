@@ -21,8 +21,8 @@ wss.on("connection", (socket) => {
     const msg = { type, payload, nickName, lectureNoteId };
     return JSON.stringify(msg);
   }
-  function updatePicture(type, payload, lectureNoteId) {
-    const msg = { type, payload, lectureNoteId };
+  function updatePicture(type, payload, nickName, lectureNoteId) {
+    const msg = { type, payload, nickName, lectureNoteId };
     return JSON.stringify(msg);
   }
   sockets.push(socket);
@@ -44,26 +44,30 @@ wss.on("connection", (socket) => {
         console.log(message.lectureNoteId + "picture1");
         client.set(message.lectureNoteId + "picture1", message.payload);
         sockets.forEach((aSocket) =>
-          aSocket.send(updatePicture(message.type, message.payload, message.lectureNoteId))
+          aSocket.send(
+            updatePicture(message.type, message.payload, message.nickName, message.lectureNoteId)
+          )
         );
         break;
       case "first1":
         console.log(message.lectureNoteId + "first1");
         client.get(message.lectureNoteId + "picture1", (err, reply) => {
-          socket.send(updatePicture("picture1", reply, message.lectureNoteId));
+          socket.send(updatePicture("picture1", reply, message.nickName, message.lectureNoteId));
         });
         break;
       case "picture2":
         console.log(message.lectureNoteId + "picture2");
         client.set(message.lectureNoteId + "picture2", message.payload);
         sockets.forEach((aSocket) =>
-          aSocket.send(updatePicture(message.type, message.payload, message.lectureNoteId))
+          aSocket.send(
+            updatePicture(message.type, message.payload, message.nickName, message.lectureNoteId)
+          )
         );
         break;
       case "first2":
         console.log(message.lectureNoteId + "first2");
         client.get(message.lectureNoteId + "picture2", (err, reply) => {
-          socket.send(updatePicture("picture2", reply, message.lectureNoteId));
+          socket.send(updatePicture("picture2", reply, message.nickName, message.lectureNoteId));
         });
         break;
     }
