@@ -10,7 +10,10 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 17%;
+  position: fixed;
+  top: 0;
+  right: 0;
 `;
 
 const StyledHeader = styled.header`
@@ -25,6 +28,7 @@ const StyledHeader = styled.header`
 
 const StyledMain = styled.main`
   width: 100%;
+  height: 80vh; /* set height to 100 viewport height units */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,12 +47,15 @@ const StyledMessageList = styled.ul`
 `;
 
 const StyledMessageForm = styled.form`
-  width: 100%;
+  width: 17%;
   display: flex;
   justify-content: center;
   padding: 16px;
   background-color: #f2f2f2;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  right: 0;
 `;
 
 const StyledInput = styled.input`
@@ -80,10 +87,7 @@ const LectureChat = ({ nickName, lectureNoteId, socket }) => {
   useEffect(() => {
     socket.addEventListener("message", (msg) => {
       const message = JSON.parse(msg.data);
-      if (
-        message.lectureNoteId === lectureNoteId &&
-        message.type === "new_message"
-      ) {
+      if (message.lectureNoteId === lectureNoteId && message.type === "new_message") {
         const li = document.createElement("li");
         li.style.listStyle = "none";
         if (nickName === message.nickName) {
@@ -101,26 +105,25 @@ const LectureChat = ({ nickName, lectureNoteId, socket }) => {
   function handleSubmit(event) {
     event.preventDefault();
     const input = messageFormRef.current.querySelector("input");
-    socket.send(
-      makeMessage("new_message", input.value, nickName, lectureNoteId)
-    );
+    socket.send(makeMessage("new_message", input.value, nickName, lectureNoteId));
     input.value = "";
   }
 
   return (
     <StyledContainer>
       <StyledHeader>
-        <h1>Noom</h1>
+        <h1>채팅</h1>
       </StyledHeader>
 
       <StyledMain>
         <StyledMessageList ref={messageListRef} />
         <StyledMessageForm onSubmit={handleSubmit} ref={messageFormRef}>
-          <StyledInput type="text" placeholder="write a msg" required />
-          <StyledButton>Send</StyledButton>
+          <StyledInput type="text" required />
+          <StyledButton>보내기</StyledButton>
         </StyledMessageForm>
       </StyledMain>
     </StyledContainer>
   );
 };
 export default LectureChat;
+
