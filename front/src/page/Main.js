@@ -79,7 +79,7 @@ const Main = () => {
       >
         <Grid container sx={{ zIndex:"1", backgroundColor: "#E8DAC3" , borderRadius: "10px", mt: 6, elevation: 3}}>
           <Grid item  xs={4}>
-            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+            <Item sx={{ backgroundColor: "#E8DAC3" , pt: 5 , borderRadius: "15px 0px 0px 0px"}}>
               <PeopleIcon
                 sx={{ fontSize: 150}}
               ></PeopleIcon>
@@ -87,7 +87,7 @@ const Main = () => {
             </Item>
           </Grid>
           <Grid item xs={4}>
-            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+            <Item sx={{ backgroundColor: "#E8DAC3" , pt: 5  }}>
               <LibraryBooksIcon sx={{ fontSize: 150 }}></LibraryBooksIcon>
               <HeaderBox
                 icon="faGraduationCap"
@@ -98,7 +98,7 @@ const Main = () => {
           </Grid>
 
           <Grid item xs={4}>
-            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+            <Item sx={{ backgroundColor: "#E8DAC3" ,pt: 5 , borderRadius: "0px 15px 0px 0px"}}>
               <SchoolIcon sx={{ fontSize: 150 }}></SchoolIcon>
               <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
             </Item>
