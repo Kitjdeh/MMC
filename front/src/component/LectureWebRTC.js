@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-
+import Button from "@mui/material/Button";
 //const socket = io.connect({ hostname: "127.0.0.1", port: 8001 });
 
 const LectureWebRTC = ({
@@ -164,12 +164,13 @@ const LectureWebRTC = ({
 
   return (
     <>
-      <button id="camera" type="button" onClick={handleCameraClick} ref={cameraBtn}>
-        Turn Camera Off
-      </button>
-      <button id="shareScreen" type="button" onClick={handleScreenClick} ref={screenBtn}>
+      <Button variant="contained" id="camera" onClick={handleCameraClick} ref={cameraBtn}>
+        카메라 공유
+      </Button>
+
+      <Button variant="contained" id="shareScreen" onClick={handleScreenClick} ref={screenBtn}>
         화면 공유
-      </button>
+      </Button>
 
       <div id="call">
         <div

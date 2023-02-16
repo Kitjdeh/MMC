@@ -475,10 +475,8 @@ const LectureNote = () => {
           <Grid item xs={2} className={classes.bar}>
             <Box>{category["Chat"]}</Box>
           </Grid>
-          <button onClick={handleDownload}>Download</button>
         </>
       )}
-      ;
     </Grid>
   );
 };
