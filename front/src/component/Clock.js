@@ -23,14 +23,14 @@ const Clock = ({ clk, setTime, userId, studentId }) => {
       setSec(padNumber(seconds % 60, 2));
       // 강의 종료 1분전(9분)
       if (padNumber(Math.floor(seconds / 60), 2) === "09" && padNumber(seconds % 60, 2) === "00") {
-        setTime(9);
+        // setTime(9);
       }
       // 강의 종료(10분)
       if (padNumber(Math.floor(seconds / 60), 2) === "10" && padNumber(seconds % 60, 2) === "00") {
         if (userId === studentId) {
-          setTime(11);
+          // setTime(11);
         } else {
-          setTime(10);
+          // setTime(10);
         }
       }
     }, 1000);
