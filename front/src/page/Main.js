@@ -76,11 +76,11 @@ const Main = () => {
         backgroundImage: "/img/main3.png",
       }}
     >
-      <Grid container spacing={2} sx={{ mt: 6, elevation: 3, backgroundColor: "#fff",}}>
+      <Grid container spacing={2} sx={{ mt: 6, elevation: 3}}>
         <Grid item xs={4}>
           <Item>
             <PeopleIcon
-              sx={{ fontSize: 150, backgroundColor: "#fff" }}
+              sx={{ fontSize: 150}}
             ></PeopleIcon>
             <HeaderBox icon="faUser" title="전체회원" number={usercount} />
           </Item>
