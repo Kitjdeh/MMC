@@ -243,7 +243,7 @@ export default function SingUp() {
               fullWidth
               variant="contained"
               onClick={regist}
-              sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56" , borderColor: "#005cbf" }}
+              sx={{ fontFamily:"BMHANNAProOTF" , mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56" , borderColor: "#005cbf" }}
             >
               회원가입
             </Button>
