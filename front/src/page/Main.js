@@ -13,11 +13,12 @@ import Container from "@mui/material/Container";
 import { questionAction } from "../redux/actions/questionAction";
 import Paper from "@mui/material/Paper";
 const Item = styled(Container)(({ theme }) => ({
-  backgroundColor: "#f6edff",
+  backgroundColor: "#E8DAC3",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  zIndex: "1"
 }));
 
 const mainbodylist = [
@@ -67,57 +68,57 @@ const Main = () => {
   useEffect(() => distinctUser(), [questionList]);
   
   return (
-    <Box sx={{ backgroundColor: "#fff" }}>
-    <Paper
-      elevation={8}
-      sx={{
-        flexGrow: 1,
-        backgroundColor: "#fff",
-        backgroundImage: "/img/main3.png",
-      }}
-    >
-      <Grid container spacing={2} sx={{ mt: 6, elevation: 3}}>
-        <Grid item xs={4}>
-          <Item>
-            <PeopleIcon
-              sx={{ fontSize: 150}}
-            ></PeopleIcon>
-            <HeaderBox icon="faUser" title="전체회원" number={usercount} />
-          </Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>
-            <LibraryBooksIcon sx={{ fontSize: 150 }}></LibraryBooksIcon>
-            <HeaderBox
-              icon="faGraduationCap"
-              title="진행중인질문"
-              number={doingquestion}
-            />
-          </Item>
-        </Grid>
+    <Box sx={{ zIndex:"1", backgroundColor: "#E8DAC3", borderRadius: "10px", border: "solid 1px #917B56"}}>
+      <Paper 
+        elevation={8}
+        sx={{
+          flexGrow: 1,
+          backgroundColor: "#E8DAC3",
+          
+        }}
+      >
+        <Grid container sx={{ zIndex:"1", backgroundColor: "#E8DAC3" , borderRadius: "10px", mt: 6, elevation: 3}}>
+          <Grid item  xs={4}>
+            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+              <PeopleIcon
+                sx={{ fontSize: 150}}
+              ></PeopleIcon>
+              <HeaderBox icon="faUser" title="전체회원" number={usercount} />
+            </Item>
+          </Grid>
+          <Grid item xs={4}>
+            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+              <LibraryBooksIcon sx={{ fontSize: 150 }}></LibraryBooksIcon>
+              <HeaderBox
+                icon="faGraduationCap"
+                title="진행중인질문"
+                number={doingquestion}
+              />
+            </Item>
+          </Grid>
 
-        <Grid item xs={4}>
-          <Item>
-            <SchoolIcon sx={{ fontSize: 150 }}></SchoolIcon>
-            <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
+          <Grid item xs={4}>
+            <Item sx={{ backgroundColor: "#E8DAC3" , borderRadius: "15px"}}>
+              <SchoolIcon sx={{ fontSize: 150 }}></SchoolIcon>
+              <HeaderBox icon="Book" title="완료된질문" number={donequestion} />
+            </Item>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} >
+          <Item sx={{ pt: 5,  mt: 0 }}>
+            {" "}
+            {mainbodylist.map((item) => (
+              <MainBodyBox
+                title={item.title}
+                mention={item.mention}
+                img={item.img}
+                key={item.title}
+              />
+            ))}
           </Item>
         </Grid>
-      </Grid>
-      <Grid item xs={12} >
-        <Item sx={{ pt: 5,  mt: 0 }}>
-          {" "}
-          {mainbodylist.map((item) => (
-            <MainBodyBox
-              title={item.title}
-              mention={item.mention}
-              img={item.img}
-              key={item.title}
-            />
-          ))}
-        </Item>
-      </Grid>
-    </Paper>
-  </Box>
+      </Paper>
+    </Box>
 
 );
 };
