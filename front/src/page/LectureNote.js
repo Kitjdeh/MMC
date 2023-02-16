@@ -69,10 +69,10 @@ const LectureNote = () => {
   const teacher = useSelector((state) => state.admin.user);
   const dispatch = useDispatch();
   img.src = question.imageUrl;
-  console.log("USER", user);
-  console.log("LECTURE", lecture);
-  console.log("QUESTION", question);
-  console.log("teacher", teacher);
+  // console.log("USER", user);
+  // console.log("LECTURE", lecture);
+  // console.log("QUESTION", question);
+  // console.log("teacher", teacher);
 
   // const lectureNoteId = 2;
   // const nickName = "SSAFY";
@@ -145,7 +145,6 @@ const LectureNote = () => {
   };
 
   const handleOpen = () => {
-    socketRTC.emit("join_room", lectureNoteId);
     socketRTC.emit("timerStart", lectureNoteId);
     setOpenModal(true);
   };
@@ -158,6 +157,7 @@ const LectureNote = () => {
   const handleMuteClick = () => {
     if (!muted) {
       muted = true;
+      console.log(myStream.getAudioTracks()[0]);
       myStream.getAudioTracks().forEach((track) => {
         track.enabled = !track.enabled;
         console.log(track.enabled);
@@ -180,7 +180,7 @@ const LectureNote = () => {
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
-        audio: false,
+        audio: true,
         video: true,
       })
       .then((stream) => {
@@ -192,6 +192,7 @@ const LectureNote = () => {
         console.log(myAudio.current.srcObject);
 
         stream.getTracks().forEach((track) => myPeerConnection.addTrack(track, stream));
+        socketRTC.emit("join_room", lectureNoteId);
       });
 
     myPeerConnection.addEventListener("icecandidate", handleIce);
@@ -239,6 +240,8 @@ const LectureNote = () => {
       setStart(true);
       myAudio.current.play();
       peersAudio.current.play();
+      console.log(peersAudio.current.srcObject);
+      console.log(myAudio.current.srcObject);
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
@@ -253,6 +256,8 @@ const LectureNote = () => {
       setStart(true);
       myAudio.current.play();
       peersAudio.current.play();
+      console.log(peersAudio.current.srcObject);
+      console.log(myAudio.current.srcObject);
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
