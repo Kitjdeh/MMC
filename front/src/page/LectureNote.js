@@ -317,6 +317,7 @@ const LectureNote = () => {
           img={img}
           pdfimg={pdfimg}
           socket={socket}
+          nickName={nickName}
         />
       ),
       Code: <LectureCode check={check} setCheck={setCheck} />,
@@ -328,6 +329,7 @@ const LectureNote = () => {
           img={img}
           pdfimg={pdfimg}
           socket={socket}
+          nickName={nickName}
         />
       ),
       Chat: <LectureChat nickName={nickName} lectureNoteId={lectureNoteId} socket={socket} />,
