@@ -70,7 +70,12 @@ public class QuestionRestController {
     @PatchMapping("/{question_id}")
     public ResponseEntity<Map<String,Object>> questionModify(@PathVariable("question_id") int questionId, @RequestBody QuestionDto question) throws Exception {
         int questionNum = question.getQuestionNumber();
-        question.setImageUrl(questionService.grabzIt(questionNum));
+        int savedQuestionNum = questionService.findQuestion(questionId).getQuestionNumber();
+        System.out.println("requestQuestionNum"+savedQuestionNum);
+        System.out.println();
+        if(savedQuestionNum != questionNum){
+            question.setImageUrl(questionService.grabzIt(questionNum));
+        }
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -82,7 +87,9 @@ public class QuestionRestController {
     @DeleteMapping("/{question_id}")
     public ResponseEntity<Map<String,Object>> questionRemove(@PathVariable("question_id") int questionId){
         questionService.deleteQuestionTrainerList(questionId);
-        lectureNoteService.removeLectureNote(lectureNoteService.findLectureNote(questionId).getLectureNoteId());
+        if(lectureNoteService.findLectureNote(questionId)!=null) {
+            lectureNoteService.removeLectureNote(lectureNoteService.findLectureNote(questionId).getLectureNoteId());
+        }
         questionService.deleteQuestion(questionId);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
