@@ -34,7 +34,7 @@ const Barb = styled(Grid)(({ theme }) => ({
   color: "#F9D9CA",
   borderRadius: "10px",
   ...theme.typography.body2,
-  padding: theme.spacing(0.5),
+  padding: 15,
   textAlign: "center",
   margin: 1,
   fontFamily: "BMHANNAProOTF",
@@ -60,6 +60,7 @@ const RequestWithdraw = ({userId}) => {
 		const nextInputs = { ...inputs,  [name]: value}
 		setInputs(nextInputs);      
   }
+  const userInfo = useSelector((state)=>state.userinfo.userinfo);
 
   return (
     <Bar sx={{ backgroundColor: "#ffffff", minWidth: 100 }}>
@@ -85,7 +86,7 @@ const RequestWithdraw = ({userId}) => {
           </Bar>
           <Bar sx={{ pl: 1}}>
             <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }} variant="subtitle2" align="right">
-              33030303
+              {userInfo.point}
             </Typography>
           </Bar>
         </Bar>
@@ -98,12 +99,12 @@ const RequestWithdraw = ({userId}) => {
         >
           <Bar>
             <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }}  variant="subtitle2" align="right">
-              출금 한도
+              최소 출금 포인트
             </Typography>
           </Bar>
           <Bar>
           <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF" }}  variant="subtitle2" align="right">
-              10000000
+              10,000
             </Typography>
           </Bar>
         </Bar>

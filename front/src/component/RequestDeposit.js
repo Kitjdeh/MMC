@@ -34,7 +34,7 @@ const Barb = styled(Grid)(({ theme }) => ({
   color: "#F9D9CA",
   borderRadius: "10px",
   ...theme.typography.body2,
-  padding: theme.spacing(0.5),
+  padding: 15,
   textAlign: "center",
   margin: 1,
   fontFamily: "BMHANNAProOTF",
@@ -59,6 +59,7 @@ const RequestDeposit = ({userId}) => {
 		const nextInputs = { ...inputs,  [name]: value}
 		setInputs(nextInputs);      
   }
+  const userInfo = useSelector((state)=>state.userinfo.userinfo);
 
   return (
     <Bar sx={{ backgroundColor: "#ffffff", minWidth: 100 }}>
@@ -84,7 +85,7 @@ const RequestDeposit = ({userId}) => {
           </Bar>
           <Bar>
             <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="right">
-              33030303
+              {userInfo.point}
             </Typography>
           </Bar>
         </Bar>

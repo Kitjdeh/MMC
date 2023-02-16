@@ -70,6 +70,7 @@ const Login = () => {
             <Typography
               component="h1"
               variant="h5"
+              align="center"
               sx={{ p: 1, fontFamily:"BMHANNAProOTF" , color: "#917B56" }}
             >
               로그인
@@ -98,9 +99,9 @@ const Login = () => {
               fullWidth
               variant="contained"
               onClick={loginUser}
-              sx={{ fontFamily:"BMHANNAProOTF", mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
+              sx={{ fontFamily:"BMHANNAProOTF", mt: 3, mb: 2, bgcolor: "#F0E4D4", color: "#917B56"}}
             >
-              코딩하러가기
+              코딩 하러가기
             </Button>
             <Grid container>
               <Grid item xs>
