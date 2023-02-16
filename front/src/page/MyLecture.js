@@ -7,12 +7,22 @@ import { mypageAction } from "../redux/actions/mypageAction";
 import { useSelector } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import { styled } from "@mui/material/styles";
+import { Box } from '@material-ui/core';
+import { fontSize, margin } from '@mui/system';
 const Mygrid = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#f6edff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
+  // backgroundColor: "#FFBEBE",
+  // ...theme.typography.body2,
+  // padding: theme.spacing(1),
+  // textAlign: "center",
+  fontFamily: "BMHANNAProOTF",
+}));
+const Title = styled(Box)(()=> ({
+  margin: "50px"
+}));
+const Myspan = styled(Box)(() => ({
+  fontFamily: "BMHANNAProOTF",
+  color: "#917B56",
+  padding: "5px 5px 5px 55px",
 }));
 const MyLecture = () => {
   useEffect(() => {
@@ -29,15 +39,18 @@ const MyLecture = () => {
   return (
    lecturesList.length > 0 ? (
       <Container>
+        <Title><h1>나의 강의</h1></Title>
         <Grid container spacing={1}>
         {lecturesList.map((lecture) =>
           lecture.progress == userId ? (
             <Mygrid item xl={3} lg={4} md={6}>
-              채택된 강의
+              <Myspan> 🔓 채택 완료 강의 🔓 </Myspan>
               <QuestionCard question={lecture} />
             </Mygrid>
           ) : (
-            <Grid item xl={3} lg={4} md={6}>
+            // <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56" , textAlign: "center"}}>
+            <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
+              <Myspan> 🔒 채택 미완료 강의 🔒 </Myspan>
               <QuestionCard question={lecture} />
               <br />
             </Grid>

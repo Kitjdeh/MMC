@@ -19,15 +19,26 @@ const Item = styled(Paper)(({ theme }) => ({
   minWidth: 60,
   maxWidth: 400,
 }));
-
+const DoneItem = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#E8DAC3",
+  padding: theme.spacing(0.3),
+  textAlign: "center",
+  minWidth: 60,
+  maxWidth: 400,
+}));
 const QuestionCard = ({ question }) => {
+  console.log(question,"111111111111")
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const showDetail = () => {
     navigate(`/question/${question.questionId}`);
   };
   return (
-    <Item
+   <div>
+
+   
+     { question?.progress > 0 ? (
+      <DoneItem
       sx={{
         p: 2,
         margin: "50",
@@ -35,12 +46,12 @@ const QuestionCard = ({ question }) => {
         height: 250
       }}
       onClick={showDetail}
-    >
+      >
       <Box component="form" noValidate sx={{ color: "#6C5D53", mt: 1, alignItems: "center" }}>
         테마
       </Box>
 
-      <Box sx={{ color: "#6C5D53"}}>
+<Box sx={{ color: "#6C5D53"}}>
         <TypographyOtf sx={{ color: "#6C5D53"}} variant="h6" align="right">
           {question.title}
         </TypographyOtf>
@@ -73,8 +84,61 @@ const QuestionCard = ({ question }) => {
           </Grid>
         </Grid>
       </Box>
-    </Item>
-  );
-};
+    </DoneItem>
+     )
+  : 
+  (
 
+    <Item
+    sx={{
+      p: 2,
+      margin: "50",
+      width: 250,
+      height: 250
+    }}
+    onClick={showDetail}
+    >
+    <Box component="form" noValidate sx={{ color: "#6C5D53", mt: 1, alignItems: "center" }}>
+      테마
+    </Box>
+
+<Box sx={{ color: "#6C5D53"}}>
+      <TypographyOtf sx={{ color: "#6C5D53"}} variant="h6" align="right">
+        {question.title}
+      </TypographyOtf>
+    </Box>
+    <Box>
+      <Grid sx={{ color: "#6C5D53"}} container spacing={1}>
+        <Grid item xs={8} textAlign="left"></Grid>
+        <Grid item xs={4} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs container alignItems="center">
+              <TypographyOtf variant="h8" align="right">
+                {new Date(question.reservation).toLocaleString("ko-kr", {
+                  month: "short",
+                  day: "2-digit",
+                  year: "numeric",
+                })}
+              </TypographyOtf>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={8} textAlign="left">
+          {question.userId}
+        </Grid>
+        <Grid item xs={4} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs container alignItems="center">
+              <TypographyOtf sx={{ color: "#6C5D53"}} variant="body1">{question.point}point</TypographyOtf>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
+  </Item>
+  )  }
+  </div>
+   )
+;
+              }
 export default QuestionCard;
