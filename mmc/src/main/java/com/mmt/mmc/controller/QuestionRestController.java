@@ -29,6 +29,9 @@ public class QuestionRestController {
     private QuestionService questionService;
 
     @Autowired
+    private LectureNoteService lectureNoteService;
+
+    @Autowired
     private S3FileUploadService s3FileUploadService;
 
     //질문 전체 조회
@@ -78,6 +81,7 @@ public class QuestionRestController {
     @DeleteMapping("/{question_id}")
     public ResponseEntity<Map<String,Object>> questionRemove(@PathVariable("question_id") int questionId){
         questionService.deleteQuestionTrainerList(questionId);
+        lectureNoteService.removeLectureNote(lectureNoteService.findLectureNote(questionId).getLectureNoteId());
         questionService.deleteQuestion(questionId);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
