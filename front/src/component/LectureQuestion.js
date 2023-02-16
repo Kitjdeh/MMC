@@ -240,8 +240,8 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
       </div>
       <canvas
         ref={canvasRef}
-        width={img.width}
-        height={img.height * 0.9 - 1000}
+        width={img.width * 1.2}
+        height={img.height * 0.9 - 500}
         onMouseDown={startDrawing}
         onMouseMove={drawing}
         onMouseUp={stopDrawing}

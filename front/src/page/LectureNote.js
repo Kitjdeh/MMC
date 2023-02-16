@@ -14,9 +14,16 @@ import { userinfoAction } from "../redux/actions/userinfoAction";
 import { questionAction } from "../redux/actions/questionAction";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
-// import MicIcon from '@mui/icons-material/Mic';
-// import MicOffIcon from '@mui/icons-material/MicOff';//webRTC setting
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import IconButton from "@mui/material/IconButton";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import CodeIcon from "@mui/icons-material/Code";
+import FormatPaintIcon from "@mui/icons-material/FormatPaint";
+import SettingsInputAntennaIcon from "@mui/icons-material/SettingsInputAntenna";
+import styled from "styled-components";
 //webRTC setting
+// webRTC setting
 
 const socketRTC = io("localhost:8001", { transports: ["websocket"] });
 
@@ -30,9 +37,55 @@ const socket = new WebSocket(`ws://localhost:8000`);
 
 // const socket = new WebSocket(`wss://i8a508.p.ssafy.io/websocket`);
 
+const StyledContainer = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  width: 8%;
+  position: fixed;
+  top: 0;
+  background-color: #f2f2f2;
+  left: 0;
+`;
+
+const StyledHeader = styled.header`
+  width: 100%;
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-around;
+  margin-bottom: 25px;
+`;
+const StyledHeaderc = styled.div`
+  width: 100%;
+  display: flex;
+  margin-left: 5%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-around;
+  margin-bottom: 20px;
+`;
+
+const StyledMain = styled.main`
+  width: 100%;
+  height: 80vh; /* set height to 100 viewport height units */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
 const useStyles = makeStyles({
   bar: {
-    backgroundColor: "#f6edff",
+    backgroundColor: "#f2f2f2",
     textAlign: "center",
   },
   word: {
@@ -73,7 +126,7 @@ socket.addEventListener("close", () => {
 });
 
 const LectureNote = () => {
-  let muted = false;
+  const [muted, setMuted] = useState(false);
   const muteBtn = useRef();
   const myAudio = useRef();
   const peersAudio = useRef();
@@ -181,26 +234,34 @@ const LectureNote = () => {
   };
 
   const handleMuteClick = () => {
-    if (!muted) {
-      muted = true;
-      console.log(myStream.getAudioTracks()[0]);
-      myStream.getAudioTracks().forEach((track) => {
-        track.enabled = !track.enabled;
-        console.log(track.enabled);
-      });
-      // setMyStream(myStream);
-      muteBtn.current.innerText = "Unmute";
-    } else {
-      muted = false;
-      console.log("making unmute");
-
-      muteBtn.current.innerText = "Mute";
-      myStream.getAudioTracks().forEach((track) => {
-        track.enabled = !track.enabled;
-        console.log(track.enabled);
-      });
-      // setMyStream(myStream);
+    const audioTrack = myStream.getAudioTracks()[0];
+    if (audioTrack) {
+      audioTrack.enabled = !audioTrack.enabled;
+      setMuted(audioTrack.enabled);
+      console.log(muted);
+      muteBtn.current.title = audioTrack.enabled ? "Unmute" : "Mute";
     }
+
+    // if (!muted) {
+    //   muted = true;
+    //   console.log(myStream.getAudioTracks()[0]);
+    //   myStream.getAudioTracks().forEach((track) => {
+    //     track.enabled = !track.enabled;
+    //     console.log(track.enabled);
+    //   });
+    //   // setMyStream(myStream);
+    //   muteBtn.current.innerText = "Unmute";
+    // } else {
+    //   muted = false;
+    //   console.log("making unmute");
+
+    //   muteBtn.current.innerText = "Mute";
+    //   myStream.getAudioTracks().forEach((track) => {
+    //     track.enabled = !track.enabled;
+    //     console.log(track.enabled);
+    //   });
+    //   // setMyStream(myStream);
+    // }
   };
 
   useEffect(() => {
@@ -431,43 +492,83 @@ const LectureNote = () => {
             <></>
           )}
           <Grid item xs={1} className={classes.bar}>
-            <Box>{category["Clock"]}</Box>
-            {/* <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
+            <StyledContainer>
+              <StyledHeader>
+                <Box>{category["Clock"]}</Box>
+                {/* <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
               Mute
               </button> */}
-            <Button
-              id="mute"
-              type="button"
-              onClick={handleMuteClick}
-              ref={muteBtn}
-              variant="contained"
-              color="primary"
-            >
-              Mute
-            </Button>
+              </StyledHeader>
 
-            <Grid container direction="column" alignItems="flex-start" spacing={2}>
-              <Grid item xs={4} className={classes.word}>
-                <Button onClick={() => setContent("Question")} variant="contained" color="primary">
-                  Question
-                </Button>
-              </Grid>
-              <Grid item xs={4} className={classes.word}>
-                <Button onClick={() => setContent("Code")} variant="contained" color="primary">
-                  Code
-                </Button>
-              </Grid>
-              <Grid item xs={4} className={classes.word}>
-                <Button onClick={() => setContent("Graffiti")} variant="contained" color="primary">
-                  Graffiti
-                </Button>
-              </Grid>
-              <Grid item xs={4} className={classes.word}>
-                <Button onClick={() => setContent("WebRTC")} variant="contained" color="primary">
-                  WebRTC
-                </Button>
-              </Grid>
-            </Grid>
+              <StyledMain>
+                <StyledHeaderc>
+                  <Button
+                    onClick={() => setContent("Question")}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<QuestionAnswerIcon />}
+                  >
+                    문제
+                  </Button>
+                </StyledHeaderc>
+                <StyledHeaderc>
+                  <Button
+                    onClick={() => setContent("Code")}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CodeIcon />}
+                  >
+                    코드
+                  </Button>
+                </StyledHeaderc>
+                <StyledHeaderc>
+                  <Button
+                    onClick={() => setContent("Graffiti")}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<FormatPaintIcon />}
+                  >
+                    그림
+                  </Button>
+                </StyledHeaderc>
+                <StyledHeaderc>
+                  <Button
+                    onClick={() => setContent("WebRTC")}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SettingsInputAntennaIcon />}
+                  >
+                    화면
+                  </Button>
+                </StyledHeaderc>
+                <StyledHeaderc>
+                  <IconButton
+                    id="mute"
+                    onClick={handleMuteClick}
+                    ref={muteBtn}
+                    color="rgba(255, 255, 255, 0.1)"
+                    sx={{
+                      bgcolor: "#917B56",
+                      borderRadius: "50%",
+                      width: "64px",
+                      height: "64px",
+                      "&:hover": {
+                        bgcolor: "rgba(255, 255, 255, 0.1)",
+                      },
+                      "&:active": {
+                        bgcolor: "rgba(255, 255, 255, 0.2)",
+                      },
+                    }}
+                  >
+                    {muted ? (
+                      <MicIcon sx={{ fontSize: "36px" }} />
+                    ) : (
+                      <MicOffIcon sx={{ fontSize: "36px" }} />
+                    )}
+                  </IconButton>
+                </StyledHeaderc>
+              </StyledMain>
+            </StyledContainer>
           </Grid>
           <Grid item xs={9} className={classes.bar}>
             {<Box>{category[content]}</Box>}
