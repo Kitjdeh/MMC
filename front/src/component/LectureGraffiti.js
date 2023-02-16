@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+// import { BiCircle, BiSquare, BiDiamond, BiStar } from 'react-icons/bi';
 
 let savedStates = [];
 
@@ -133,8 +134,16 @@ const LectureGraffiti = ({ lectureNoteId, check, img, pdfimg, setCheck, socket }
           value={thickness}
           onChange={(event) => setThickness(event.target.value)}
         />
-        <button onClick={clear}>Clear</button>
-        <button onClick={restore}>Restore</button>
+        <img
+          src="https://cdn.pixabay.com/photo/2017/10/23/19/10/delete-2884219_960_720.png"
+          alt="Clear"
+          onClick={clear}
+        />
+        <img
+          src="https://cdn.pixabay.com/photo/2017/10/23/19/12/undo-arrow-2884221_960_720.png"
+          alt="Restore"
+          onClick={restore}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { Grid, Button, Box, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import LectureQuestion from "../component/LectureQuestion";
@@ -49,6 +49,10 @@ socket.addEventListener("close", () => {
 });
 
 const LectureNote = () => {
+  let muted = false;
+  const muteBtn = useRef();
+  const myAudio = useRef();
+  const peersAudio = useRef();
   const img = new Image();
   // img.src =
   //   "https://ssafy-mmc.s3.ap-northeast-2.amazonaws.com/13793120a9ba4c50a4e2bd9f390abf1f.jpg";
@@ -62,11 +66,9 @@ const LectureNote = () => {
   const lectureNoteId = lecture;
   const userId = user.userId;
   const studentId = question.userId;
-  const teacherId = question.progress;
   const teacher = useSelector((state) => state.admin.user);
   const dispatch = useDispatch();
   img.src = question.imageUrl;
-  const [temperature, setTemperature] = useState(0);
   console.log("USER", user);
   console.log("LECTURE", lecture);
   console.log("QUESTION", question);
@@ -132,6 +134,10 @@ const LectureNote = () => {
 
   const handleAddStream = (data) => {
     setPeerStream(data.stream);
+    let audioTrack = data.stream.getAudioTracks();
+
+    peersAudio.current.srcObject = new MediaStream(audioTrack);
+    console.log(peersAudio.current.srcObject);
   };
   const handleIce = (data) => {
     console.log("sent candidate");
@@ -144,6 +150,33 @@ const LectureNote = () => {
     setOpenModal(true);
   };
 
+  const handleScreen = (data) => {
+    socketRTC.emit("setScreen", lectureNoteId, data);
+    setScreen(data);
+  };
+
+  const handleMuteClick = () => {
+    if (!muted) {
+      muted = true;
+      myStream.getAudioTracks().forEach((track) => {
+        track.enabled = !track.enabled;
+        console.log(track.enabled);
+      });
+      // setMyStream(myStream);
+      muteBtn.current.innerText = "Unmute";
+    } else {
+      muted = false;
+      console.log("making unmute");
+
+      muteBtn.current.innerText = "Mute";
+      myStream.getAudioTracks().forEach((track) => {
+        track.enabled = !track.enabled;
+        console.log(track.enabled);
+      });
+      // setMyStream(myStream);
+    }
+  };
+
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
@@ -153,6 +186,10 @@ const LectureNote = () => {
       .then((stream) => {
         //
         setMyStream(stream);
+        let audioTrack = stream.getAudioTracks();
+
+        myAudio.current.srcObject = new MediaStream(audioTrack);
+        console.log(myAudio.current.srcObject);
 
         stream.getTracks().forEach((track) => myPeerConnection.addTrack(track, stream));
       });
@@ -200,6 +237,8 @@ const LectureNote = () => {
 
     socketRTC.on("settingTime", (obj) => {
       setStart(true);
+      myAudio.current.play();
+      peersAudio.current.play();
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
@@ -212,6 +251,8 @@ const LectureNote = () => {
 
     socketRTC.on("setTime", (obj) => {
       setStart(true);
+      myAudio.current.play();
+      peersAudio.current.play();
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
@@ -258,7 +299,7 @@ const LectureNote = () => {
           peerStream={peerStream}
           myPeerConnection={myPeerConnection}
           isScreen={isScreen}
-          setScreen={setScreen}
+          handleScreen={handleScreen}
           check={check}
           setCheck={setCheck}
         />
@@ -286,14 +327,7 @@ const LectureNote = () => {
       ),
       Chat: <LectureChat nickName={nickName} lectureNoteId={lectureNoteId} socket={socket} />,
       Clock: (
-        <Clock
-          clk={clk}
-          time={time}
-          setTime={setTime}
-          userId={userId}
-          studentId={studentId}
-          teacherId={teacherId}
-        />
+        <Clock clk={clk} time={time} setTime={setTime} userId={userId} studentId={studentId} />
       ),
     }),
     [myStream, peerStream, myPeerConnection, clk]
@@ -301,6 +335,8 @@ const LectureNote = () => {
 
   return (
     <Grid container justify="space-between">
+      <audio ref={myAudio}></audio>
+      <audio ref={peersAudio}></audio>
       {!start ? (
         <>
           <Button variant="contained" color="primary" onClick={handleOpen}>
@@ -392,6 +428,9 @@ const LectureNote = () => {
           <Grid item xs={9} className={classes.bar}>
             Screen
             <Box>{category["Clock"]}</Box>
+            <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
+              Mute
+            </button>
             {<Box>{category[content]}</Box>}
           </Grid>
           <Grid item xs={2} className={classes.bar}>

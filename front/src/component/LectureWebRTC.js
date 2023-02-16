@@ -1,18 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import io from "socket.io-client";
-
-const socket = io("localhost:8001", { transports: ["websocket"] });
 
 //const socket = io.connect({ hostname: "127.0.0.1", port: 8001 });
-
-const enterCode = "2";
 
 const LectureWebRTC = ({
   myStream,
   peerStream,
   myPeerConnection,
   isScreen,
-  setScreen,
+  handleScreen,
   check,
   setCheck,
 }) => {
@@ -21,14 +16,12 @@ const LectureWebRTC = ({
   console.log(myPeerConnection);
 
   //const //myFace = useRef();
-  const muteBtn = useRef();
+
   const cameraBtn = useRef();
   const peersFace = useRef();
   const screenBtn = useRef();
 
   const [screenCtr, setScreenCtr] = useState(isScreen);
-
-  let muted = true;
 
   let cameraOff = false;
   let peerPlaying = false;
@@ -36,18 +29,18 @@ const LectureWebRTC = ({
 
   let peerData = peerStream;
 
-  peerData.onaddtrack = function () {
-    peersFace.srcObject = peerData;
-  };
+  // peerData.onaddtrack = function () {
+  //   peersFace.srcObject = peerData;
+  // };
 
-  peerData.onremovetrack = function () {
-    peersFace.srcObject = myStream;
-    //myFace.srcObject = null;
-  };
+  // peerData.onremovetrack = function () {
+  //   peersFace.srcObject = myStream;
+  //   //myFace.srcObject = null;
+  // };
 
-  socket.on("goodbye", () => {
-    peersFace.current.srcObject = null;
-  });
+  // socket.on("goodbye", () => {
+  //   peersFace.current.srcObject = null;
+  // });
 
   // const getMedia = () => {
   //   let video = //myFace.current;
@@ -73,6 +66,7 @@ const LectureWebRTC = ({
       video.pause();
       peerPlaying = false;
     }
+    console.log(peerData);
     video.srcObject = peerData;
     console.log(video.srcObject);
     console.log(peerData);
@@ -86,22 +80,6 @@ const LectureWebRTC = ({
       .catch((error) => {
         console.log("no video yet");
       });
-  };
-
-  const handleMuteClick = () => {
-    if (!muted) {
-      muted = true;
-      myStream.getAudioTracks().forEach((track) => {
-        track.enabled = !track.enabled;
-      });
-      muteBtn.current.innerText = "Unmute";
-    } else {
-      muted = false;
-      muteBtn.current.innerText = "Mute";
-      myStream.getAudioTracks().forEach((track) => {
-        track.enabled = !track.enabled;
-      });
-    }
   };
 
   const handleCameraClick = () => {
@@ -126,12 +104,12 @@ const LectureWebRTC = ({
   };
 
   const handleScreenClick = () => {
-    console.log(screenCtr);
-    if (screenCtr) return;
+    console.log(screenCtr, isScreen);
+    if (screenCtr || isScreen) return;
     navigator.mediaDevices
       .getDisplayMedia({
         video: { cursor: "always" },
-        audio: { echoCancellation: true, noiseSuppression: true },
+        //audio: { echoCancellation: true, noiseSuppression: true },
       })
       .then((stream) => {
         if (peerData) {
@@ -140,9 +118,9 @@ const LectureWebRTC = ({
         }
         const videoTrack = stream.getVideoTracks()[0];
         console.log("send 1");
-        socket.emit("setScreen", enterCode, 1);
+
         setScreenCtr(1);
-        setScreen(screenCtr);
+        handleScreen(1);
         // this.props.PeerControl(videoTrack);
 
         myPeerConnection
@@ -154,8 +132,8 @@ const LectureWebRTC = ({
           console.log("hihi");
           let screenTrack = myStream.getVideoTracks()[0];
           setScreenCtr(0);
-          setScreen(screenCtr);
-          socket.emit("setScreen", enterCode, 0);
+          handleScreen(0);
+
           myPeerConnection
             .getSenders()
             .find((sender) => sender.track.kind === screenTrack.kind)
@@ -174,9 +152,9 @@ const LectureWebRTC = ({
     getPeersMedia();
   }, [peersFace]);
 
-  // useEffect(() => {
-  //   getMedia();
-  // }, [//myFace]);
+  useEffect(() => {
+    //getMedia();
+  }, []);
 
   useEffect(() => {
     if (check !== 4) {
@@ -186,9 +164,6 @@ const LectureWebRTC = ({
 
   return (
     <>
-      <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
-        Mute
-      </button>
       <button id="camera" type="button" onClick={handleCameraClick} ref={cameraBtn}>
         Turn Camera Off
       </button>
@@ -202,7 +177,7 @@ const LectureWebRTC = ({
           style={{ height: 0, overflow: "hidden", paddingBottom: "56.25%", position: "relative" }}
         >
           <video
-            id="myFace"
+            id="//myFace"
             ref={peersFace}
             autoPlay
             playsInline
