@@ -73,7 +73,13 @@ const AllQuestion = () => {
     dispatch(questionAction.getQuestions());
   };
   useEffect(() => getallQuestions(), []);
-  useEffect(()=> setFilteredList(questionList)
+  useEffect(()=> {
+    let filteredList = []
+    questionList.forEach((item, index) => {
+      if (item.progress!=2) { filteredList.push(item) }
+    })
+    setFilteredList(filteredList);
+  }
   ,[questionList])
   console.log(filteredList, "초기값")
   console.log(questionList, "????")
@@ -94,7 +100,7 @@ const AllQuestion = () => {
     })
     questionList.forEach((item, index) => {
       if (item["title"].includes(search) && language.includes(item["language"])
-        && category.includes(item["category"])) { filteredList.push(item) }
+        && category.includes(item["category"]) && item.progress != 2) { filteredList.push(item) }
     })
     console.log("체크확인", search, language, category)
     console.log(filteredList)

@@ -21,7 +21,7 @@ const PointStatement = ({userId}) => {
   return (
     <div>{pointList.length>0 ? 
       <TablePagination rowsPerPageOptions={[10, 50]} pointList={pointList}></TablePagination>
-    : <div></div>}
+    : <div>입출금 내역이 없습니다.</div>}
     </div>
   )
 }

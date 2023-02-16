@@ -42,15 +42,21 @@ const MyLecture = () => {
         <Title><h1>나의 강의</h1></Title>
         <Grid container spacing={1}>
         {lecturesList.map((lecture) =>
-          lecture.progress == userId ? (
+          lecture.progress == 0 ? (
             <Mygrid item xl={3} lg={4} md={6}>
-              <Myspan> 🔓 채택 완료 강의 🔓 </Myspan>
+              <Myspan> 🔓 채택 전 강의 🔓 </Myspan>
               <QuestionCard question={lecture} />
             </Mygrid>
-          ) : (
+          ) : lecture.progress == 2 ? (
             // <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56" , textAlign: "center"}}>
             <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
-              <Myspan> 🔒 채택 미완료 강의 🔒 </Myspan>
+              <Myspan> 🔒 종료된 강의 🔒 </Myspan>
+              <QuestionCard question={lecture} />
+              <br />
+            </Grid>
+          ) : (
+            <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
+              <Myspan> 🔒 진행 중 강의 🔒 </Myspan>
               <QuestionCard question={lecture} />
               <br />
             </Grid>
