@@ -38,27 +38,27 @@ const TeacherCard = () => {
   
 
 
-  const tier = () =>{
+   const tier = () =>{
     let rank = "";
-    let sub = (backjoon.tier+1)%5;
+    let sub = (backjoon.tier-1)%5;
     switch(parseInt((backjoon.tier-1)/5)){
       case 0:
-        rank="브론즈 " +sub;
+        rank="브론즈 " +(5-sub);
         break;
       case 1:
-        rank="실버 " +sub;
+        rank="실버 " +(5-sub);
         break;
       case 2:
-        rank="골드 " +sub;
+        rank="골드 " +(5-sub);
         break;
       case 3:
-        rank="플레티넘 " +sub;
+        rank="플레티넘 " +(5-sub);
         break;
       case 4:
-        rank="다이아 " +sub;
+        rank="다이아 " +(5-sub);
         break;
       case 5:
-        rank="루비 " +sub;
+        rank="루비 " +(5-sub);
         break;
     }
     return rank;
