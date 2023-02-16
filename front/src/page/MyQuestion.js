@@ -43,7 +43,7 @@ const MyQuestion = () => {
       <Title><h1>나의 질문</h1></Title>
       <Grid container spacing={1}>
         {questionList.map((question) =>
-        question.progress > 0 ?
+        question.progress > -1 ?
           (question.progress == 2 ? (
             <Mygrid item xl={3} lg={4} md={6}>
               <Myspan> 🔓 채택 완료 강의 🔓 </Myspan>

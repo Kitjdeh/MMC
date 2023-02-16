@@ -18,13 +18,26 @@ const Main = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
+  fontFamily: "BMHANNAProOTF",
 }));
 const Bar = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#f6edff",
+  backgroundColor: "#E8DAC3",
+  borderRadius: "10px",
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
   textAlign: "center",
   margin: 1,
+  fontFamily: "BMHANNAProOTF",
+}));
+const Barb = styled(Grid)(({ theme }) => ({
+  backgroundColor: "#917B56",
+  color: "#F9D9CA",
+  borderRadius: "10px",
+  ...theme.typography.body2,
+  padding: theme.spacing(0.5),
+  textAlign: "center",
+  margin: 1,
+  fontFamily: "BMHANNAProOTF",
 }));
 
 const RequestDeposit = ({userId}) => {
@@ -50,7 +63,7 @@ const RequestDeposit = ({userId}) => {
   return (
     <Bar sx={{ backgroundColor: "#ffffff", minWidth: 100 }}>
       <Bar
-        sx={{ backgroundColor: "#ffffff", minWidth: 50 }}
+        sx={{ borderRadius: "10px",backgroundColor: "#E8DAC3", minWidth: 50 }}
         container
         direction="column"
         justifyContent="center"
@@ -65,12 +78,12 @@ const RequestDeposit = ({userId}) => {
         >
           {" "}
           <Bar>
-            <Typography variant="subtitle1" align="left">
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle1" align="left">
               보유포인트
             </Typography>
           </Bar>
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="right">
               33030303
             </Typography>
           </Bar>
@@ -83,7 +96,7 @@ const RequestDeposit = ({userId}) => {
           sx={{ margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="right">
               충전 포인트
             </Typography>
           </Bar>
@@ -98,13 +111,13 @@ const RequestDeposit = ({userId}) => {
               onChange={onChangeHandler}
               value={inputs.amount}
               onFocus={e=>e.target.select()}
-              sx={{ backgroundColor: "#ffffff" }}
+              sx={{ fontFamily: "BMHANNAProOTF" , backgroundColor: "#ffffff" }}
             />
           </Bar>
         </Bar>
       </Bar>
       <Bar
-        sx={{ backgroundColor: "#ffffff", minWidth: 200 }}
+        sx={{ mt: "10px", borderRadius: "10px",backgroundColor: "#E8DAC3" , minWidth: 200 }}
         container
         direction="column"
         justifyContent="center"
@@ -119,12 +132,12 @@ const RequestDeposit = ({userId}) => {
           alignItems="center"
         >
           {" "}
-          <Bar>
-            <Typography variant="subtitle2" align="left">
+          <Bar sx={{pl: 1 }}>
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="left">
               계좌번호
             </Typography>
           </Bar>
-          <Bar>
+          <Bar sx={{pl: 1 }}>
             <TextField
               fullWidth
               type="tel"
@@ -134,7 +147,7 @@ const RequestDeposit = ({userId}) => {
               label="계좌번호를 입력해주세요"
               onChange={onChangeHandler}
               value={inputs.account}
-              sx={{ backgroundColor: "#ffffff" }}
+              sx={{ fontFamily: "BMHANNAProOTF" ,backgroundColor: "#ffffff" }}
             />
           </Bar>
         </Bar>
@@ -143,10 +156,10 @@ const RequestDeposit = ({userId}) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ margin: 0 }}
+          sx={{ pl: 1 ,margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="right">
               은행
             </Typography>
           </Bar>
@@ -159,7 +172,7 @@ const RequestDeposit = ({userId}) => {
               onChange={onChangeHandler}
               value={inputs.bank}
               size="small"
-              sx={{ backgroundColor: "#ffffff" }}
+              sx={{ fontFamily: "BMHANNAProOTF" ,backgroundColor: "#ffffff" }}
             />
           </Bar>
         </Bar>
@@ -168,15 +181,15 @@ const RequestDeposit = ({userId}) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ margin: 0 }}
+          sx={{ pl: 1 ,margin: 0 }}
         >
           <Bar>
-            <Typography variant="subtitle2" align="right">
+            <Typography sx={{ pl: 1 ,fontFamily: "BMHANNAProOTF"}} variant="subtitle2" align="right">
               입금금액
             </Typography>
           </Bar>
           <Bar>
-            <Typography variant="subtitle1" align="right">
+            <Typography sx={{ fontFamily: "BMHANNAProOTF"}} variant="subtitle1" align="right">
               {inputs.amount*100} 원
             </Typography>
           </Bar>
@@ -188,17 +201,24 @@ const RequestDeposit = ({userId}) => {
           backgroundColor: "#f6edff",
           textAlign: "center",
           margin: 2,
-          width:100
+          width:100,
+          color: "#F0E4D4" ,
+          fontFamily: "BMHANNAProOTF" ,
+          backgroundColor: "#D18063",
+          mb: 10,
+          m: 5,
         }}
         onClick={submitDeposit}
       >
         입금신청
-      </Button>
-      <ul>{DepositWarning.map((menu)=>(
-        <li sx={{textAlign: "left"}}>{menu}</li>
-      ))}
-        
-      </ul>
+      </Button >
+      <Barb>
+        <ul>{DepositWarning.map((menu)=>(
+          <li>{menu}</li>
+        ))}
+          
+        </ul>
+      </Barb>
     </Bar>
   );
 };

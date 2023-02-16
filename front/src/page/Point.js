@@ -28,7 +28,7 @@ const Point = () => {
   }));
   return (
     <Box sx={{ minWidth: 400}}>
-      <Typography variant="h3" align="center">
+      <Typography sx={{ m: 6 , fontFamily: "BMHANNAProOTF"}} variant="h3" align="center">
         포인트내역
       </Typography>
       <Grid container direction="row" alignItems="flex-start" margin={2}>
@@ -38,7 +38,7 @@ const Point = () => {
             name="deposit"
             value="main2"
             variant="contained"
-            sx={{ backgroundColor: "#D18063", color: "#F0E4D4" }}
+            sx={{ fontFamily: "BMHANNAProOTF" , backgroundColor: "#D18063", color: "#F0E4D4" }}
           >
             입금신청
           </Button>
@@ -48,7 +48,7 @@ const Point = () => {
             onClick={selectcomponent}
             name="withdraw"
             variant="contained"
-            sx={{ backgroundColor: "#D18063", color: "#F0E4D4" }}
+            sx={{  fontFamily: "BMHANNAProOTF" , backgroundColor: "#D18063", color: "#F0E4D4" }}
           >
             출금신청
           </Button>
@@ -58,7 +58,7 @@ const Point = () => {
             onClick={selectcomponent}
             name="statement"
             variant="contained"
-            sx={{ backgroundColor: "#D18063", color: "#F0E4D4" }}
+            sx={{  fontFamily: "BMHANNAProOTF" , backgroundColor: "#D18063", color: "#F0E4D4" }}
           >
             입출금내역
           </Button>
