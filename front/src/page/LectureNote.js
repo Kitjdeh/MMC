@@ -186,11 +186,6 @@ const LectureNote = () => {
       .then((stream) => {
         //
         setMyStream(stream);
-        let audioTrack = stream.getAudioTracks();
-
-        myAudio.current.srcObject = new MediaStream(audioTrack);
-        console.log(myAudio.current.srcObject);
-
         stream.getTracks().forEach((track) => myPeerConnection.addTrack(track, stream));
         socketRTC.emit("join_room", lectureNoteId);
       });
@@ -238,10 +233,8 @@ const LectureNote = () => {
 
     socketRTC.on("settingTime", (obj) => {
       setStart(true);
-      myAudio.current.play();
       peersAudio.current.play();
       console.log(peersAudio.current.srcObject);
-      console.log(myAudio.current.srcObject);
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
@@ -254,10 +247,8 @@ const LectureNote = () => {
 
     socketRTC.on("setTime", (obj) => {
       setStart(true);
-      myAudio.current.play();
       peersAudio.current.play();
       console.log(peersAudio.current.srcObject);
-      console.log(myAudio.current.srcObject);
       clk.hour = obj.hour;
       clk.min = obj.min;
       clk.sec = obj.sec;
@@ -342,7 +333,6 @@ const LectureNote = () => {
 
   return (
     <Grid container justify="space-between">
-      <audio ref={myAudio}></audio>
       <audio ref={peersAudio}></audio>
       {!start ? (
         <>
