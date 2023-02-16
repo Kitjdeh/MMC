@@ -106,7 +106,7 @@ const LectureNote = () => {
     setValue(newValue);
   };
   const classes = useStyles();
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState("Question");
   const [check, setCheck] = useState(0);
   const [peerStream, setPeerStream] = useState();
   const [isScreen, setScreen] = useState(0);
@@ -300,17 +300,11 @@ const LectureNote = () => {
     });
   }, [socketRTC]);
 
-  const handleDownload = async () => {
-    console.log(openModal);
+  const handleDownload = () => {
     const pdf = new jsPDF();
-    // await new Promise((resolve) => {
-    //   img.onload = resolve;
-    // });
-    // pdf.addImage(img.src, "JPEG", 0, 0, 210, 297);
-    // pdf.addPage();
-    pdf.addImage(pdfimg.Question, "PNG", 0, 0, img.width / 5, (img.height - 800) / 5);
+    pdf.addImage(pdfimg.Question, "PNG", 0, 0, img.width / 6, (img.height - 800) / 6);
     pdf.addPage();
-    pdf.addImage(pdfimg.Graffiti, "PNG", 0, 0, img.width / 5, (img.height - 800) / 5);
+    pdf.addImage(pdfimg.Graffiti, "PNG", 0, 0, img.width / 6, (img.height - 800) / 6);
     pdf.save("canvas-image.pdf");
   };
 

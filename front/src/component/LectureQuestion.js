@@ -58,6 +58,7 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
       setCheck(1);
       const canvas = canvasRef.current;
       canvas.style.backgroundImage = `url(${img.src})`;
+      canvas.style.backgroundSize = "90%"; // 배경 이미지 크기를 90%로 설정
       const context = canvas.getContext("2d");
       context.imageSmoothingEnabled = false;
       socket.send(updatePicture("first1", "", lectureNoteId));
@@ -237,11 +238,10 @@ const LectureQuestion = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
           Restore
         </Button>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}></div>
       <canvas
         ref={canvasRef}
         width={img.width}
-        height={800}
+        height={img.height * 0.9 - 1000}
         onMouseDown={startDrawing}
         onMouseMove={drawing}
         onMouseUp={stopDrawing}

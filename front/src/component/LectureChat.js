@@ -10,7 +10,10 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 17%;
+  position: fixed;
+  top: 0;
+  right: 0;
 `;
 
 const StyledHeader = styled.header`
@@ -44,12 +47,15 @@ const StyledMessageList = styled.ul`
 `;
 
 const StyledMessageForm = styled.form`
-  width: 100%;
+  width: 17%;
   display: flex;
   justify-content: center;
   padding: 16px;
   background-color: #f2f2f2;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  right: 0;
 `;
 
 const StyledInput = styled.input`

@@ -237,7 +237,7 @@ const LectureGraffiti = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
       <canvas
         ref={canvasRef}
         width={img.width}
-        height={800}
+        height={1000}
         onMouseDown={startDrawing}
         onMouseMove={drawing}
         onMouseUp={stopDrawing}
