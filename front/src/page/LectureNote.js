@@ -14,8 +14,21 @@ import { userinfoAction } from "../redux/actions/userinfoAction";
 import { questionAction } from "../redux/actions/questionAction";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
+// import MicIcon from '@mui/icons-material/Mic';
+// import MicOffIcon from '@mui/icons-material/MicOff';//webRTC setting
 //webRTC setting
+
 const socketRTC = io("localhost:8001", { transports: ["websocket"] });
+
+const socket = new WebSocket(`ws://localhost:8000`);
+
+// const socketRTC = io.connect({
+//   hostname: "i8a508.p.ssafy.io",
+//   port: 8001,
+//   transports: ["websocket"],
+// });
+
+// const socket = new WebSocket(`wss://i8a508.p.ssafy.io/websocket`);
 
 const useStyles = makeStyles({
   bar: {
@@ -50,7 +63,7 @@ const useStyles = makeStyles({
 });
 
 // WebSocket
-const socket = new WebSocket(`ws://localhost:8000`);
+
 socket.addEventListener("open", () => {
   console.log("Connected to Server ✅");
 });
@@ -206,6 +219,14 @@ const LectureNote = () => {
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
 
+    return () => {
+      socketRTC.off("connect");
+      myPeerConnection.removeEventListener("icecandidate", handleIce);
+      myPeerConnection.removeEventListener("addstream", handleAddStream);
+    };
+  }, []);
+
+  useEffect(() => {
     socketRTC.on("connect", () => {
       console.log("connected to server");
     });
@@ -277,13 +298,7 @@ const LectureNote = () => {
       // setPeerStream(null);
       console.log("byebye");
     });
-
-    return () => {
-      socketRTC.off("connect");
-      myPeerConnection.removeEventListener("icecandidate", handleIce);
-      myPeerConnection.removeEventListener("addstream", handleAddStream);
-    };
-  }, []);
+  }, [socketRTC]);
 
   const handleDownload = async () => {
     console.log(openModal);
