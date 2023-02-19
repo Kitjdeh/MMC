@@ -1,0 +1,67 @@
+@font-face {
+  font-family: BMHANNAProOTF;
+  src: url(../public/fonts/BMHANNAProOTF.otf);
+  font-size: xx-large;
+}
+
+* {
+  font-family: "BMHANNAProOTF";
+}
+
+.menu-section {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+.menu-section li {
+  padding: 10px;
+}
+.nav-bar {
+  background: rgba(69, 64, 225, 0.1);
+}
+.body {
+  margin-left: 200px;
+  margin-right: 200px;
+  -ms-overflow-style: none;
+}
+ 
+::-webkit-scrollbar {
+    display: none;
+}
+
+.main-header {
+  border: 1px solid rgba(69, 64, 225, 0.2);
+  /* background-color: rgba(69, 64, 225, 0.4); */
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.header-box {
+  display: flex;
+  width: 30%;
+}
+.main-body {
+  margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.main-rightbody {
+  display : flex;
+  justify-content: center;
+}
+.signup {
+  display: flex;
+  align-items: center;
+}
+.questiontitlebar{
+  height: 50px;
+  border: 3px solid rgba(69, 64, 225, 0.3);
+  border-radius: 20px;
+  background-color: rgba(69, 64, 225, 0.1);;
+}
+.questiontitlemain{
+  background-color: white;
+  border-radius: 10px;
+}
