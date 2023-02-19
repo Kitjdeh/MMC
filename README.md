@@ -1,8 +1,6 @@
-# 포트폴리오
+# MMC(Many Make Code)
 
-## MMC(Many Make Code)
-
-서비스 내용 : 온라인 코딩 강의
+- 서비스 내용 : 온라인 코딩 강의
 
 - 서비스 주요 기능 :
     - WebRTC를 통한 화면 공유
