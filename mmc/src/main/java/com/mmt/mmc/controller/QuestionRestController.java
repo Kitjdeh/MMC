@@ -3,6 +3,7 @@ package com.mmt.mmc.controller;
 import com.mmt.mmc.model.dto.QuestionDto;
 import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.UserDto;
+import com.mmt.mmc.model.service.LectureNoteService;
 import com.mmt.mmc.model.service.QuestionService;
 import com.mmt.mmc.model.service.S3FileUploadService;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class QuestionRestController {
     private QuestionService questionService;
 
     @Autowired
+    private LectureNoteService lectureNoteService;
+
+    @Autowired
     private S3FileUploadService s3FileUploadService;
 
     //질문 전체 조회
@@ -45,9 +49,7 @@ public class QuestionRestController {
     @PostMapping
     public ResponseEntity<Map<String,Object>> questionAdd(@RequestBody QuestionDto question) throws Exception {
         int questionNum = question.getQuestionNumber();
-        System.out.println("questionNumber "+questionNum);
         question.setImageUrl(questionService.grabzIt(questionNum));
-        System.out.println("Question "+question);
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -66,7 +68,14 @@ public class QuestionRestController {
 
     //질문 수정
     @PatchMapping("/{question_id}")
-    public ResponseEntity<Map<String,Object>> questionModify(@PathVariable("question_id") int questionId, @RequestBody QuestionDto question){
+    public ResponseEntity<Map<String,Object>> questionModify(@PathVariable("question_id") int questionId, @RequestBody QuestionDto question) throws Exception {
+        int questionNum = question.getQuestionNumber();
+        int savedQuestionNum = questionService.findQuestion(questionId).getQuestionNumber();
+        System.out.println("requestQuestionNum"+savedQuestionNum);
+        System.out.println();
+        if(savedQuestionNum != questionNum){
+            question.setImageUrl(questionService.grabzIt(questionNum));
+        }
         questionService.saveQuestion(question);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -78,6 +87,9 @@ public class QuestionRestController {
     @DeleteMapping("/{question_id}")
     public ResponseEntity<Map<String,Object>> questionRemove(@PathVariable("question_id") int questionId){
         questionService.deleteQuestionTrainerList(questionId);
+        if(lectureNoteService.findLectureNote(questionId)!=null) {
+            lectureNoteService.removeLectureNote(lectureNoteService.findLectureNote(questionId).getLectureNoteId());
+        }
         questionService.deleteQuestion(questionId);
         Map<String,Object> map = new HashMap<>();
         map.put("result",SUCCESS);
@@ -112,7 +124,7 @@ public class QuestionRestController {
     }
 
     //강사 신청 수락
-    @PatchMapping("/lecture/{question_id}")
+    @PatchMapping("/lecture/{question_id}/{user_id}")
     public ResponseEntity<Map<String,Object>> questionTrainerModify(@RequestBody QuestionTrainerDto questionTrainer){
         questionService.saveQuestionTrainer(questionTrainer);
         Map<String,Object> map = new HashMap<>();
@@ -135,7 +147,6 @@ public class QuestionRestController {
     public ResponseEntity<Map<String,Object>> trainerList(@PathVariable("question_id") int questionId){
         Map<String,Object> map = new HashMap<>();
         List<UserDto> trainers = questionService.findAllTrainer(questionId);
-        System.out.println("trainers "+trainers);
         map.put("result",SUCCESS);
         map.put("users",trainers);
         return new ResponseEntity<>(map,HttpStatus.OK);

@@ -23,7 +23,8 @@ public class TradeRestController {
 	// 입출금 신청
 	@PostMapping("/mypage/points")
 	public ResponseEntity<String> TradeAdd(@RequestBody TradeDto tradeDto) {
-		tradeService.saveTrade(tradeDto);
+		System.out.println("TRADEADD "+ tradeDto);
+		tradeService.addTrade(tradeDto);
 		return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
 	}
 
@@ -42,9 +43,10 @@ public class TradeRestController {
 	}
 
 	// 입출금 정보 변경
-	@PatchMapping("/points/{trade_id}")
-	public ResponseEntity<String> TradeModify(@RequestBody TradeDto tradeDto){
-		tradeService.saveTrade(tradeDto);
+	@PutMapping("/points/{trade_id}")
+	public ResponseEntity<String> TradeModify(@PathVariable("trade_id") int tradeId, @RequestBody TradeDto tradeDto){
+		System.out.println("TRADEDTO "+tradeDto);
+		tradeService.modifyTrade(tradeDto);
 		// 사용자 포인트 정보 수정 추가 필요
 
 		return new ResponseEntity<>(SUCCESS,HttpStatus.OK);

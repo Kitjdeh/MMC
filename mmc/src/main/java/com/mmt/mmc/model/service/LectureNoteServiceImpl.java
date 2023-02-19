@@ -19,11 +19,11 @@ public class LectureNoteServiceImpl implements LectureNoteService{
 	// 강의 노트 찾기
 	@Override
 	public LectureNoteDto findLectureNote(int lectureNoteId) {
-		Optional<LectureNote> lectureNoteWrapper = lectureNoteRepository.findById(lectureNoteId);
+		Optional<LectureNote> lectureNoteWrapper = lectureNoteRepository.findByQuestionId(lectureNoteId);
 		if(lectureNoteWrapper.isPresent()){
 			LectureNote lectureNote = lectureNoteWrapper.get();
 			LectureNoteDto dto = LectureNoteDto.builder()
-				.lectureNoteId(lectureNoteId)
+				.lectureNoteId(lectureNote.getLectureNoteId())
 				.questionId(lectureNote.getQuestionId())
 				.lectureTime(lectureNote.getLectureTime())
 				.pdfUrl(lectureNote.getPdfUrl())

@@ -36,16 +36,11 @@ public class UserRestController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> userLogin(@RequestBody UserDto userDto) throws IdIncorrectException, PwIncorrectException, NoSuchAlgorithmException {
         Map<String, Object> resultMap = new HashMap<>();
-        System.out.println("login error : id,pw confirm before");
         UserDto tempUserDto = (UserDto) userService.loginUser(userDto).get("userDto");
-        System.out.println("login error : id,pw confirm after");
-
-        System.out.println("login error : token before");
         //생성된 토큰 정보를 클라이언트에게 전달
         resultMap.put("jwt-auth-token", tempUserDto.getAuthToken());
         resultMap.put("jwt-refresh-token", tempUserDto.getRefreshToken());
         resultMap.put("userId", tempUserDto.getUserId());
-        System.out.println("login error : token after");
         //userId와 access토큰만 넘어간다.
         return new ResponseEntity<>(resultMap,HttpStatus.ACCEPTED);
     }
@@ -59,9 +54,8 @@ public class UserRestController {
     }
 
     //회원가입
-    @Transactional
     @PostMapping("/users")
-    public ResponseEntity<String> userAdd(UserDto userDto, @RequestPart(value="profile", required = false) final MultipartFile multipartFile) throws Exception{
+    public ResponseEntity<String> userAdd(@RequestPart("user") UserDto userDto, @RequestPart(value = "profile",required = false) MultipartFile multipartFile) throws Exception{
         if(multipartFile != null){
             userDto.setProfileImage(s3FileUploadService.upload(multipartFile));
         }
@@ -87,7 +81,6 @@ public class UserRestController {
     @GetMapping("/users/{user_id}")
     public ResponseEntity<UserDto> userDetails(@PathVariable("user_id") int userId){
         UserDto userDto = userService.findByIdUser(userId);
-        System.out.println("UserRestController " + userDto);
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
@@ -97,6 +90,15 @@ public class UserRestController {
         //refresh 토큰 유효 검증
         Map<String,Object> resultMap = userService.validRefreshToken(userDto);
         return new ResponseEntity<>(resultMap, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/users/count")
+    public ResponseEntity<Map<String,Object>> userCount(){
+        Map<String,Object> map = new HashMap<>();
+        int userCount = userService.findAllUser();
+        map.put("result",SUCCESS);
+        map.put("users",userCount);
+        return new ResponseEntity<>(map, HttpStatus.ACCEPTED);
     }
 
 }

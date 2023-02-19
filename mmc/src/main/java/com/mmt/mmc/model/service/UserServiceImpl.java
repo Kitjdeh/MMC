@@ -2,18 +2,23 @@ package com.mmt.mmc.model.service;
 
 import com.mmt.mmc.controller.JWTUtil;
 import com.mmt.mmc.controller.SHA256;
+import com.mmt.mmc.entity.QuestionTrainer;
 import com.mmt.mmc.entity.User;
 import com.mmt.mmc.exception.IdIncorrectException;
 import com.mmt.mmc.exception.PwIncorrectException;
+import com.mmt.mmc.model.dto.QuestionTrainerDto;
 import com.mmt.mmc.model.dto.UserDto;
 import com.mmt.mmc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -69,7 +74,8 @@ public class UserServiceImpl implements UserService{
     */
     @Override
     public void addUser(UserDto userDto) throws NoSuchAlgorithmException {
-        validateDuplicateUser(userDto.toEntity());//중복 회원 검증 , 이후 암호화 적용 및 JWP적용
+        System.out.println("USERDTO "+userDto);
+//        validateDuplicateUser(userDto.toEntity());//중복 회원 검증 , 이후 암호화 적용 및 JWP적용
         userDto.setPassword(new SHA256().getHash(userDto.getPassword()));
         userRepository.save(userDto.toEntity());
     }
@@ -109,15 +115,13 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * 전체 회원 조회
-     * 전체 강사 리스트 가져오기 할 때 사용(/api/v1/questions/{question_id}/trainer)
-     * @return
+     * 전체 회원 수 조회
      */
-//    @Override
-//    public List<UserDto> findAllUser() {
-//        return userRepository.findAll();
-//    }
-
+    @Override
+    public int findAllUser() {
+        int users = userRepository.findAll().size();
+        return users;
+    }
 
     //증복 name 검사
     private void validateDuplicateUser(User user){
@@ -143,7 +147,4 @@ public class UserServiceImpl implements UserService{
         }
         return resultMap;
     }
-
-    //
-//    public
 }
