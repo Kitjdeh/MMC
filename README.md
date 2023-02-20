@@ -37,9 +37,75 @@
     - mysql : 3306port
     - redis : 6379port
 
+- Docker 사용 서버
+    - react(nginx) , spring , nodejs(web-socket) , nodejs(webRTC) 
+
+- SSL
+    - 하나의 사이트에서 http와 https가 mix 되면 안되기 때문에 모든 요청을 아래와 같이 80port 로 받은 후 proxy server인 443port로 보내주어 redirect 시켜준다.
+
+- SSL nginx 설정 파일
+```
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name _;
+        return 301 https:$host$request_uri;
+
+}
+
+
+server{
+
+        listen 443 ssl;
+        server_name i8a508.p.ssafy.io; # 도메인으로 변경
+
+        ssl_certificate /etc/letsencrypt/live/i8a508.p.ssafy.io/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/i8a508.p.ssafy.io/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf;
+        location / {
+
+                proxy_pass http://i8a508.p.ssafy.io:3000;
+        }
+
+        location /api {
+                proxy_pass http://i8a508.p.ssafy.io:8083;
+        }
+
+        location ^~ /websocket {
+                proxy_pass http://i8a508.p.ssafy.io:8000;
+
+
+                proxy_http_version      1.1;
+                proxy_set_header        Upgrade $http_upgrade;
+                proxy_set_header        Connection "upgrade";
+                proxy_set_header        Host $host;
+        }
+
+        location ^~ /socket.io {
+
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_set_header X-Client-Verify SUCCESS;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-NginX-Proxy true;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_pass http://i8a508.p.ssafy.io:8001;
+                proxy_redirect off;
+                proxy_buffering off;
+
+
+
+        }
+
+}
+```
 
 - 시연 영상 : [https://youtu.be/CXmn76vtSew](https://youtu.be/CXmn76vtSew)
 - UCC : [https://youtu.be/yobItHNKP1M](https://youtu.be/yobItHNKP1M)
+
 
 ## 서비스 소개
 
