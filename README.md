@@ -15,11 +15,28 @@
     - 양현용 : Back-end (연동 및 외부Api, Mysql)
 - 개발 환경
     - 언어 : Java11, HTML/CSS, JavaScript
-    - 서버 : AWS EC2, ubuntu
     - 프레임워크 : Spring, React
     - DB : Mysql, Redis
     - IDE : IntelliJ, Vscode
     - API, 라이브러리 : Grabzit, Ideone, Solved.ac
+
+-배포 환경
+    - 서버 : AWS EC2, ubuntu 22.04.1 LTS
+    - docker : 23.0.1
+    - docker-compose : 2.5.0
+    - mysql : 8.0.32
+    - redis : 5.0.7 
+
+- Server Port
+    - web server(nginx) : 80port
+    - proxy server(https) : 443port
+    - react(nginx) : 3000port
+    - springboot(tomcat) : 8083port
+    - Nodejs(web-socket) : 8000port
+    - Nodejs(webRTC) : 8001port
+    - mysql : 3306port
+    - redis : 6379port
+
 
 - 시연 영상 : [https://youtu.be/CXmn76vtSew](https://youtu.be/CXmn76vtSew)
 - UCC : [https://youtu.be/yobItHNKP1M](https://youtu.be/yobItHNKP1M)
