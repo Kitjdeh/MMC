@@ -6,7 +6,6 @@ import jwtDecode from "jwt-decode";
 import { apiInstance } from "../../api/index";
 
 let baseUrl="http://i8a508.p.ssafy.io:8083/api/v1";
-// let baseUrl=`http://localhost:8080/api/v1`;
 
 const api = apiInstance();
 
@@ -18,7 +17,6 @@ function onLogin(id, password) {
   console.log("로그인요청은 옴", data);
   return async (dispatch, getState) => {
     let url = `${baseUrl}/login`;
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
     let response = await axios
       .post(url, JSON.stringify(data), {
         headers: {
@@ -46,7 +44,6 @@ function onLogout(userId) {
   };
   return async (dispatch, getState) => {
     let url = `${baseUrl}/logout?userId=${id}`;
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/logout?userId=${id}`;
     let response = await api
       .get(url)
       .then((response) => {
@@ -75,7 +72,6 @@ function resetToken(refreshtoken, userId) {
   console.log("리셋토큰데이터", data);
   return async (dispatch, getstate) => {
     let url = `${baseUrl}/users/refresh`;
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
       .post(url, JSON.stringify(data), {
         headers: {
@@ -100,7 +96,6 @@ function userConfirm(userId, password) {
   };
   return async (dispatch) => {
     let url = `${baseUrl}/login`;
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/login`;
     let response = await axios
       .post(url, JSON.stringify(inputs), {
         headers: {
@@ -144,7 +139,6 @@ function userConfirm(userId, password) {
 function getUserInfo(token){
   console.log("OOOO",token)
   let decodeToken = jwtDecode(token);
-  // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
   return async (dispatch) => {
     let url = `${baseUrl}/users/${decodeToken.userId}`;
     api.defaults.headers["jwt-auth-token"] = token;
@@ -168,7 +162,6 @@ function tokenRegeneration(refreshtoken, userId) {
   console.log("리셋토큰데이터", data);
   return async (dispatch, getstate) => {
     let url = `${baseUrl}/users/refresh`;
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/users/refresh`
     let response = await axios
       .post(url, JSON.stringify(data), {
         headers: {

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import  eco  from "@material-ui/icons";
 
 const Spinner = (props) => {
   return (

@@ -3,7 +3,6 @@ import { apiInstance } from "../../api";
 const api = apiInstance();
 
 let baseUrl = "http://i8a508.p.ssafy.io:8083/api/v1/questions";
-// let baseUrl="http://localhost:8083/api/v1/questions";
 
 function getQuestions() {
   return async (dispatch, getState) => {
@@ -22,7 +21,6 @@ function getQuestions() {
 
 function getQuestionDetail(user_id) {
   return async (dispatch, getState) => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/questions/${user_id}`;
     let url = baseUrl + `/${user_id}`;
     let response = await api
       .get(url)
@@ -39,7 +37,6 @@ function getQuestionDetail(user_id) {
 function writeQuestion(question) {
   console.log("quset", question);
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl;
     let response = await api
       .post(url, JSON.stringify(question), {
@@ -59,7 +56,6 @@ function writeQuestion(question) {
 function deleteQuestion(question_id) {
   console.log("deleteQuestion", question_id);
   return async (dispatch) => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/${question_id}`;
     let response = await api
       .delete(url)
@@ -76,7 +72,6 @@ function deleteQuestion(question_id) {
 
 function getTrainers(question_id) {
   return async (dispatch) => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/${question_id}/trainer`;
     api.defaults.headers["jwt-auth-token"] =
       sessionStorage.getItem("jwt-auth-token");
@@ -99,7 +94,6 @@ function addTrainer(question_id, user_id) {
     userId: user_id,
   };
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/lecture`;
     let response = await api
       .post(url, JSON.stringify(inputs), {
@@ -125,7 +119,6 @@ function acceptTrainer(question_id, user_id) {
     isAdopt: 1,
   };
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/lecture/${question_id}/${user_id}`;
     let response = await api
       .patch(url, JSON.stringify(inputs), {
@@ -146,7 +139,6 @@ function acceptTrainer(question_id, user_id) {
 function deleteTrainer(question_id, user_id) {
   console.log("deleteTrainer", question_id, user_id);
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/lecture/${question_id}/${user_id}`;
     let response = await api
       .delete(url)
@@ -163,7 +155,6 @@ function deleteTrainer(question_id, user_id) {
 function getQuestionImage(question_id) {
   console.log("getQuestionImage", question_id);
   return async (dispatch) => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/${question_id}/image`;
     let response = await api
       .get(url)
@@ -197,7 +188,6 @@ function modifyQuestion(question) {
   console.log("quset", question);
   let question_id = question["questionId"];
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseUrl + `/${question_id}`;
     let response = await api
       .patch(url, JSON.stringify(question), {

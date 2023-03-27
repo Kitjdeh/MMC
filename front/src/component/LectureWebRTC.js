@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-//const socket = io.connect({ hostname: "127.0.0.1", port: 8001 });
 
 const LectureWebRTC = ({
   myStream,
@@ -15,8 +14,6 @@ const LectureWebRTC = ({
   console.log("aaa");
   console.log(myPeerConnection);
 
-  //const //myFace = useRef();
-
   const cameraBtn = useRef();
   const peersFace = useRef();
   const screenBtn = useRef();
@@ -25,40 +22,7 @@ const LectureWebRTC = ({
 
   let cameraOff = false;
   let peerPlaying = false;
-  let mePlaying = false;
-
   let peerData = peerStream;
-
-  // peerData.onaddtrack = function () {
-  //   peersFace.srcObject = peerData;
-  // };
-
-  // peerData.onremovetrack = function () {
-  //   peersFace.srcObject = myStream;
-  //   //myFace.srcObject = null;
-  // };
-
-  // socket.on("goodbye", () => {
-  //   peersFace.current.srcObject = null;
-  // });
-
-  // const getMedia = () => {
-  //   let video = //myFace.current;
-  //   if (mePlaying) {
-  //     mePlaying = false;
-  //     video.pause();
-  //   }
-  //   video.srcObject = myStream;
-
-  //   video
-  //     .play()
-  //     .then(() => {
-  //       mePlaying = true;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   const getPeersMedia = () => {
     let video = peersFace.current;
@@ -89,8 +53,6 @@ const LectureWebRTC = ({
         track.enabled = !track.enabled;
       });
 
-      //myFace.current.srcObject = null;
-
       cameraBtn.current.innerText = "Turn Camera On";
     } else {
       cameraOff = false;
@@ -98,7 +60,6 @@ const LectureWebRTC = ({
       myStream.getVideoTracks().forEach((track) => {
         track.enabled = !track.enabled;
       });
-      //myFace.current.srcObject = myStream;
       cameraBtn.current.innerText = "Turn Camera Off";
     }
   };
@@ -109,19 +70,16 @@ const LectureWebRTC = ({
     navigator.mediaDevices
       .getDisplayMedia({
         video: { cursor: "always" },
-        //audio: { echoCancellation: true, noiseSuppression: true },
       })
       .then((stream) => {
         if (peerData) {
           peersFace.current.srcObject = stream;
-          //myFace.current.srcObject = peerData;
         }
         const videoTrack = stream.getVideoTracks()[0];
         console.log("send 1");
 
         setScreenCtr(1);
         handleScreen(1);
-        // this.props.PeerControl(videoTrack);
 
         myPeerConnection
           .getSenders()
@@ -142,7 +100,6 @@ const LectureWebRTC = ({
           console.log(peerData);
           if (peerData) {
             peersFace.current.srcObject = peerStream;
-            //myFace.current.srcObject = myStream;
           }
         };
       });
@@ -153,7 +110,6 @@ const LectureWebRTC = ({
   }, [peersFace]);
 
   useEffect(() => {
-    //getMedia();
   }, []);
 
   useEffect(() => {
@@ -192,7 +148,6 @@ const LectureWebRTC = ({
           ></video>
 
           <video
-            // ref={//myFace}
             autoPlay
             playsInline
             style={{

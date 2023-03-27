@@ -46,7 +46,6 @@ public class JWTUtil {
                 .setHeaderParam("alg", "HS256")
                 .setHeaderParam("typ", "JWT")
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin));
-//                .setExpiration(new Date(System.currentTimeMillis() + expireMin));
         //담고 싶은 정보 설정
         builder.claim("userId", userId);
 

@@ -1,7 +1,5 @@
-import axios from "axios";
 import { apiInstance } from "../../api";
 const api = apiInstance();
-// let baseURL=`http://localhost:8080/api/v1/notes`;
 let baseURL=`http://i8a508.p.ssafy.io:8083/api/v1/notes`;
 
 function makeLectureNote(question_id) {
@@ -9,7 +7,6 @@ function makeLectureNote(question_id) {
         questionId: question_id,
     }
   return async () => {
-    // let url = `http://i8a508.p.ssafy.io:8080/api/v1/mypage/points`;
     let url = baseURL;
     let response = await api.post(url, JSON.stringify(inputs), {headers: {
         "Content-Type": "application/json;charset=utf-8"}})

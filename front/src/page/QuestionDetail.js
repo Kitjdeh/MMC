@@ -1,12 +1,8 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { useParams } from "react-router-dom";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import { withStyles } from "@material-ui/core/styles";
 import QuestionAbout from "../component/QuestionAbout";
 import QuestionCode from "../component/QuestionCode";
 import QuestionMain from "../component/QuestionMain";
@@ -15,17 +11,13 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 import { Cookies } from "react-cookie";
 import QuestionModify from "../component/QuestionModify";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { SvgIcon } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import { border, color } from "@mui/system";
 
 const QuestionDetail = () => {
   let questionId = useParams();
   let id = questionId.id;
 
-  // const store = useStore();
   const question = useSelector((state) => state.question.question);
 
   const dispatch = useDispatch();
@@ -42,8 +34,6 @@ const QuestionDetail = () => {
     getQuestion();
     getAllTrainers();
   }, []);
-
-  // const question = store.getState().question;
 
   const [content, setContent] = useState();
   const [userauth, setUserauth] = useState(false);
@@ -68,7 +58,6 @@ const QuestionDetail = () => {
     code: <QuestionCode question={question} />,
     modify: <QuestionModify question={question} />,
   };
-  const aboutcomponent = ["메인", "문제", "코드"];
   const TabLeft = styled(Grid)(({ theme }) => ({
     textAlign: "left",
   }));
@@ -148,13 +137,6 @@ const QuestionDetail = () => {
         )}
       </Grid>
       {content && <Box>{category[content]}</Box>}
-      {/* {content ? (
-        <Box>{category[content]}</Box>
-      ) : (
-        <Box>
-          <QuestionMain question={question} />
-        </Box>
-      )} */}
     </Box>
   );
 };

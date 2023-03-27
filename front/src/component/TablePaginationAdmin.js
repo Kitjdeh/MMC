@@ -18,7 +18,6 @@ import { Cookies } from 'react-cookie';
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminAction } from './../redux/actions/adminAction';
-import { userinfoAction } from '../redux/actions/userinfoAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#f6edff",
@@ -87,8 +86,6 @@ const TablePaginationActions = (props)=> {
 }
 
 const CustomPaginationActionsTable=({pointList})=> {
-  const cookie = new Cookies();
-  const userId = cookie.get("userId");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const userInfo = useSelector((state)=>state.admin.user);
@@ -116,10 +113,7 @@ const CustomPaginationActionsTable=({pointList})=> {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pointList.length) : 0;
 
-  const handleChangePage = (
-    event,
-    newPage
-  ) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 

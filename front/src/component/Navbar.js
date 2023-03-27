@@ -1,26 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { getCookieToken, getUserId } from "../storage/Cookie";
-import alarm from "./alarm";
 import { Cookies } from "react-cookie";
 import { userinfoAction } from "./../redux/actions/userinfoAction";
-import { display } from "@mui/system";
 import styled from "styled-components";
-import { ConstructionOutlined } from "@mui/icons-material";
 const MenuName = styled.div`
 font-size: 14px;
 font-weight: bold;
@@ -44,12 +38,7 @@ const MenuInfoItem = styled(MenuItem)(({ theme }) => ({
   textAlign: "right",
 }));
 const Navbar = () => {
-  // const authcookie = getCookieToken();
-  const store = useStore();
-  // console.log(store.getState());
-  // const authenticated = store.getState().authToken.isLogin;
   const userInfo = useSelector((state) => state.userinfo.userinfo);
-  // console.log("USERINFO", userInfo);
   const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
     const cookie = new Cookies();
@@ -62,8 +51,6 @@ const Navbar = () => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,7 +75,6 @@ const Navbar = () => {
   };
   const logout = () => {
     handleClose();
-    // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
     console.log(userId);
     dispatch(authAction.onLogout(userId));
     setAuthenticated(false)
@@ -133,15 +119,6 @@ const Navbar = () => {
               {authenticated === true ? (
                 <div>
                   <Grid item>
-                    {/* <Button
-                      id="alarm-button"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      // open={openalarm}
-                      sx = {{ color: "#917B56" }}
-                      >
-                        마이페이지
-                      </Button> */}
                       <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -156,11 +133,7 @@ const Navbar = () => {
                     </Menu>
                     <Button
                       id="mypage-button"
-                      // aria-controls={openmypage ? "basic-menu" : undefined}
-                      // aria-haspopup="true"
-                      // aria-expanded={openmypage ? "true" : undefined}
                       onClick={handleClick}
-                      // sx={{ mt: 3, mb: 2, bgcolor: "#F9D9CA", color: "#917B56"}}
                       sx = {{ color: "#917B56" , fontFamily: "BMHANNAProOTF"}}
                       >
                       마이페이지

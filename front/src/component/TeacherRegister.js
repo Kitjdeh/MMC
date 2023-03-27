@@ -1,13 +1,10 @@
-import React,{useEffect} from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import { questionAction } from "./../redux/actions/questionAction";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { userinfoAction } from "./../redux/actions/userinfoAction";
+import { useDispatch, useSelector } from "react-redux";
 import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
 import { adminAction } from './../redux/actions/adminAction';
@@ -59,7 +56,6 @@ const TeacherRegister = ({ nickname, temperature,writeId, cancelregister, select
       <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
-        // divider={<Divider orientation="vertical" flexItem />}
       >
         <Item sx={{ maxWidth: 50 }} onClick={()=>getUserInfo()}>
           {nickname}

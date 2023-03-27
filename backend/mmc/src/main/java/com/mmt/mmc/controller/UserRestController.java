@@ -22,7 +22,6 @@ import java.util.Map;
 @Slf4j
 @CrossOrigin(origins = "*")
 public class UserRestController {
-//    private static final String HEADER_AUTH = "access-token";
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 

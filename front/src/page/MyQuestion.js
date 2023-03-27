@@ -9,11 +9,6 @@ import { Cookies } from "react-cookie";
 import { Box } from '@material-ui/core';
 import { styled } from "@mui/material/styles";
 const Mygrid = styled(Grid)(({ theme }) => ({
-  // backgroundColor: "#f6edff",
-  // ...theme.typography.body2,
-  // padding: theme.spacing(1),
-  // textAlign: "center",
-  // color: theme.palette.text.secondary,
   fontFamily: "BMHANNAProOTF",
 }));
 const Myspan = styled(Box)(() => ({
@@ -49,7 +44,6 @@ const MyQuestion = () => {
               <QuestionCard question={question} />
             </Mygrid>
           ) : question.progress == 2 ? (
-            // <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56" , textAlign: "center"}}>
             <Grid item xl={3} lg={4} md={6} sx={{color: "#917B56"}}>
               <Myspan> 🔒 종료된 강의 🔒 </Myspan>
               <QuestionCard question={question} />

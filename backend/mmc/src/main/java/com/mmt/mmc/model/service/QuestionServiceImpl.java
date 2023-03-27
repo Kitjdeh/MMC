@@ -132,8 +132,6 @@ public class QuestionServiceImpl implements QuestionService{
 
         ImageOptions options = new ImageOptions();
         options.setBrowserHeight(-1);
-//        options.setWidth(-1);
-//        options.setHeight(-1);
 
         grabzIt.URLToImage("https://www.acmicpc.net/problem/"+questionNum,options);
         String filename=questionNum+".jpg";

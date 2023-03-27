@@ -22,20 +22,10 @@ import CodeIcon from "@mui/icons-material/Code";
 import FormatPaintIcon from "@mui/icons-material/FormatPaint";
 import SettingsInputAntennaIcon from "@mui/icons-material/SettingsInputAntenna";
 import styled from "styled-components";
-//webRTC setting
-// webRTC setting
 
 const socketRTC = io("localhost:8001", { transports: ["websocket"] });
 
 const socket = new WebSocket(`ws://localhost:8000`);
-
-// const socketRTC = io.connect({
-//   hostname: "i8a508.p.ssafy.io",
-//   port: 8001,
-//   transports: ["websocket"],
-// });
-
-// const socket = new WebSocket(`wss://i8a508.p.ssafy.io/websocket`);
 
 const StyledContainer = styled.div`
   display: flex;
@@ -96,12 +86,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
   },
-  // paper: {
-  //   backgroundColor: "white",
-  //   border: "2px solid #000",
-  //   boxShadow: 24,
-  //   padding: 16,
-  // },
   paper: {
     backgroundColor: "white",
     border: "2px solid #000",
@@ -115,7 +99,6 @@ const useStyles = makeStyles({
   },
 });
 
-// WebSocket
 
 socket.addEventListener("open", () => {
   console.log("Connected to Server ✅");
@@ -131,8 +114,6 @@ const LectureNote = () => {
   const myAudio = useRef();
   const peersAudio = useRef();
   const img = new Image();
-  // img.src =
-  //   "https://ssafy-mmc.s3.ap-northeast-2.amazonaws.com/13793120a9ba4c50a4e2bd9f390abf1f.jpg";
   const [start, setStart] = useState(false); // 둘다 들어올시 시작
   const [openModal, setOpenModal] = useState(false); // 준비 버튼 누를시 모달창 뜸
   const [time, setTime] = useState(false);
@@ -146,13 +127,6 @@ const LectureNote = () => {
   const teacher = useSelector((state) => state.admin.user);
   const dispatch = useDispatch();
   img.src = question.imageUrl;
-  // console.log("USER", user);
-  // console.log("LECTURE", lecture);
-  // console.log("QUESTION", question);
-  // console.log("teacher", teacher);
-
-  // const lectureNoteId = 2;
-  // const nickName = "SSAFY";
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -207,7 +181,6 @@ const LectureNote = () => {
     dispatch(userinfoAction.modifyUser(user));
     dispatch(userinfoAction.modifyUser(teacher));
   };
-  // webRTC
 
   const handleAddStream = (data) => {
     console.log(data);
@@ -241,27 +214,6 @@ const LectureNote = () => {
       console.log(muted);
       muteBtn.current.title = audioTrack.enabled ? "Unmute" : "Mute";
     }
-
-    // if (!muted) {
-    //   muted = true;
-    //   console.log(myStream.getAudioTracks()[0]);
-    //   myStream.getAudioTracks().forEach((track) => {
-    //     track.enabled = !track.enabled;
-    //     console.log(track.enabled);
-    //   });
-    //   // setMyStream(myStream);
-    //   muteBtn.current.innerText = "Unmute";
-    // } else {
-    //   muted = false;
-    //   console.log("making unmute");
-
-    //   muteBtn.current.innerText = "Mute";
-    //   myStream.getAudioTracks().forEach((track) => {
-    //     track.enabled = !track.enabled;
-    //     console.log(track.enabled);
-    //   });
-    //   // setMyStream(myStream);
-    // }
   };
 
   useEffect(() => {
@@ -353,10 +305,6 @@ const LectureNote = () => {
     });
 
     socketRTC.on("goodbye", () => {
-      // myPeerConnection.getSenders().map((sender) => sender.replaceTrack(null));
-      // console.log(myPeerConnection.getSenders().map((sender) => sender.track));
-
-      // setPeerStream(null);
       console.log("byebye");
     });
   }, [socketRTC]);
@@ -495,9 +443,6 @@ const LectureNote = () => {
             <StyledContainer>
               <StyledHeader>
                 <Box>{category["Clock"]}</Box>
-                {/* <button id="mute" type="button" onClick={handleMuteClick} ref={muteBtn}>
-              Mute
-              </button> */}
               </StyledHeader>
 
               <StyledMain>

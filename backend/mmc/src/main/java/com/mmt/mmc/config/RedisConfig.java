@@ -25,10 +25,4 @@ public class RedisConfig {
         return lettuceConnectionFactory;
     }
 
-//    @Bean
-//    public RedisTemplate<?,?> redisTemplateJPA(){
-//        RedisTemplate<byte[], byte[]> redisTemplate=new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(redisConnectionFactory());
-//        return redisTemplate;
-//    }
 }

@@ -1,25 +1,14 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DepositWarning } from "../assets/DepositWarning";
-import { menuItemClasses } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { pointAction } from "../redux/actions/pointAction";
 import moment from 'moment';
-import { Cookies } from 'react-cookie';
 
-const Main = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#ffffff",
-  ...theme.typography.body2,
-  padding: theme.spacing(0.5),
-  textAlign: "center",
-  fontFamily: "BMHANNAProOTF",
-}));
 const Bar = styled(Grid)(({ theme }) => ({
   backgroundColor: "#E8DAC3",
   borderRadius: "10px",

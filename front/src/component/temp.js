@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -14,11 +13,8 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { authAction } from "../redux/actions/authAction";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { getCookieToken, getUserId } from "../storage/Cookie";
-import alarm from "./alarm";
 import { Cookies } from "react-cookie";
 import { userinfoAction } from "./../redux/actions/userinfoAction";
-import { display } from "@mui/system";
 import styled from "styled-components";
 import { styled as styledM } from "@mui/material/styles";
 
@@ -58,12 +54,7 @@ const GridSort = styled.div`
 `;
 
 const Navbar = () => {
-  // const authcookie = getCookieToken();
-  const store = useStore();
-  // console.log(store.getState());
-  // const authenticated = store.getState().authToken.isLogin;
   const userInfo = useSelector((state) => state.userinfo.userinfo);
-  // console.log("USERINFO", userInfo);
   const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
     const cookie = new Cookies();
@@ -76,7 +67,6 @@ const Navbar = () => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
   let openalarm = false;
   let openmypage = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -102,7 +92,6 @@ const Navbar = () => {
   };
   const logout = () => {
     handleClose();
-    // console.log("엑세스토큰,유저아이디 호출", authenticated, userId);
     console.log(userId);
     dispatch(authAction.onLogout(userId));
     setAuthenticated(false)
@@ -114,10 +103,6 @@ const Navbar = () => {
       <Item
         position="static"
         elevation={0}
-        // sx={{
-        //   backgroundColor: "#f6edff",
-        //   borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-        // }}
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
         <GridSort>

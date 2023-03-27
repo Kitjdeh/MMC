@@ -1,8 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Cookies } from 'react-cookie';
 import { setAccessToken } from "../storage/Cookie";
-import { authAction } from "../redux/actions/authAction";
-import { useDispatch } from 'react-redux';
 
 function apiInstance() {
   const cookie = new Cookies();

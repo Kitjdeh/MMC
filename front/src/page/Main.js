@@ -7,7 +7,6 @@ import Grid from "@mui/material/Grid";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import SchoolIcon from "@mui/icons-material/School";
 import PeopleIcon from "@mui/icons-material/People";
-import { mainInfo } from "../redux/reducers/question";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import { questionAction } from "../redux/actions/questionAction";

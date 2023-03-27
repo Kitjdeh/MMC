@@ -68,7 +68,6 @@ const LectureGraffiti = ({ lectureNoteId, check, img, pdfimg, setCheck, socket, 
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         context.imageSmoothingEnabled = false;
-        // savedStates.push(context.getImageData(0, 0, canvas.width, canvas.height));
         const Data2JSON = message.payload;
         const Data2Array = JSON.parse(Data2JSON);
         const Data2 = new ImageData(new Uint8ClampedArray(Data2Array), canvas.width, canvas.height);

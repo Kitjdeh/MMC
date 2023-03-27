@@ -8,12 +8,7 @@ import { useSelector } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import { styled } from "@mui/material/styles";
 import { Box } from '@material-ui/core';
-import { fontSize, margin } from '@mui/system';
 const Mygrid = styled(Grid)(({ theme }) => ({
-  // backgroundColor: "#FFBEBE",
-  // ...theme.typography.body2,
-  // padding: theme.spacing(1),
-  // textAlign: "center",
   fontFamily: "BMHANNAProOTF",
 }));
 const Title = styled(Box)(()=> ({

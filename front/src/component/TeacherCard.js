@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector,useStore } from "react-redux";
 import { questionAction } from './../redux/actions/questionAction';
 
@@ -24,10 +23,8 @@ const Word = styled(Grid)(({ theme }) => ({
   color: "#917B56",
 }));
 const TeacherCard = () => {
-  const store = useStore();
   const dispatch = new useDispatch();
   const trainer = useSelector((state) => state.admin.user);
-  const [flag, setFlag] = useState(false);
   const backjoon = useSelector((state) => state.question.backjoon);
   useEffect(() => {
     console.log("CARD",trainer)

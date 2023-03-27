@@ -35,8 +35,6 @@ function publicRooms() {
   });
 
   return publicRooms;
-  // const sids = wsServer.sockets.adapter.sids;
-  // const rooms = wsServer.sockets.adapter.rooms;
 }
 
 function countRoom(roomName) {
@@ -70,19 +68,12 @@ wsServer.on("connection", (socket) => {
     socket.to(roomName).emit("setScreen", num);
   });
 
-  /// modal
-  // socket.on("modal", (roomName) => {
-
-  //   socket.join(roomName);
-  //   socket.to(roomName).emit("settingTime", status[roomName]);
-  // });
 
   // 시간 설정
   socket.on("timerStart", (roomName) => {
     socket.join(roomName);
     console.log(status[roomName]);
     wsServer.sockets.emit("room_change", publicRooms());
-    //console.log(wsServer.sockets.adapter);
 
     console.log(countRoom(roomName));
     if (!status[roomName]) {
@@ -112,7 +103,6 @@ wsServer.on("connection", (socket) => {
   });
 
   socket.on("disconnect", (data) => {
-    //console.log(wsServer.sockets.adapter);
     const roomNum = roomNumber;
     console.log("byebye");
     socket.to("12345").emit("goodbye");

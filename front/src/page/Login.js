@@ -1,26 +1,19 @@
-import React, {useMemo} from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { width } from "@mui/system";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
 import { authAction } from "../redux/actions/authAction";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { getRefreshToken, getUserId, getAccessToken} from "../storage/Cookie";
-import { Cookies } from "react-cookie";
+import { useDispatch, useStore } from "react-redux";
 
 const Login = () => {
   const [userid, setId] = useState("");
   const [password, setPassword] = useState("");
-  // const [token, setToken] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch(); 
   const store = useStore();
@@ -33,7 +26,6 @@ const Login = () => {
       console.log("123");
       await dispatch(authAction.getUserInfo(token));
     }
-    // dispatch(authAction.onLogin(userid, password));
     navigate("/question")
   };
 
@@ -53,8 +45,6 @@ const Login = () => {
           md={6}
           maxWidth="xs"
           sx={{
-            // maxWidth: 300,
-            // maxHeight: 300,
             backgroundImage: "url(/img/mmclogo.png)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>

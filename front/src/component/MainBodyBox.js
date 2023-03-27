@@ -1,14 +1,9 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import ButtonBase from "@mui/material/ButtonBase";
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -29,7 +24,7 @@ const MainBodyBox = (props) => {
         mb: 5,
         maxWidth: 1000,
         border: "1px solid #917B56",
-        backgroundColor: "#F0E4D4", ////////////////////////
+        backgroundColor: "#F0E4D4",
         zIndex: "1"
       }}
     >

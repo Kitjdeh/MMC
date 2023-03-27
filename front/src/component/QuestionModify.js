@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Typography } from "@material-ui/core";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,9 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { questionAction } from "../redux/actions/questionAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
-import moment from "moment";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: (theme.palette.mode = "#DFD3C3"),
@@ -68,11 +66,6 @@ const QuestionModify = ({ question }) => {
   const onChangeMultiHandler = (e) => {
     const { value } = e.target;
     setAlgorithm(typeof value === "string" ? value.split(",") : value);
-    // if(e.target.name==="algorithm"){
-    //   setAlgorithm(
-    //     typeof value === 'string' ? value.split(',') : value,
-    //   );
-    // }
     transBitmask();
   };
 

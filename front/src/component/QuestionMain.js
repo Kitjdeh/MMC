@@ -4,19 +4,17 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { questionAction } from "../redux/actions/questionAction";
 import TeacherCard from "./TeacherCard";
 import TeacherRegister from "./TeacherRegister";
-import { TransitEnterexitSharp } from "@mui/icons-material";
 import { adminAction } from "./../redux/actions/adminAction";
 import { Button } from "@mui/material";
 import { noteAction } from "./../redux/actions/noteAction";
 import { Cookies } from "react-cookie";
 import TextField from "@mui/material/TextField";
-import { borderRadius } from "@mui/system";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#f6edff" : "#fff",
@@ -76,7 +74,6 @@ const QuestionMain = ({ question }) => {
   const cookie = new Cookies();
   const userId = cookie.get("userId");
 
-  let time = new Date(question.reservation);
   useEffect(() => {
     if (question.progress) {
       setAdoptuser(question.progress);
@@ -103,9 +100,6 @@ const QuestionMain = ({ question }) => {
     }
     setAlgorithm(updated);
   };
-  const deleteQuestion = () => {
-    dispatch(questionAction.deleteQuestion(question.questionId));
-  };
   const addTrainer = () => {
     dispatch(questionAction.addTrainer(question.questionId, userId)); //userId 추가 필요
   };
@@ -119,12 +113,6 @@ const QuestionMain = ({ question }) => {
     dispatch(adminAction.getUserInfo(question.progress));
     console.log(question.progress);
     setLoading(true);
-  };
-  const note = useSelector((state) => state.note.note);
-  const selectTrainer = (item) => {
-    const { name } = item;
-    console.log({ name }, name);
-    console.log("클릭클릭", item.target, name);
   };
   return (
     <Box sx={{ minWidth: 100 }}>
@@ -217,14 +205,7 @@ const QuestionMain = ({ question }) => {
             </Item>
           </Grid>
 
-          {/* <Grid item xs={9}>
-            <Item sx={{ backgroundColor: "#F9D9CA" , color: "#917B56" }} >{question.title}</Item>
-          </Grid> */}
-
           <Grid item xs={9}>
-            {/* <Item sx={{ backgroundColor: "#BD885C" , color: "#F0E4D4"}}>
-              {question.content}
-            </Item> */}
             <TextFieldM
               variant="outlined"
               fullWidth
@@ -236,21 +217,6 @@ const QuestionMain = ({ question }) => {
         </Bar>
       </Bar>
       <br />
-      {/* <Bar height={50} sx={{ minWidth: 300, backgroundColor: "#f6edff" }}>
-        <Grid container sx={{}}>
-          <Bar item xs={2} margin={1}>
-            나의 풀이 
-          </Bar>
-
-          {algorithm.map((element) => (
-            <Bar item xs={2} margin={1}>
-              {element}
-            </Bar>
-          ))}
-        </Grid>
-      </Bar>
-      <br /> */}
-
       <Box>
         <Bar>
           {question?.userId !== parseInt(userId) && question?.progress < 1 ? (
@@ -291,14 +257,12 @@ const QuestionMain = ({ question }) => {
                   />
                   {trainers.length != 0 ? (
                     trainers.map((item) => (
-                      // <Button name={item} onClick={selectTrainer(item)}>
                       <TeacherRegister
                         nickname={item.nickname}
                         temperature={item.temperature}
                         writeId={item.userId}
                         select={select}
                       />
-                      // </Button>
                     ))
                   ) : (
                     <Item sx={{ color: "#917B56" }}>

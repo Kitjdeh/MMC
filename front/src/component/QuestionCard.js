@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { questionAction } from "./../redux/actions/questionAction";
 import { styled } from "@mui/material/styles";
 
 const TypographyOtf = styled(Typography)({
@@ -32,7 +31,6 @@ const NotSelectedItem = styled(Paper)(({ theme }) => ({
 
 //완료
 const DoneItem = styled(Paper)(({ theme }) => ({
-  // backgroundColor: "#E8DAC3",
   backgroundColor: "#D1BBA0",
   padding: theme.spacing(0.3),
   textAlign: "center",

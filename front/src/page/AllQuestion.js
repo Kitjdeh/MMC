@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import QuestionCard from "../component/QuestionCard";
-import Spinner from "../icon/Spinner"
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import SearchIcon from "@mui/icons-material/Search";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
-import { useSearchParams } from "react-router-dom";
 import { questionAction } from "../redux/actions/questionAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
@@ -34,14 +31,7 @@ const BoxTitle = styled.div`
 `;
 
 const AllQuestion = () => {
-  const [searchList, setSearch] = useState("");
-  const [isfindpython, setfindpython] = React.useState(true);
-  const [isfindjava, setfindjava] = React.useState(true);
-  const [isfindC, setfindC] = React.useState(true);
-  const [algorithm, setalorithm] = React.useState(true);
-  const [debugging, setdebugging] = React.useState(true);
   const [filteredList, setFilteredList] = React.useState([])
-  const [category, setCategory] = useState([]);
   const [check, setCheck] = useState(
     {
       python: true,
@@ -63,10 +53,7 @@ const AllQuestion = () => {
   ]
   console.log(check, "체크체크체크")
   console.log()
-  // const [is_loaded,setLoaded] = useState(false)
   const questionList = useSelector((state) => state.question.questions);
-
-  const is_loaded = useSelector((state) => state.question.is_loaded);
 
   const dispatch = useDispatch();
   const getallQuestions = () => {
@@ -110,70 +97,6 @@ const AllQuestion = () => {
     getfilter()
   }, [check])
 
-  // useEffect(() => {
-  //   getFilteredList();
-  // }, [searchList]);
-
-  // useEffect(() => {
-  //   const getLanguage = () => {
-  //     let temp = [];
-  //     languageGroup.forEach((item, index) => {
-  //       if (item === true) {
-  //         temp.push(index);
-  //       }
-  //     });
-  //     setLanguage(temp);
-  //     console.log("언어세팅", language);
-  //     return language;
-  //   };
-  //   const getFilteredList = () => {
-  //     // 1. 3가지 언어 중 체크 여부 확인
-  //     let setLanguage = getLanguage();
-  //     // 2. 받아온걸로 filter
-  //     let result = questionList.filter(
-  //       (item) =>
-  //         item["title"].includes(searchList) &&
-  //         setLanguage.includes(item["language"])
-  //     );
-  //     setFilteredList(result);
-  //     console.log("필터적용", filteredList);
-  //     return;
-  //   };
-  //   getFilteredList();
-  // }, [isfindpython, isfindjava]);
-
-
-  //함수 selectList 구성 effect({},[language,search,category])
-  //1. 검색어 title 모으는 titleList
-  //2. 언어 체크리스트 모으는 lanugageGroup
-  //3. 유형 체크리스트 모으는 categoryGroup
-  //4. 3가지 함수를 await로 대기 한 후 filter
-  // const getLanguage = () => {
-  //   let temp = [];
-  //   languageGroup.forEach((item, index) => {
-  //     if (item === true) {
-  //       temp.push(index);
-  //     }
-  //   });
-  //   setLanguage(temp);
-  //   return language;
-  // };
-
-  // const getFilteredList = async (event) => {
-  //   // 1. 3가지 언어 중 체크 여부 확인
-  //   // let setLanguage = await getLanguage();
-  //   // 2. 검색창 입력갑 받음
-  //   let setTitle = await searchList;
-  //   // 3. 받아온걸로 filter
-  //   let result = await questionList.filter(
-  //     (item) =>
-  //       item["title"].includes(searchList) &&
-  //       setLanguage.includes(item["language"]) &&
-  //       setCategory.includes(item["category"])
-  //   );
-  //   setFilteredList(result);
-  //   return;
-  // };
   const resetFilterList = () => {
     setCheck({ ...check, debug: true, algo: true, python: true, java: true, c: true, })
   };
@@ -188,7 +111,6 @@ const AllQuestion = () => {
           <Box className="searchbar">
             <Grid item xs={12} textAlign="left">
               <TextFieldM
-                // variant="standard"
                 font
                 required
                 fullWidth
@@ -196,7 +118,6 @@ const AllQuestion = () => {
                 label="키워드 검색"
                 name="userid"
                 onChange={(event) => setCheck({ ...check, search: event.target.value })}
-              // InputProps={{disableUnderline:true}}
               />
             </Grid>
           </Box>
@@ -251,7 +172,6 @@ const AllQuestion = () => {
             xs={1}
             sx={{ position: "absolute", top: "40%", right: "5%" }}
           >
-            {/* <SearchIcon onClick={() => getFilteredList()} sx={{ mr: "20px" }} /> */}
             <RotateLeftIcon onClick={() => resetFilterList()} />
           </Grid>
         </Box>
@@ -265,7 +185,6 @@ const AllQuestion = () => {
         </Link>
       </Container>
       <Container>
-        {/* <Grid container spacing={1} justifyContent="space-between"> */}
         <Grid container direction="row" >
           {filteredList.slice(0).reverse()?.map((question) => (
             <Grid key={question.questionId} justifyContent="space-between">

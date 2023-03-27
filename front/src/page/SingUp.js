@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { userinfoAction } from "../redux/actions/userinfoAction";
 import ImageUploader from "react-images-upload";
@@ -32,7 +29,6 @@ export default function SingUp() {
     temperature:0,
     profileImage:"",
   });
-  // console.log("dddddd", inputs);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [pythonchecked, setpythonChecked] = React.useState(false);
@@ -62,10 +58,8 @@ export default function SingUp() {
       if (languageArray[i] === true) {
         temp += languagecount[i];
       }
-      // console.log("언어합", temp, languageArray);
     }
     inputs["language"] = temp;
-    // console.log(inputs["language"]);
   };
 
   const regist= ()=> {
